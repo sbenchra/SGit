@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="815106c7-c503-4dd7-97e5-0f5bb621a1d6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/scala/Models/Object.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/scala/Models/Tree.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -65,7 +63,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1570123987821</updated>
-      <workItem from="1570123989424" duration="959000" />
+      <workItem from="1570123989424" duration="1343000" />
+      <workItem from="1570128917877" duration="197000" />
     </task>
     <servers />
   </component>
