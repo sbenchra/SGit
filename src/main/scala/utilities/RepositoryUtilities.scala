@@ -1,41 +1,47 @@
 package utilities
 import java.io.{BufferedWriter, File, FileWriter, PrintWriter}
-import java.nio.file.Paths
 
 object RepositoryUtilities {
-  //Create Directories
+  //Recusrive function to create Directories
 
   def createDirectories(sDirecoties: List[String]): Unit = {
-    if(sDirecoties.length == 0)
-      {
-        println("The list of directories is empty")
-      }
-    else
-      {
-        new File(sDirecoties.head).mkdir()
-        createDirectories(sDirecoties.tail)
+    if (sDirecoties.isEmpty) {
+      println("The list of directories is empty")
+    }
+    else {
+      new File(sDirecoties.head).mkdir()
+      createDirectories(sDirecoties.tail)
 
-      }
+    }
 
   }
-  //Create files
+
+  //Recursive function to create files
 
   def createFiles(sFiles: List[String]): Unit = {
-    if(sFiles.length == 0)
-    {
+    if (sFiles.isEmpty) {
       println("The list of files is empty")
     }
-    else
-    {
+    else {
       new File(sFiles.head).createNewFile()
       createFiles(sFiles.tail)
 
-    }  }
-  //Write in a file
-  def writeInFile(filename:String,text:String): Unit = {
-    val file = new File(filename)
-    val bw = new BufferedWriter(new FileWriter(file))
-    bw.write(text)
-    bw.close()
+    }
+  }
+
+  //Recursive function to write in a file
+  //Write an element of the list contents to a file in the list files having the same index
+  def writeInFiles(files: List[String], contents: List[String]): Unit = {
+    if (files.isEmpty || contents.isEmpty) {
+      println("nothing to write")
+    }
+    else {
+      val file = new File(files.head)
+      val bw = new BufferedWriter(new FileWriter(file))
+      bw.write(contents.head)
+      bw.close()
+      writeInFiles(files.tail, contents.tail)
+
+    }
   }
 }
