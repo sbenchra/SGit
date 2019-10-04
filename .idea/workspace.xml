@@ -2,74 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="815106c7-c503-4dd7-97e5-0f5bb621a1d6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/sbt__org_scala_lang_scala_library_2_12_7_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/SGit-build.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/SGit.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/scala_compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/scala/sgit/Blob.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/scala/sgit/Repository.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/scala/sgit/Tree.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/.history" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/default/sgit$sources/0.1/resolved.xml.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/default/sgit$sources/0.1/resolved.xml.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/default/sgit_2.12/0.1/resolved.xml.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/default/sgit_2.12/0.1/resolved.xml.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit$sources-compile-internal.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit$sources-compile.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit$sources-optional.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit$sources-plugin.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit$sources-pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit$sources-provided.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit$sources-runtime-internal.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit$sources-runtime.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit$sources-scala-tool.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit$sources-test-internal.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit$sources-test.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit_2.12-compile-internal.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit_2.12-compile.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit_2.12-optional.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit_2.12-plugin.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit_2.12-pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit_2.12-provided.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit_2.12-runtime-internal.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit_2.12-runtime.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit_2.12-scala-tool.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit_2.12-test-internal.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-sgit_2.12-test.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/ivy-report.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/ivy-report.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/$global/$global/dumpStructure/$global/streams/out" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/$global/dependencyPositions/$global/streams/update_cache_2.12/input_dsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/$global/dependencyPositions/$global/streams/update_cache_2.12/output_dsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/$global/ivyConfiguration/$global/streams/out" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/$global/ivySbt/$global/streams/out" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/$global/projectDescriptors/$global/streams/out" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/$global/update/$global/streams/out" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/$global/update/$global/streams/update_cache_2.12/inputs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/$global/update/$global/streams/update_cache_2.12/output" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/$global/updateClassifiers/$global/streams/out" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/compile/externalDependencyClasspath/$global/streams/export" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/compile/managedClasspath/$global/streams/export" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/compile/unmanagedClasspath/$global/streams/export" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/compile/unmanagedJars/$global/streams/export" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/runtime/externalDependencyClasspath/$global/streams/export" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/runtime/managedClasspath/$global/streams/export" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/runtime/unmanagedClasspath/$global/streams/export" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/runtime/unmanagedJars/$global/streams/export" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/test/externalDependencyClasspath/$global/streams/export" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/test/managedClasspath/$global/streams/export" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/test/unmanagedClasspath/$global/streams/export" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/streams/test/unmanagedJars/$global/streams/export" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/sgit.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sbt.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sbt.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.sgit/HEAD" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.sgit/config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.sgit/description" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.sgit/info/exclude" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/utilities/RepositoryUtilities.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/git/Blob.scala" beforeDir="false" afterPath="$PROJECT_DIR$/HEAD" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/git/Commit.scala" beforeDir="false" afterPath="$PROJECT_DIR$/config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/git/Object.scala" beforeDir="false" afterPath="$PROJECT_DIR$/description" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/git/Tree.scala" beforeDir="false" afterPath="$PROJECT_DIR$/index" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/sgit/Repository.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/sgit/Repository.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/sgit/Repository$.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/sgit/Repository$.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -185,6 +125,8 @@
       <updated>1570123987821</updated>
       <workItem from="1570123989424" duration="1343000" />
       <workItem from="1570128917877" duration="8781000" />
+      <workItem from="1570170816366" duration="2216000" />
+      <workItem from="1570173447398" duration="448000" />
     </task>
     <servers />
   </component>
@@ -212,7 +154,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="scala-line">
           <url>file://$PROJECT_DIR$/src/main/scala/sgit/Repository.scala</url>
-          <line>16</line>
+          <line>17</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
