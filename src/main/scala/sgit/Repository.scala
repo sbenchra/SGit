@@ -18,9 +18,9 @@ object Repository {
       val dirPath = System.getProperty("user.dir")
       if (!isInitialized(dirPath)) {
         //Sequence of directories to create
-        val directories = Seq(s"$dirPath/.sgit",s"$dirPath/.sgit/info",s"$dirPath/.sgit/objects/info",s"$dirPath/.sgit/objects/pack",s"$dirPath/.sgit/branches",s"$dirPath/.sgit/refs")
+        val directories = List(s"$dirPath/.sgit",s"$dirPath/.sgit/info",s"$dirPath/.sgit/objects/info",s"$dirPath/.sgit/objects/pack",s"$dirPath/.sgit/branches",s"$dirPath/.sgit/refs")
         //List of files to create
-        val files = Seq(s"$dirPath/.sgit/HEAD",s"$dirPath/.sgit/config",s"$dirPath/.sgit/description",s"$dirPath/.sgit/info/exclude")
+        val files = List(s"$dirPath/.sgit/HEAD",s"$dirPath/.sgit/config",s"$dirPath/.sgit/description",s"$dirPath/.sgit/info/exclude")
         RepositoryUtilities.createDirectories(directories)
         RepositoryUtilities.createFiles(files)
         RepositoryUtilities.writeInFile(files(0),"ref: refs/heads/master")
