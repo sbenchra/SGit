@@ -10,8 +10,8 @@ object RepositoryUtilities {
       println("The list of directories is empty")
     }
     else {
-      new File(sDirecoties.head).mkdir()
-
+      new File(sDirecoties.head).mkdirs()
+      createDirectories(sDirecoties.tail)
     }
 
   }

@@ -36,7 +36,8 @@ object Repository {
   }
 
   def main(args: Array[String]): Unit = {
-    println( )
+    initializeRepo()
+    println( Blob.createBlob(Blob(3,None)))
   }
 
 }
