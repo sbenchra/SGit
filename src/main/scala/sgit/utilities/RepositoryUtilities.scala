@@ -1,5 +1,6 @@
-package utilities
-import java.io.{BufferedWriter, File, FileWriter, PrintWriter}
+package sgit.utilities
+
+import java.io.{BufferedWriter, File, FileWriter}
 
 object RepositoryUtilities {
   //Recusrive function to create Directories
@@ -10,7 +11,6 @@ object RepositoryUtilities {
     }
     else {
       new File(sDirecoties.head).mkdir()
-      createDirectories(sDirecoties.tail)
 
     }
 
@@ -32,7 +32,7 @@ object RepositoryUtilities {
   //Recursive function to write in a file
   //Write an element of the list contents to a file in the list files having the same index
   def writeInFiles(files: List[String], contents: List[String]): Unit = {
-    if (files.isEmpty || contents.isEmpty) {
+    if (files.isEmpty || contents.isEmpty || contents.length != files.length ) {
       println("nothing to write")
     }
     else {

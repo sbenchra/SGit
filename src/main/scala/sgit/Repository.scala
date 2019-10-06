@@ -1,8 +1,7 @@
 package sgit
 import java.io.File
 import utilities.RepositoryUtilities
-import java.io.PrintWriter
-import java.nio.file.Paths
+
 
 
 object Repository {
@@ -28,6 +27,7 @@ object Repository {
         RepositoryUtilities.createFiles(files)
         RepositoryUtilities.writeInFiles(files,content)
 
+
         println(s"Dépôt SGit vide initialisé dans $dirPath/.sgit")
       }
       else {
@@ -35,7 +35,8 @@ object Repository {
       }
   }
 
-  def main(args: Array[String]): Unit ={
-    initializeRepo()
+  def main(args: Array[String]): Unit = {
+    println( )
   }
+
 }
