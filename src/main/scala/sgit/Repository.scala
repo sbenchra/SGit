@@ -36,8 +36,10 @@ object Repository {
   }
 
   def main(args: Array[String]): Unit = {
-    initializeRepo()
-    println( Blob.createBlob(Blob(3,None)))
+    val dirPath = System.getProperty("user.dir")
+
+    println(    RepositoryUtilities.readFileContent(new File(s"$dirPath/soufiane.txt"))
+    )
   }
 
 }

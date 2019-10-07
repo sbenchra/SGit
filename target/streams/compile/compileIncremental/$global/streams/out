@@ -1,1 +1,70 @@
-[0m[[0m[0mdebug[0m] [0m[0mNo changes[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mInitial source changes: [0m
+[0m[[0m[0mdebug[0m] [0m[0m	removed:Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0m	added: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0m	modified: Set(/home/benchraa/SGit/src/main/scala/sgit/Blob.scala, /home/benchraa/SGit/src/main/scala/sgit/utilities/RepositoryUtilities.scala)[0m
+[0m[[0m[0mdebug[0m] [0m[0mInvalidated products: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0mExternal API changes: API Changes: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0mModified binary dependencies: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0mInitial directly invalidated classes: Set(sgit.Blob, sgit.utilities.RepositoryUtilities)[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mSources indirectly invalidated by:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	product: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0m	binary dep: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0m	external source: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0mAll initially invalidated classes: Set(sgit.Blob, sgit.utilities.RepositoryUtilities)[0m
+[0m[[0m[0mdebug[0m] [0m[0mAll initially invalidated sources:Set(/home/benchraa/SGit/src/main/scala/sgit/Blob.scala, /home/benchraa/SGit/src/main/scala/sgit/utilities/RepositoryUtilities.scala)[0m
+[0m[[0m[0minfo[0m] [0m[0mCompiling 2 Scala sources to /home/benchraa/SGit/target/scala-2.12/classes ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting org.scala-sbt:compiler-bridge_2.12:1.2.5:compile for Scala 2.12.7[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting org.scala-sbt:compiler-bridge_2.12:1.2.5:compile for Scala 2.12.7[0m
+[0m[[0m[0mdebug[0m] [0m[0m[zinc] Running cached compiler 59bf8d3b for Scala compiler version 2.12.7[0m
+[0m[[0m[0mdebug[0m] [0m[0m[zinc] The Scala compiler is invoked with:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-bootclasspath[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/benchraa/.sbt/boot/scala-2.12.7/lib/scala-library.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-classpath[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/benchraa/SGit/target/scala-2.12/classes:/home/benchraa/.ivy2/cache/com.roundeights/hasher_2.12/jars/hasher_2.12-1.2.0.jar:/home/benchraa/.ivy2/cache/com.gilt/gfc-guava_2.12/jars/gfc-guava_2.12-0.3.1.jar:/home/benchraa/.ivy2/cache/com.gilt/gfc-util_2.12/jars/gfc-util_2.12-0.2.1.jar:/home/benchraa/.ivy2/cache/com.gilt/gfc-collection_2.12/jars/gfc-collection_2.12-0.0.5.jar:/home/benchraa/.ivy2/cache/commons-codec/commons-codec/jars/commons-codec-1.11.jar:/home/benchraa/.ivy2/cache/com.gilt/gfc-concurrent_2.12/jars/gfc-concurrent_2.12-0.3.7.jar:/home/benchraa/.ivy2/cache/com.gilt/gfc-logging_2.12/jars/gfc-logging_2.12-0.0.8.jar:/home/benchraa/.ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.7.25.jar:/home/benchraa/.ivy2/cache/com.google.guava/guava/bundles/guava-24.0-jre.jar:/home/benchraa/.ivy2/cache/com.google.code.findbugs/jsr305/jars/jsr305-3.0.2.jar:/home/benchraa/.ivy2/cache/org.checkerframework/checker-compat-qual/jars/checker-compat-qual-2.0.0.jar:/home/benchraa/.ivy2/cache/com.google.errorprone/error_prone_annotations/jars/error_prone_annotations-2.1.3.jar:/home/benchraa/.ivy2/cache/com.google.j2objc/j2objc-annotations/jars/j2objc-annotations-1.1.jar:/home/benchraa/.ivy2/cache/org.codehaus.mojo/animal-sniffer-annotations/jars/animal-sniffer-annotations-1.14.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mScala compilation took 0.887323616 s[0m
+[0m[[0m[0minfo[0m] [0m[0mDone compiling.[0m
+[0m[[0m[0mdebug[0m] [0m[0mInvalidating (transitively) by inheritance from sgit.Blob...[0m
+[0m[[0m[0mdebug[0m] [0m[0mInitial set of included nodes: Set(sgit.Blob)[0m
+[0m[[0m[0mdebug[0m] [0m[0mInvalidated by transitive inheritance dependency: Set(sgit.Blob)[0m
+[0m[[0m[0mdebug[0m] [0m[0mChange NamesChange(sgit.Blob,ModifiedNames(changes = UsedName(copy$default$2,[Default]), UsedName(copy,[Default]), UsedName(apply,[Default]), UsedName(content,[Default]), UsedName(unapply,[Default]), UsedName(sgit;Blob;init;,[Default]))) invalidates 1 classes due to The sgit.Blob has the following regular definitions changed:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	UsedName(copy$default$2,[Default]), UsedName(copy,[Default]), UsedName(apply,[Default]), UsedName(content,[Default]), UsedName(unapply,[Default]), UsedName(sgit;Blob;init;,[Default]).[0m
+[0m[[0m[0mdebug[0m] [0m[0m	> by transitive inheritance: Set(sgit.Blob)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	> [0m
+[0m[[0m[0mdebug[0m] [0m[0m	> [0m
+[0m[[0m[0mdebug[0m] [0m[0m        [0m
+[0m[[0m[0mdebug[0m] [0m[0mInvalidating (transitively) by inheritance from sgit.utilities.RepositoryUtilities...[0m
+[0m[[0m[0mdebug[0m] [0m[0mInitial set of included nodes: Set(sgit.utilities.RepositoryUtilities)[0m
+[0m[[0m[0mdebug[0m] [0m[0mInvalidated by transitive inheritance dependency: Set(sgit.utilities.RepositoryUtilities)[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of sgit.Blob. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mThe following modified names cause invalidation of sgit.Repository: Set(UsedName(readFileContent,[Default]))[0m
+[0m[[0m[0mdebug[0m] [0m[0mChange NamesChange(sgit.utilities.RepositoryUtilities,ModifiedNames(changes = UsedName(readFileContent,[Default]))) invalidates 2 classes due to The sgit.utilities.RepositoryUtilities has the following regular definitions changed:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	UsedName(readFileContent,[Default]).[0m
+[0m[[0m[0mdebug[0m] [0m[0m	> by transitive inheritance: Set(sgit.utilities.RepositoryUtilities)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	> [0m
+[0m[[0m[0mdebug[0m] [0m[0m	> by member reference: Set(sgit.Repository)[0m
+[0m[[0m[0mdebug[0m] [0m[0m        [0m
+[0m[[0m[0mdebug[0m] [0m[0mNew invalidations:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Set(sgit.Repository)[0m
+[0m[[0m[0mdebug[0m] [0m[0mInitial set of included nodes: Set(sgit.Repository)[0m
+[0m[[0m[0mdebug[0m] [0m[0mPreviously invalidated, but (transitively) depend on new invalidations:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0mAll newly invalidated classes after taking into account (previously) recompiled classes:Set(sgit.Repository)[0m
+[0m[[0m[0minfo[0m] [0m[0mCompiling 1 Scala source to /home/benchraa/SGit/target/scala-2.12/classes ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting org.scala-sbt:compiler-bridge_2.12:1.2.5:compile for Scala 2.12.7[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting org.scala-sbt:compiler-bridge_2.12:1.2.5:compile for Scala 2.12.7[0m
+[0m[[0m[0mdebug[0m] [0m[0m[zinc] Running cached compiler 3d354205 for Scala compiler version 2.12.7[0m
+[0m[[0m[0mdebug[0m] [0m[0m[zinc] The Scala compiler is invoked with:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-bootclasspath[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/benchraa/.sbt/boot/scala-2.12.7/lib/scala-library.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-classpath[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/benchraa/SGit/target/scala-2.12/classes:/home/benchraa/.ivy2/cache/com.roundeights/hasher_2.12/jars/hasher_2.12-1.2.0.jar:/home/benchraa/.ivy2/cache/com.gilt/gfc-guava_2.12/jars/gfc-guava_2.12-0.3.1.jar:/home/benchraa/.ivy2/cache/com.gilt/gfc-util_2.12/jars/gfc-util_2.12-0.2.1.jar:/home/benchraa/.ivy2/cache/com.gilt/gfc-collection_2.12/jars/gfc-collection_2.12-0.0.5.jar:/home/benchraa/.ivy2/cache/commons-codec/commons-codec/jars/commons-codec-1.11.jar:/home/benchraa/.ivy2/cache/com.gilt/gfc-concurrent_2.12/jars/gfc-concurrent_2.12-0.3.7.jar:/home/benchraa/.ivy2/cache/com.gilt/gfc-logging_2.12/jars/gfc-logging_2.12-0.0.8.jar:/home/benchraa/.ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.7.25.jar:/home/benchraa/.ivy2/cache/com.google.guava/guava/bundles/guava-24.0-jre.jar:/home/benchraa/.ivy2/cache/com.google.code.findbugs/jsr305/jars/jsr305-3.0.2.jar:/home/benchraa/.ivy2/cache/org.checkerframework/checker-compat-qual/jars/checker-compat-qual-2.0.0.jar:/home/benchraa/.ivy2/cache/com.google.errorprone/error_prone_annotations/jars/error_prone_annotations-2.1.3.jar:/home/benchraa/.ivy2/cache/com.google.j2objc/j2objc-annotations/jars/j2objc-annotations-1.1.jar:/home/benchraa/.ivy2/cache/org.codehaus.mojo/animal-sniffer-annotations/jars/animal-sniffer-annotations-1.14.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mScala compilation took 0.435853928 s[0m
+[0m[[0m[0minfo[0m] [0m[0mDone compiling.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNew invalidations:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0mInitial set of included nodes: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0mPreviously invalidated, but (transitively) depend on new invalidations:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0mAll newly invalidated classes after taking into account (previously) recompiled classes:Set()[0m

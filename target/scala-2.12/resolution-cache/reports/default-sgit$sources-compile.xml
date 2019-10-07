@@ -7,10 +7,10 @@
 		revision="0.1"
 		conf="compile"
 		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, pom, scala-tool"
-		date="20191005150601"/>
+		date="20191007141802"/>
 	<dependencies>
 		<module organisation="org.scala-lang" name="scala-library">
-			<revision name="2.12.7" status="release" pubdate="20180927103542" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" extra-info.apiURL="http://www.scala-lang.org/api/2.12.7/" downloaded="false" searched="false" default="false" conf="default, compile, runtime(*), master(compile), runtime, default(compile), compile(*), master" position="1">
+			<revision name="2.12.7" status="release" pubdate="20180927103542" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" extra-info.apiURL="http://www.scala-lang.org/api/2.12.7/" downloaded="false" searched="false" default="false" conf="default, compile, runtime(*), master(compile), runtime, default(compile), compile(*), master" position="12">
 				<license name="BSD 3-Clause" url="http://www.scala-lang.org/license.html"/>
 				<metadata-artifact status="no" details="" size="2471" time="0" location="/home/benchraa/.ivy2/cache/org.scala-lang/scala-library/ivy-2.12.7.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.7/scala-library-2.12.7.pom"/>
 				<caller organisation="default" name="sgit$sources" conf="compile" rev="2.12.7" rev-constraint-default="2.12.7" rev-constraint-dynamic="2.12.7" callerrev="0.1" extra-info.apiURL="http://www.scala-lang.org/api/2.12.7/"/>
@@ -21,14 +21,171 @@
 				</artifacts>
 			</revision>
 		</module>
+		<module organisation="com.gilt" name="gfc-guava_2.12">
+			<revision name="0.3.1" status="release" pubdate="20180305190907" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/gilt/gfc-guava" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="10">
+				<license name="Apache-style" url="https://raw.githubusercontent.com/gilt/gfc-guava/master/LICENSE"/>
+				<metadata-artifact status="no" details="" size="3489" time="0" location="/home/benchraa/.ivy2/cache/com.gilt/gfc-guava_2.12/ivy-0.3.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/gilt/gfc-guava_2.12/0.3.1/gfc-guava_2.12-0.3.1.pom"/>
+				<caller organisation="default" name="sgit$sources" conf="compile" rev="0.3.1" rev-constraint-default="0.3.1" rev-constraint-dynamic="0.3.1" callerrev="0.1"/>
+				<artifacts>
+					<artifact name="gfc-guava_2.12" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="11517" time="558" location="/home/benchraa/.ivy2/cache/com.gilt/gfc-guava_2.12/srcs/gfc-guava_2.12-0.3.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/gilt/gfc-guava_2.12/0.3.1/gfc-guava_2.12-0.3.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.gilt" name="gfc-util_2.12">
+			<revision name="0.2.1" status="release" pubdate="20180305183325" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/gilt/gfc-util" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="13">
+				<license name="Apache-style" url="https://raw.githubusercontent.com/gilt/gfc-util/master/LICENSE"/>
+				<metadata-artifact status="no" details="" size="3439" time="0" location="/home/benchraa/.ivy2/cache/com.gilt/gfc-util_2.12/ivy-0.2.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/gilt/gfc-util_2.12/0.2.1/gfc-util_2.12-0.2.1.pom"/>
+				<caller organisation="default" name="sgit$sources" conf="compile" rev="0.2.1" rev-constraint-default="0.2.1" rev-constraint-dynamic="0.2.1" callerrev="0.1"/>
+				<artifacts>
+					<artifact name="gfc-util_2.12" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="9335" time="906" location="/home/benchraa/.ivy2/cache/com.gilt/gfc-util_2.12/srcs/gfc-util_2.12-0.2.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/gilt/gfc-util_2.12/0.2.1/gfc-util_2.12-0.2.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="commons-codec" name="commons-codec">
+			<revision name="1.11" status="release" pubdate="20171017165430" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://commons.apache.org/proper/commons-codec/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="9">
+				<license name="Apache License, Version 2.0" url="https://www.apache.org/licenses/LICENSE-2.0.txt"/>
+				<metadata-artifact status="no" details="" size="12632" time="0" location="/home/benchraa/.ivy2/cache/commons-codec/commons-codec/ivy-1.11.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/commons-codec/commons-codec/1.11/commons-codec-1.11.pom"/>
+				<caller organisation="default" name="sgit$sources" conf="compile" rev="1.11" rev-constraint-default="1.11" rev-constraint-dynamic="1.11" callerrev="0.1"/>
+				<artifacts>
+					<artifact name="commons-codec" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="342809" time="588" location="/home/benchraa/.ivy2/cache/commons-codec/commons-codec/srcs/commons-codec-1.11-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/commons-codec/commons-codec/1.11/commons-codec-1.11-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
 		<module organisation="com.roundeights" name="hasher_2.12">
-			<revision name="1.2.0" status="release" pubdate="20170204204121" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/Nycto/Hasher" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="0">
+			<revision name="1.2.0" status="release" pubdate="20170204204121" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/Nycto/Hasher" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="8">
 				<license name="MIT" url="https://opensource.org/licenses/MIT"/>
 				<metadata-artifact status="no" details="" size="2864" time="0" location="/home/benchraa/.ivy2/cache/com.roundeights/hasher_2.12/ivy-1.2.0.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/roundeights/hasher_2.12/1.2.0/hasher_2.12-1.2.0.pom"/>
 				<caller organisation="default" name="sgit$sources" conf="compile" rev="1.2.0" rev-constraint-default="1.2.0" rev-constraint-dynamic="1.2.0" callerrev="0.1"/>
 				<artifacts>
-					<artifact name="hasher_2.12" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="9246" time="91" location="/home/benchraa/.ivy2/cache/com.roundeights/hasher_2.12/srcs/hasher_2.12-1.2.0-sources.jar">
+					<artifact name="hasher_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="9246" time="0" location="/home/benchraa/.ivy2/cache/com.roundeights/hasher_2.12/srcs/hasher_2.12-1.2.0-sources.jar">
 						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/roundeights/hasher_2.12/1.2.0/hasher_2.12-1.2.0-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.google.guava" name="guava">
+			<revision name="24.0-jre" status="release" pubdate="20180201212657" resolver="sbt-chain" artresolver="sbt-chain" homepage="" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="4">
+				<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+				<metadata-artifact status="no" details="" size="7546" time="0" location="/home/benchraa/.ivy2/cache/com.google.guava/guava/ivy-24.0-jre.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/google/guava/guava/24.0-jre/guava-24.0-jre.pom"/>
+				<caller organisation="default" name="sgit$sources" conf="compile" rev="24.0-jre" rev-constraint-default="24.0-jre" rev-constraint-dynamic="24.0-jre" callerrev="0.1"/>
+				<artifacts>
+					<artifact name="guava" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="1612903" time="1510" location="/home/benchraa/.ivy2/cache/com.google.guava/guava/srcs/guava-24.0-jre-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/google/guava/guava/24.0-jre/guava-24.0-jre-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.codehaus.mojo" name="animal-sniffer-annotations">
+			<revision name="1.14" status="release" pubdate="20150225175330" resolver="sbt-chain" artresolver="sbt-chain" homepage="" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="5">
+				<license name="MIT license" url="http://www.opensource.org/licenses/mit-license.php"/>
+				<metadata-artifact status="no" details="" size="4565" time="0" location="/home/benchraa/.ivy2/cache/org.codehaus.mojo/animal-sniffer-annotations/ivy-1.14.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/codehaus/mojo/animal-sniffer-annotations/1.14/animal-sniffer-annotations-1.14.pom"/>
+				<caller organisation="default" name="sgit$sources" conf="compile" rev="1.14" rev-constraint-default="1.14" rev-constraint-dynamic="1.14" callerrev="0.1"/>
+				<artifacts>
+					<artifact name="animal-sniffer-annotations" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="1862" time="1008" location="/home/benchraa/.ivy2/cache/org.codehaus.mojo/animal-sniffer-annotations/srcs/animal-sniffer-annotations-1.14-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/codehaus/mojo/animal-sniffer-annotations/1.14/animal-sniffer-annotations-1.14-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.google.errorprone" name="error_prone_annotations">
+			<revision name="2.1.3" status="release" pubdate="20171128230614" resolver="sbt-chain" artresolver="sbt-chain" homepage="" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="6">
+				<license name="Apache 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+				<metadata-artifact status="no" details="" size="4103" time="0" location="/home/benchraa/.ivy2/cache/com.google.errorprone/error_prone_annotations/ivy-2.1.3.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.1.3/error_prone_annotations-2.1.3.pom"/>
+				<caller organisation="default" name="sgit$sources" conf="compile" rev="2.1.3" rev-constraint-default="2.1.3" rev-constraint-dynamic="2.1.3" callerrev="0.1"/>
+				<artifacts>
+					<artifact name="error_prone_annotations" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="25622" time="656" location="/home/benchraa/.ivy2/cache/com.google.errorprone/error_prone_annotations/srcs/error_prone_annotations-2.1.3-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.1.3/error_prone_annotations-2.1.3-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.checkerframework" name="checker-compat-qual">
+			<revision name="2.0.0" status="release" pubdate="20160503043856" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://checkerframework.org" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="14">
+				<license name="GNU General Public License, version 2 (GPL2), with the classpath exception" url="http://www.gnu.org/software/classpath/license.html"/>
+				<license name="The MIT License" url="http://opensource.org/licenses/MIT"/>
+				<metadata-artifact status="no" details="" size="2832" time="0" location="/home/benchraa/.ivy2/cache/org.checkerframework/checker-compat-qual/ivy-2.0.0.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/checkerframework/checker-compat-qual/2.0.0/checker-compat-qual-2.0.0.pom"/>
+				<caller organisation="default" name="sgit$sources" conf="compile" rev="2.0.0" rev-constraint-default="2.0.0" rev-constraint-dynamic="2.0.0" callerrev="0.1"/>
+				<artifacts>
+					<artifact name="checker-compat-qual" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="1554466" time="1044" location="/home/benchraa/.ivy2/cache/org.checkerframework/checker-compat-qual/srcs/checker-compat-qual-2.0.0-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/checkerframework/checker-compat-qual/2.0.0/checker-compat-qual-2.0.0-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.google.code.findbugs" name="jsr305">
+			<revision name="3.0.2" status="release" pubdate="20170331065548" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://findbugs.sourceforge.net/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="3">
+				<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+				<metadata-artifact status="no" details="" size="3268" time="0" location="/home/benchraa/.ivy2/cache/com.google.code.findbugs/jsr305/ivy-3.0.2.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.pom"/>
+				<caller organisation="default" name="sgit$sources" conf="compile" rev="3.0.2" rev-constraint-default="3.0.2" rev-constraint-dynamic="3.0.2" callerrev="0.1"/>
+				<artifacts>
+					<artifact name="jsr305" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="18102" time="838" location="/home/benchraa/.ivy2/cache/com.google.code.findbugs/jsr305/srcs/jsr305-3.0.2-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.gilt" name="gfc-collection_2.12">
+			<revision name="0.0.5" status="release" pubdate="20161112113247" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/gilt/gfc-collection" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="2">
+				<license name="Apache-style" url="https://raw.githubusercontent.com/gilt/gfc-collection/master/LICENSE"/>
+				<metadata-artifact status="no" details="" size="2941" time="0" location="/home/benchraa/.ivy2/cache/com.gilt/gfc-collection_2.12/ivy-0.0.5.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/gilt/gfc-collection_2.12/0.0.5/gfc-collection_2.12-0.0.5.pom"/>
+				<caller organisation="default" name="sgit$sources" conf="compile" rev="0.0.5" rev-constraint-default="0.0.5" rev-constraint-dynamic="0.0.5" callerrev="0.1"/>
+				<artifacts>
+					<artifact name="gfc-collection_2.12" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="2871" time="1129" location="/home/benchraa/.ivy2/cache/com.gilt/gfc-collection_2.12/srcs/gfc-collection_2.12-0.0.5-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/gilt/gfc-collection_2.12/0.0.5/gfc-collection_2.12-0.0.5-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.google.j2objc" name="j2objc-annotations">
+			<revision name="1.1" status="release" pubdate="20170119000659" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/google/j2objc/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="1">
+				<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+				<metadata-artifact status="no" details="" size="3174" time="0" location="/home/benchraa/.ivy2/cache/com.google.j2objc/j2objc-annotations/ivy-1.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.pom"/>
+				<caller organisation="default" name="sgit$sources" conf="compile" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="0.1"/>
+				<artifacts>
+					<artifact name="j2objc-annotations" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="10481" time="843" location="/home/benchraa/.ivy2/cache/com.google.j2objc/j2objc-annotations/srcs/j2objc-annotations-1.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.gilt" name="gfc-concurrent_2.12">
+			<revision name="0.3.7" status="release" pubdate="20171110185036" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/gilt/gfc-concurrent" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="0">
+				<license name="Apache-style" url="https://raw.githubusercontent.com/gilt/gfc-concurrent/master/LICENSE"/>
+				<metadata-artifact status="no" details="" size="3196" time="0" location="/home/benchraa/.ivy2/cache/com.gilt/gfc-concurrent_2.12/ivy-0.3.7.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/gilt/gfc-concurrent_2.12/0.3.7/gfc-concurrent_2.12-0.3.7.pom"/>
+				<caller organisation="default" name="sgit$sources" conf="compile" rev="0.3.7" rev-constraint-default="0.3.7" rev-constraint-dynamic="0.3.7" callerrev="0.1"/>
+				<artifacts>
+					<artifact name="gfc-concurrent_2.12" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="18661" time="1011" location="/home/benchraa/.ivy2/cache/com.gilt/gfc-concurrent_2.12/srcs/gfc-concurrent_2.12-0.3.7-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/gilt/gfc-concurrent_2.12/0.3.7/gfc-concurrent_2.12-0.3.7-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.gilt" name="gfc-logging_2.12">
+			<revision name="0.0.8" status="release" pubdate="20170419085308" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/gilt/gfc-logging" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="11">
+				<license name="Apache-style" url="https://raw.githubusercontent.com/gilt/gfc-logging/master/LICENSE"/>
+				<metadata-artifact status="no" details="" size="2938" time="0" location="/home/benchraa/.ivy2/cache/com.gilt/gfc-logging_2.12/ivy-0.0.8.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/gilt/gfc-logging_2.12/0.0.8/gfc-logging_2.12-0.0.8.pom"/>
+				<caller organisation="default" name="sgit$sources" conf="compile" rev="0.0.8" rev-constraint-default="0.0.8" rev-constraint-dynamic="0.0.8" callerrev="0.1"/>
+				<artifacts>
+					<artifact name="gfc-logging_2.12" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="1888" time="1191" location="/home/benchraa/.ivy2/cache/com.gilt/gfc-logging_2.12/srcs/gfc-logging_2.12-0.0.8-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/gilt/gfc-logging_2.12/0.0.8/gfc-logging_2.12-0.0.8-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.slf4j" name="slf4j-api">
+			<revision name="1.7.25" status="release" pubdate="20170316173632" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.slf4j.org" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="7">
+				<license name="MIT License" url="http://www.opensource.org/licenses/mit-license.php"/>
+				<metadata-artifact status="no" details="" size="5377" time="0" location="/home/benchraa/.ivy2/cache/org.slf4j/slf4j-api/ivy-1.7.25.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.pom"/>
+				<caller organisation="default" name="sgit$sources" conf="compile" rev="1.7.25" rev-constraint-default="1.7.25" rev-constraint-dynamic="1.7.25" callerrev="0.1"/>
+				<artifacts>
+					<artifact name="slf4j-api" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="55539" time="734" location="/home/benchraa/.ivy2/cache/org.slf4j/slf4j-api/srcs/slf4j-api-1.7.25-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25-sources.jar"/>
 					</artifact>
 				</artifacts>
 			</revision>

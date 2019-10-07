@@ -1,6 +1,12 @@
 package sgit.utilities
 
 import java.io.{BufferedWriter, File, FileWriter}
+import java.nio.charset.StandardCharsets
+import java.util.Base64.getEncoder
+
+import com.google.common.io.BaseEncoding
+
+import scala.io.Source
 
 object RepositoryUtilities {
   //Recusrive function to create Directories
@@ -32,7 +38,7 @@ object RepositoryUtilities {
   //Recursive function to write in a file
   //Write an element of the list contents to a file in the list files having the same index
   def writeInFiles(files: List[String], contents: List[String]): Unit = {
-    if (files.isEmpty || contents.isEmpty || contents.length != files.length ) {
+    if (files.isEmpty || contents.isEmpty || contents.length != files.length) {
       println("nothing to write")
     }
     else {
@@ -44,4 +50,9 @@ object RepositoryUtilities {
 
     }
   }
+
+  def readFileContent(file: File): String = {
+    Source.fromFile(file).mkString }
+
+
 }
