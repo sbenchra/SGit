@@ -7,6 +7,7 @@ import com.roundeights.hasher.Implicits._
 // length of the object
 
 abstract class Object{
+
   def objectType : ObjectType
   def length: Int
   // Returns the header of the object
@@ -14,6 +15,14 @@ abstract class Object{
     s"{${o.objectType}}"+" "+s"{${o.length}}"
 
   }
+  def sha(o:Object) : String = {
+    o match {
+      case o:Blob  => Blob.shaBlob(o)
+
+  }
+}
+
+
 }
 
 

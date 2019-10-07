@@ -8,7 +8,7 @@ import com.google.common.io.BaseEncoding
 
 import scala.io.Source
 
-object RepositoryUtilities {
+object FilesUtilities {
   //Recusrive function to create Directories
 
   def createDirectories(sDirecoties: List[String]): Unit = {
@@ -24,9 +24,9 @@ object RepositoryUtilities {
 
   //Recursive function to create files
 
-  def createFiles(sFiles: List[String]): Unit = {
+  def createFiles(sFiles: List[String]): String = {
     if (sFiles.isEmpty) {
-      println("The list of files is empty")
+        ""
     }
     else {
       new File(sFiles.head).createNewFile()
@@ -39,7 +39,7 @@ object RepositoryUtilities {
   //Write an element of the list contents to a file in the list files having the same index
   def writeInFiles(files: List[String], contents: List[String]): Unit = {
     if (files.isEmpty || contents.isEmpty || contents.length != files.length) {
-      println("nothing to write")
+        println("nothing to write")
     }
     else {
       val file = new File(files.head)

@@ -1,10 +1,15 @@
 package sgit
+import java.awt.SystemTray
 import java.io.File
-import utilities.RepositoryUtilities
+
+import utilities.FilesUtilities
+
 
 
 
 object Repository {
+
+  def dirPath : String = System.getProperty("user.dir")
 
   private def isInitialized(path : String) : Boolean ={
     val dir = new File(path)
@@ -14,7 +19,6 @@ object Repository {
 
   private def initializeRepo(): Unit = {
 
-      val dirPath = System.getProperty("user.dir")
 
       if (!isInitialized(dirPath)) {
         //Sequence of directories to create
@@ -23,9 +27,9 @@ object Repository {
         val files = List(s"$dirPath/.sgit/HEAD",s"$dirPath/.sgit/config",s"$dirPath/.sgit/description",s"$dirPath/.sgit/info/exclude")
         //List of contents to fill in files
         val content = List("ref: refs/heads/master","[core]\n\trepositoryformatversion = 0\n\tfilemode = true\n\tbare = false\n\tlogallrefupdates = true","        Unnamed repository; edit this file 'description' to name the repository.","# git ls-files --others --exclude-from=.git/info/exclude\n# Lines that start with '#' are comments.\n# For a project mostly in C, the following would be a good set of\n# exclude patterns (uncomment them if you want to use them):\n# *.[oa]\n# *~")
-        RepositoryUtilities.createDirectories(directories)
-        RepositoryUtilities.createFiles(files)
-        RepositoryUtilities.writeInFiles(files,content)
+        FilesUtilities.createDirectories(directories)
+        FilesUtilities.createFiles(files)
+        FilesUtilities.writeInFiles(files,content)
 
 
         println(s"Dépôt SGit vide initialisé dans $dirPath/.sgit")
@@ -36,10 +40,9 @@ object Repository {
   }
 
   def main(args: Array[String]): Unit = {
-    val dirPath = System.getProperty("user.dir")
+    Repository.initializeRepo()
+    println(   ObjectBL.addObject(Blob("Hello World",10)))
 
-    println(    RepositoryUtilities.readFileContent(new File(s"$dirPath/soufiane.txt"))
-    )
   }
 
 }

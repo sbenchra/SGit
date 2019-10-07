@@ -1,16 +1,17 @@
+
 package sgit
-import utilities.RepositoryUtilities
+import utilities.FilesUtilities
 import com.roundeights.hasher.Implicits._
 import sgit.ObjectType.ObjectType
 
-case class Blob(size : Int, content :String, bLength:Int) extends Object {
+case class Blob( content :String, bLength:Int) extends Object {
   override def objectType: ObjectType = ObjectType.blob
-
   override def length: Int = bLength
+
 }
 object Blob{
 
-  private def encodeId(b:Blob): String= {
+  def shaBlob(b:Blob): String= {
     val header = b.getHeader(b)
     val encodedBlob= header + b.content
      encodedBlob.sha1.hex
@@ -21,9 +22,9 @@ object Blob{
     b.content
     }
 
-  private def encodeBlob(b: Blob) :String ={
+   def encodeBlob(b: Blob) :List[String] ={
 
-   b.objectType +" "+ b.size+" "+ encodeBlob(b)
+   List(b.objectType +" "+ b.length +" "+ encodeBlobBody(b))
 
    }
 
