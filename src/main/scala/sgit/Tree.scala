@@ -18,15 +18,14 @@ object Tree{
   }
   //Forming the tree
   def encodeTree(t:Tree): List[String] = {
-    List(t.getHeader(t),s"{${t.length}}",encodeBodyTree(t))
-
+    List(t.getHeader(t)+" "+encodeBodyTree(t))
   }
 
   //Tree body
   def encodeBodyTree(t:Tree): String = {
    if (t.content.isEmpty) ""
    else
-     " \n" + t.content.head.objectType + t.content.head.name + t.content.head.lSha + encodeBodyTree(Tree(t.content.tail))
+     " \n" + t.content.head.objectType +" "+ t.content.head.name+" " + t.content.head.lSha +" " +encodeBodyTree(Tree(t.content.tail))
 
   }
 }

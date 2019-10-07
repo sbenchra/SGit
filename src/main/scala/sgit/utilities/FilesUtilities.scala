@@ -51,6 +51,9 @@ object FilesUtilities {
     }
   }
 
+
+
+  // Returns the file
   def readFileContent(file: File): String = {
     Source.fromFile(file).mkString }
 

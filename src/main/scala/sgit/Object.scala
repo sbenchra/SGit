@@ -12,13 +12,14 @@ abstract class Object{
   def length: Int
   // Returns the header of the object
   def getHeader(o:Object ): String = {
-    s"{${o.objectType}}"+" "+s"{${o.length}}"+"\0"
+    s"${o.objectType}"+" "+s"${o.length}"+"\0"
 
   }
   def sha(o:Object) : String = {
     o match {
       case o:Blob  => Blob.shaBlob(o)
       case o:Tree => Tree.shaTree(o)
+      case o:Commit=> Commit.shaCommit(o)
 
   }
 }
