@@ -41,7 +41,9 @@ object Repository {
 
   def main(args: Array[String]): Unit = {
     Repository.initializeRepo()
-    println(   ObjectBL.addObject(Blob("Hello World",10)))
+    val content="soufiane"
+    val test = Blob(content,content.length)
+    println(   ObjectBL.addObject(Tree(Seq(TreeL(test.objectType.toString,"path",test.sha(test))))))
 
   }
 

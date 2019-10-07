@@ -7,7 +7,8 @@ object ObjectBL {
 
     def encodeObject(o:Object) : List[String] = {
       o match {
-        case o:Blob => encodeBlob(o)
+        case o:Blob => Blob.encodeBlob(o)
+        case o:Tree => Tree.encodeTree(o)
       }
     }
       def addObject(o:Object) :Unit = {
@@ -16,7 +17,8 @@ object ObjectBL {
         val fileName =directName+"/"+sha.takeRight(38)
         FilesUtilities.createDirectories(List(directName))
         FilesUtilities.createFiles(List(fileName))
-        FilesUtilities.writeInFiles(List(fileName),encodeObject(o))
+        val test= encodeObject(o)
+        FilesUtilities.writeInFiles(List(fileName),test)
       }
 
 }
