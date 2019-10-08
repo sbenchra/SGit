@@ -14,7 +14,7 @@ FilesUtilities {
 
   def createDirectories(sDirecoties: List[String]): Unit = {
     if (sDirecoties.isEmpty) {
-      println("The list of directories is empty")
+      print()
     }
     else {
       new File(sDirecoties.head).mkdirs()
@@ -29,7 +29,7 @@ FilesUtilities {
     if (sFiles.isEmpty)  List()
     else {
       val newFile=new File(sFiles.head)
-        newFile.createNewFile()
+       newFile.createNewFile()
        newFile::createFiles(sFiles.tail)
 
     }
@@ -39,17 +39,17 @@ FilesUtilities {
   //Write an element of the list contents to a file in the list files having the same index
   def writeInFiles(files: List[File], contents: List[String]): Unit = {
     if (files.isEmpty || contents.isEmpty || contents.length != files.length) {
-        println("nothing to write")
+        println()
     }
     else {
-      fillInFile (files.head,contents.head)
+      openFileandFillIn (files.head,contents.head)
       writeInFiles(files.tail, contents.tail)
 
     }
   }
 
-  def fillInFile(file:File,content:String) :Unit={
-    val bw = new BufferedWriter(new FileWriter(file))
+  def openFileandFillIn(file:File,content:String) :Unit={
+    val bw = new BufferedWriter(new FileWriter(file,true))
     bw.write(content)
     bw.close()
   }
@@ -58,14 +58,10 @@ FilesUtilities {
   //Recursive function to write in a file
   //Write an element of the list contents to a file in the list files having the same index
   def writeInFile(file:File, content: List[String]): Unit = {
-    if (file.exists()) {
-      println("Not found")
-    }
-    else {
-      fillInFile (file,content.head)
-      writeInFile(file, content.tail)
-
-    }
+    if (file.exists() && !content.isEmpty) {
+      openFileandFillIn(file,content.head)
+      writeInFile(file, content.tail)}
+    else print()
   }
 
 

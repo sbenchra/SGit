@@ -6,6 +6,8 @@ import java.util.Date
 import sgit.commands.{Add, Init}
 import utilities.FilesUtilities
 
+import scala.io.Source
+
 
 
 
@@ -42,8 +44,11 @@ object Repository {
   }
 
   def main(args: Array[String]): Unit = {
-    Init.Init()
-   // Add.add(List(new File("./soufiane.txt")))
+   // Init.Init()
+
+    //Add.add(List(new File("./soufiane.txt")))
+    println("soufiane benchraa".split(" ").length)
+    val s=
 
   }
 
