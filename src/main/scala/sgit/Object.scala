@@ -9,20 +9,20 @@ import com.roundeights.hasher.Implicits._
 abstract class Object{
 
   def objectType : ObjectType
-  def length: Int
+
   // Returns the header of the object
   def getHeader(o:Object ): String = {
-    s"${o.objectType}"+" "+s"${o.length}"+"\0"
+    s"${o.objectType}"+" "+s"${length(o)}"+"\0"
 
   }
-  def sha(o:Object) : String = {
+  def length(o: Object) : Int= {
     o match {
-      case o:Blob  => Blob.shaBlob(o)
-      case o:Tree => Tree.shaTree(o)
-      case o:Commit=> Commit.shaCommit(o)
-
+      case o:Blob => Blob.lengthBlob(o)
+      case o:Tree => Tree.lengthTree(o)
+      case o:Commit => Commit.lengthCommit(o)
+    }
   }
-}
+
 
 
 }

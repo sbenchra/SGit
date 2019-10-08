@@ -3,12 +3,14 @@ package sgit
 import com.roundeights.hasher.Implicits._
 import sgit.ObjectType.ObjectType
 
-case class Blob( content :String, bLength:Int) extends Object {
+case class Blob( content :String) extends Object {
   override def objectType: ObjectType = ObjectType.blob
-  override def length: Int = bLength
 
 }
 object Blob{
+
+  def lengthBlob(b:Blob): Int = b.content.length
+
 
   def shaBlob(b:Blob): String= {
 
@@ -22,7 +24,7 @@ object Blob{
 
    def encodeBlob(b: Blob) :List[String] ={
 
-   List(b.getHeader(b)+" "+ encodeBlobBody(b))
+   List(b.getHeader(b),encodeBlobBody(b))
 
    }
 
