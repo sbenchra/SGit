@@ -44,11 +44,9 @@ object Repository {
   }
 
   def main(args: Array[String]): Unit = {
-   // Init.Init()
+ //  Init.Init()
 
-    //Add.add(List(new File("./soufiane.txt")))
-    println("soufiane benchraa".split(" ").length)
-    val s=
+    Add.add(List(new File("./soufiane")))
 
   }
 
