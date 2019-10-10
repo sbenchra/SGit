@@ -15,7 +15,7 @@ object Add {
     System.getProperty("user.dir")
   }
 
-// Add a file to objects
+
 
   def addFileToDir(file: File): Unit = {
 
@@ -29,20 +29,21 @@ object Add {
     val lFilesBis= FilesUtilities.filesOfListFiles(lFiles)
     lFilesBis match {
       case _ if lFilesBis.isEmpty=>Unit
+        // if the file doesn't exist, go to the next one
       case _ if !lFilesBis.head.exists() => add(lFilesBis.tail)
-
-      case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).sha, Index.indexContent(FilesUtilities.indexContentBis)) && !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).path, Index.indexContent(FilesUtilities.indexContentBis)) =>
+        // if the file doesn't exist in the index add it to the index and object Directory
+      case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).sha, Index(Index.indexContent(FilesUtilities.indexContentBis))) && !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).path,Index (Index.indexContent(FilesUtilities.indexContentBis)) )=>
                  addFileToDir(lFilesBis.head)
                  Index.addIndexEntry(lFilesBis.head)
                  add(lFilesBis.tail)
-
-      case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).sha, Index.indexContent(FilesUtilities.indexContentBis)) &&
-                 Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).path, Index.indexContent(FilesUtilities.indexContentBis)) =>
+        // if
+      case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).sha, Index(Index.indexContent(FilesUtilities.indexContentBis))) &&
+                 Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).path, Index(Index.indexContent(FilesUtilities.indexContentBis)) )=>
                  addFileToDir(lFilesBis.head)
                  Index.modifyIndexContent(IndexEntry(Index.shaAndPath(lFilesBis.head).sha,Index.shaAndPath(lFilesBis.head).path),FilesUtilities.indexContentBis)
                  add(lFilesBis.tail)
 
-      case _=>Unit
+      case _=> Unit
     }
 
 

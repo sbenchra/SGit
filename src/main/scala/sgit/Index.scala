@@ -32,10 +32,10 @@ object Index{
 //Recursive function to check the field in an index
 
   @scala.annotation.tailrec
-  def fieldInIndex(field:String, index:List[IndexEntry]):Boolean={
-    if (index.isEmpty) false
+  def fieldInIndex(field:String, index:Index):Boolean={
+    if (index.indexEntries.isEmpty) false
     else {
-      index.head.sha.equals(field) || index.head.path.equals(field) || fieldInIndex(field,index.tail)}
+      index.indexEntries.head.sha.equals(field) || index.indexEntries.head.path.equals(field) || fieldInIndex(field,Index(index.indexEntries.tail))}
   }
 //Function to tranform a file to an index Entry
   def shaAndPath(file:File): IndexEntry= {
@@ -61,11 +61,11 @@ object Index{
   }
   //Check if the workDirField is contained in the index
   @scala.annotation.tailrec
-  def containsIndexEntry(workDirField:IndexEntry, index:List[IndexEntry]):Boolean={
-    if(index.isEmpty) false
+  def containsIndexEntry(workDirField:IndexEntry, index:Index):Boolean={
+    if(index.indexEntries.isEmpty) false
     else
     {
-      workDirField.sha.equals(index.head.sha) || index.head.path.equals(workDirField.path) || containsIndexEntry(workDirField,index.tail)
+      workDirField.sha.equals(index.indexEntries.head.sha) || index.indexEntries.head.path.equals(workDirField.path) || containsIndexEntry(workDirField,Index(index.indexEntries.tail))
     }
   }
 
