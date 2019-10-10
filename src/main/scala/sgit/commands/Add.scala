@@ -16,7 +16,6 @@ object Add {
   }
 
 
-  //Add File to ./sgit/pbjects
 
   def addFileToDir(file: File): Unit = {
 
@@ -33,16 +32,15 @@ object Add {
                         print("Nothing to add")
       case _ if !lFilesBis.head.exists() => add(lFilesBis.tail)
 
-      case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).head, Index.indexContent) &&
-                !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head)(1), Index.indexContent) =>
+      case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).sha, Index.indexContent(Index.indexContentBis)) && !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).path, Index.indexContent(Index.indexContentBis)) =>
                  addFileToDir(lFilesBis.head)
                  Index.addIndexEntry(lFilesBis.head)
                  add(lFilesBis.tail)
 
-      case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).head, Index.indexContent) &&
-                 Index.fieldInIndex(Index.shaAndPath(lFilesBis.head)(1), Index.indexContent) =>
+      case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).sha, Index.indexContent(Index.indexContentBis)) &&
+                 Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).path, Index.indexContent(Index.indexContentBis)) =>
                  addFileToDir(lFilesBis.head)
-                 Index.modifyIndexContent(Index.shaAndPath(lFilesBis.head).head,Index.shaAndPath(lFilesBis.head)(1),Index.indexContent)
+                 Index.modifyIndexContent(Index.shaAndPath(lFilesBis.head).sha,Index.shaAndPath(lFilesBis.head).path,Index.indexContentBis)
                  add(lFilesBis.tail)
 
       case _=>println("Nothing")

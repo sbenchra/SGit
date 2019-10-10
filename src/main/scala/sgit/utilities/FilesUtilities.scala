@@ -1,12 +1,6 @@
 package sgit.utilities
 
 import java.io.{BufferedWriter, File, FileWriter}
-import java.nio.charset.StandardCharsets
-import java.nio.file.Files
-import java.util.Base64.getEncoder
-
-import com.google.common.io.BaseEncoding
-
 import scala.io.Source
 
 object

@@ -15,16 +15,23 @@ object Index{
     new File(System.getProperty("user.dir")+"/.sgit/index")
   }
 
-  def indexContent:List[Array[String]]={
+  def indexContentBis:List[Array[String]]={
 
     Source.fromFile(IndexFile.getAbsolutePath).getLines().toList.map(x=>x.split(" "))
+
+  }
+
+  def indexContent(contentBis:List[Array[String]]): List[IndexEntry]={
+    if (contentBis.isEmpty) List()
+    else if (contentBis.head.length==2) List(IndexEntry(contentBis.head(1),contentBis.head.head))++indexContent(contentBis.tail)
+    else indexContent(contentBis.tail)
 
   }
 
   def modifyIndexContent(sha:String, path:String, indexContent:List[Array[String]]):Unit={
     if (indexContent.isEmpty) print("")
     else if (indexContent.head.contains(path)) {
-      indexContent.head.update(0,sha)
+       indexContent.head.update(0,sha)
     }
     else {modifyIndexContent(sha,path,indexContent.tail)}
     FilesUtilities.modifyFile(IndexFile,indexContent)
@@ -33,20 +40,20 @@ object Index{
   }
 
   @scala.annotation.tailrec
-  def fieldInIndex(field:String, text:List[Array[String]]):Boolean={
+  def fieldInIndex(field:String, text:List[IndexEntry]):Boolean={
     if (text.isEmpty) false
 
     else {
 
-      text.head.contains(field) || fieldInIndex(field,text.tail)}
+      text.head.sha.equals(field) || text.head.path.equals(field) || fieldInIndex(field,text.tail)}
 
   }
 
-  def shaAndPath(file:File): Array[String]= {
+  def shaAndPath(file:File): IndexEntry= {
     val blob = new Blob(FilesUtilities.readFileContent(file))
     val sha = ObjectBL.sha(blob)
     val path = file.getPath
-    Array(sha,path)
+    IndexEntry(path,sha)
   }
 
   def addIndexEntry(file: File) : IndexEntry= {
