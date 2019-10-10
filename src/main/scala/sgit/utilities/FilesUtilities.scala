@@ -12,9 +12,7 @@ FilesUtilities {
 
   @scala.annotation.tailrec
   def createDirectories(sDirecoties: List[String]): Unit = {
-    if (sDirecoties.isEmpty) {
-      print()
-    }
+    if (sDirecoties.isEmpty) Unit
     else {
       new File(sDirecoties.head).mkdirs()
       createDirectories(sDirecoties.tail)
@@ -38,9 +36,7 @@ FilesUtilities {
   //Write an element of the list contents to a file in the list files having the same index
   @scala.annotation.tailrec
   def writeInFiles(files: List[File], contents: List[String]): Unit = {
-    if (files.isEmpty || contents.isEmpty || contents.length != files.length) {
-      println()
-    }
+    if (files.isEmpty || contents.isEmpty || contents.length != files.length) Unit
     else {
       openFileOverWrite(files.head, contents.head)
       writeInFiles(files.tail, contents.tail)
@@ -64,7 +60,7 @@ FilesUtilities {
       openFileOverWrite(file, content.head)
       writeInFile(file, content.tail)
     }
-    else print()
+    else Unit
   }
 
 
@@ -99,7 +95,7 @@ FilesUtilities {
 //Function to modify a files content
   def modifyFile(file: File, content: List[Array[String]]): Unit = {
     val tmp=new File("/tmp/temporary.txt")
-    if (content.isEmpty) print("Nothing to modify")
+    if (content.isEmpty) Unit
     else {
       openFileOverWrite(tmp, content.head.mkString(" "))
       modifyFile(file,content.tail)

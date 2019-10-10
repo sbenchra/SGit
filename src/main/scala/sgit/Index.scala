@@ -11,59 +11,61 @@ case class Index(indexEntries:List[IndexEntry])
 object Index{
 
 
-
+//Function to tranform an index content to list of index entries
   def indexContent(contentBis:List[Array[String]]): List[IndexEntry]={
     if (contentBis.isEmpty) List()
-    else if (contentBis.head.length==2) List(IndexEntry(contentBis.head(1),contentBis.head.head))++indexContent(contentBis.tail)
+    else if (contentBis.head.length==2) List(IndexEntry(contentBis.head.head,contentBis.head(1)))++indexContent(contentBis.tail)
     else indexContent(contentBis.tail)
 
   }
-
-  def modifyIndexContent(sha:String, path:String, indexContent:List[Array[String]]):Unit={
-    if (indexContent.isEmpty) print("")
-    else if (indexContent.head.contains(path)) {
-       indexContent.head.update(0,sha)
+//Function to modify an index
+  def modifyIndexContent(indexEntry: IndexEntry, indexContent:List[Array[String]]):Unit={
+    if (indexContent.isEmpty) Unit
+    else if (indexContent.head.contains(indexEntry.path)) {
+       indexContent.head.update(0,indexEntry.sha)
     }
-    else {modifyIndexContent(sha,path,indexContent.tail)}
+    else {modifyIndexContent(indexEntry,indexContent.tail)}
     FilesUtilities.modifyFile(FilesUtilities.IndexFile,indexContent)
 
 
   }
+//Recursive function to check the field in an index
 
   @scala.annotation.tailrec
-  def fieldInIndex(field:String, text:List[IndexEntry]):Boolean={
-    if (text.isEmpty) false
+  def fieldInIndex(field:String, index:List[IndexEntry]):Boolean={
+    if (index.isEmpty) false
     else {
-      text.head.sha.equals(field) || text.head.path.equals(field) || fieldInIndex(field,text.tail)}
+      index.head.sha.equals(field) || index.head.path.equals(field) || fieldInIndex(field,index.tail)}
   }
-
+//Function to tranform a file to an index Entry
   def shaAndPath(file:File): IndexEntry= {
     val blob = new Blob(FilesUtilities.readFileContent(file))
     val sha = ObjectBL.sha(blob)
     val path = file.getPath
     IndexEntry(path,sha)
   }
-
+//Tranform a file to and index entry and fill it in Index file
   def addIndexEntry(file: File) : IndexEntry= {
     if (!file.exists()) IndexEntry("", "")
     else {
-      val sha = ObjectBL.sha(new Blob(FilesUtilities.readFileContent(file)))
-      val path = file.getPath
-      FilesUtilities.writeInFile(FilesUtilities.IndexFile,List("\n",s"$sha"," ",s"${path}"))
+      val indexEntry=shaAndPath(file)
+      val sha = indexEntry.sha
+      val path = indexEntry.path
+      FilesUtilities.writeInFile(FilesUtilities.IndexFile,List("\n",s"$path"," ",s"$sha"))
       IndexEntry(path, sha)
     }
-  }
-
+  }//Function to transform the list of working directory files to list of entries
   def workingDirBlobs(lFiles:List[File]) :List[IndexEntry]={
     if(lFiles.isEmpty) List()
     else Index.shaAndPath(lFiles.head):: workingDirBlobs(lFiles.tail)
   }
+  //Check if the workDirField is contained in the index
   @scala.annotation.tailrec
-  def containsBlob(workDirField:IndexEntry, index:List[IndexEntry]):Boolean={
+  def containsIndexEntry(workDirField:IndexEntry, index:List[IndexEntry]):Boolean={
     if(index.isEmpty) false
     else
     {
-      workDirField.sha.equals(index.head.sha) || index.head.path.equals(workDirField.path) || containsBlob(workDirField,index.tail)
+      workDirField.sha.equals(index.head.sha) || index.head.path.equals(workDirField.path) || containsIndexEntry(workDirField,index.tail)
     }
   }
 

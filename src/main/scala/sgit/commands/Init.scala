@@ -7,6 +7,7 @@ object Init {
   def RepositoryPath:String={
     System.getProperty("user.dir")
   }
+//Initialize the repository
 
   def Init() : Unit={
     val dirPath = RepositoryPath
