@@ -3,6 +3,9 @@ package sgit.utilities
 import java.io.{BufferedWriter, File, FileWriter}
 import scala.io.Source
 
+
+
+//Layer interacting with the files system
 object
 FilesUtilities {
   //Recusrive function to create Directories
@@ -45,6 +48,7 @@ FilesUtilities {
     }
   }
 
+  //Function to open a file and overwrite a content
   def openFileOverWrite(file: File, content: String): Unit = {
     val bw = new BufferedWriter(new FileWriter(file, true))
     bw.write(content)
@@ -64,17 +68,12 @@ FilesUtilities {
   }
 
 
-  // Returns the file
+  // Returns the file content as a string
   def readFileContent(file: File): String = {
     Source.fromFile(file).mkString
   }
 
-  def getListOfSubDirectories(directoryName: String): List[File] = {
-    (new File(directoryName))
-      .listFiles
-      .filter(_.isFile).toList
-  }
-
+  //Recursive function to list files of a directory and its directories
   def filesOfListFiles(lFile: List[File]): List[File] = {
     lFile match {
       case _ if lFile.isEmpty => List()
@@ -85,6 +84,19 @@ FilesUtilities {
 
   }
 
+  //Getting the index file
+  def IndexFile:File={
+    new File(System.getProperty("user.dir")+"/.sgit/index")
+  }
+
+  //Function to get an index content
+  def indexContentBis:List[Array[String]]={
+
+    Source.fromFile(IndexFile.getAbsolutePath).getLines().toList.map(x=>x.split(" "))
+
+  }
+
+//Function to modify a files content
   def modifyFile(file: File, content: List[Array[String]]): Unit = {
     val tmp=new File("/tmp/temporary.txt")
     if (content.isEmpty) print("Nothing to modify")

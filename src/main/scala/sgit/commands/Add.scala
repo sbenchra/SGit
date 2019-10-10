@@ -32,15 +32,15 @@ object Add {
                         print("Nothing to add")
       case _ if !lFilesBis.head.exists() => add(lFilesBis.tail)
 
-      case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).sha, Index.indexContent(Index.indexContentBis)) && !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).path, Index.indexContent(Index.indexContentBis)) =>
+      case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).sha, Index.indexContent(FilesUtilities.indexContentBis)) && !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).path, Index.indexContent(Index.indexContentBis)) =>
                  addFileToDir(lFilesBis.head)
                  Index.addIndexEntry(lFilesBis.head)
                  add(lFilesBis.tail)
 
-      case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).sha, Index.indexContent(Index.indexContentBis)) &&
-                 Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).path, Index.indexContent(Index.indexContentBis)) =>
+      case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).sha, Index.indexContent(FilesUtilities.indexContentBis)) &&
+                 Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).path, Index.indexContent(FilesUtilities.indexContentBis)) =>
                  addFileToDir(lFilesBis.head)
-                 Index.modifyIndexContent(Index.shaAndPath(lFilesBis.head).sha,Index.shaAndPath(lFilesBis.head).path,Index.indexContentBis)
+                 Index.modifyIndexContent(Index.shaAndPath(lFilesBis.head).sha,Index.shaAndPath(lFilesBis.head).path,FilesUtilities.indexContentBis)
                  add(lFilesBis.tail)
 
       case _=>println("Nothing")

@@ -15,6 +15,7 @@ abstract class Object{
     s"${o.objectType}"+" "+s"${length(o)}"+"\0"
 
   }
+  // Gives the length of an object
   def length(o: Object) : Int= {
     o match {
       case o:Blob => Blob.lengthBlob(o)

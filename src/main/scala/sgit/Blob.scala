@@ -2,29 +2,29 @@
 package sgit
 import com.roundeights.hasher.Implicits._
 import sgit.ObjectType.ObjectType
-
+// Blob
 case class Blob( content :String) extends Object {
   override def objectType: ObjectType = ObjectType.blob
 
 }
 object Blob{
-
+//Length of blob
   def lengthBlob(b:Blob): Int = b.content.length
 
-
+//Generating the sha of the blob
   def shaBlob(b:Blob): String= {
 
-     encodeBlob(b).mkString("").sha1.hex
+     formBlob(b).mkString("").sha1.hex
   }
-
- private def encodeBlobBody(b: Blob) : String=
+//Function to form a blob body
+ private def formBlobBody(b: Blob) : String=
     {
     b.content
     }
+//Function to form a Blob to write it in a file
+   def formBlob(b: Blob) :List[String] ={
 
-   def encodeBlob(b: Blob) :List[String] ={
-
-   List(b.getHeader(b),encodeBlobBody(b))
+   List(b.getHeader(b),formBlobBody(b))
 
    }
 
