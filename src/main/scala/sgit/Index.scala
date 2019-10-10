@@ -42,11 +42,11 @@ object Index{
 
   }
 
-  def shaAndPath(file:File): List[String]= {
+  def shaAndPath(file:File): Array[String]= {
     val blob = new Blob(FilesUtilities.readFileContent(file))
     val sha = ObjectBL.sha(blob)
     val path = file.getPath
-    List(sha,path)
+    Array(sha,path)
   }
 
   def addIndexEntry(file: File) : IndexEntry= {

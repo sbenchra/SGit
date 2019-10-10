@@ -1,12 +1,8 @@
 package sgit
-import java.awt.SystemTray
 import java.io.File
-import java.util.Date
-
-import sgit.commands.{Add, Init}
+import sgit.commands.{Add, Init, Status}
 import utilities.FilesUtilities
 
-import scala.io.Source
 
 
 
@@ -44,10 +40,10 @@ object Repository {
   }
 
   def main(args: Array[String]): Unit = {
- //  Init.Init()
+    // Init.Init()
 
-    Add.add(List(new File("./soufiane")))
-
+    //Add.add(List(new File("./soufiane")))
+    Status.status
   }
 
 }

@@ -2,6 +2,7 @@ package sgit.utilities
 
 import java.io.{BufferedWriter, File, FileWriter}
 import java.nio.charset.StandardCharsets
+import java.nio.file.Files
 import java.util.Base64.getEncoder
 
 import com.google.common.io.BaseEncoding
@@ -83,6 +84,7 @@ FilesUtilities {
   def filesOfListFiles(lFile: List[File]): List[File] = {
     lFile match {
       case _ if lFile.isEmpty => List()
+      case _ if !lFile.head.exists()=>filesOfListFiles(lFile.tail)
       case _ if lFile.head.isFile => lFile.head :: filesOfListFiles(lFile.tail)
       case _ if lFile.head.isDirectory => filesOfListFiles(lFile.head.listFiles().toList) ++ filesOfListFiles(lFile.tail)
     }
