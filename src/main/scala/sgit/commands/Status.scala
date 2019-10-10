@@ -28,7 +28,7 @@ object Status {
         print(workDirContent.head.path+"is untracked")
         statusCompare(index.tail,workDirContent)
       }
-      else if (Index.fieldInIndex(index.head.path,workDirContent) && !Index.fieldInIndex(index.head.sha,workDirContent))
+      else if (!Index.fieldInIndex(index.head.path,workDirContent) && !Index.fieldInIndex(index.head.sha,workDirContent))
       {
         print(workDirContent.head.path+ "is modified")
         statusCompare(index.tail,workDirContent)
