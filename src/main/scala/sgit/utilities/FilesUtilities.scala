@@ -97,7 +97,7 @@ FilesUtilities {
     val tmp=new File("/tmp/temporary.txt")
     if (content.isEmpty) Unit
     else {
-      openFileOverWrite(tmp, content.head.mkString(" "))
+      openFileOverWrite(tmp, content.head.mkString(" ")+"\n")
       modifyFile(file,content.tail)
     }
     val index= new File("./.sgit/index")

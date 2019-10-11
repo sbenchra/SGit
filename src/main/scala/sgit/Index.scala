@@ -22,7 +22,7 @@ object Index{
   def modifyIndexContent(indexEntry: IndexEntry, indexContent:List[Array[String]]):Unit={
     if (indexContent.isEmpty) Unit
     else if (indexContent.head.contains(indexEntry.path)) {
-       indexContent.head.update(0,indexEntry.sha)
+       indexContent.head.update(1,indexEntry.sha)
     }
     else {modifyIndexContent(indexEntry,indexContent.tail)}
     FilesUtilities.modifyFile(FilesUtilities.IndexFile,indexContent)

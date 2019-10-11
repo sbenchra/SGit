@@ -21,6 +21,7 @@ object Repository {
 
 
       if (!isInitialized(dirPath)) {
+
         //List of directories to create
         val directories = List(s"$dirPath/.sgit",s"$dirPath/.sgit/info",s"$dirPath/.sgit/objects/info",s"$dirPath/.sgit/objects/pack",s"$dirPath/.sgit/branches",s"$dirPath/.sgit/refs/tags",s"$dirPath/.sgit/refs/heads")
         //List of files to create
@@ -40,10 +41,22 @@ object Repository {
   }
 
   def main(args: Array[String]): Unit = {
-    Init.Init()
+ //  Init.Init()
 
-   Add.add(List(new File("./soufiane")))
+ //Add.add(List(new File("./soufiane/abdel.txt")))
     Status.status()
+
+
+
+
+
+
+
+//val s=transpose(List(pathF,pathD,pathl,pathL)).map(_.distinct)
+
+  //  print(s)
   }
+
+
 
 }

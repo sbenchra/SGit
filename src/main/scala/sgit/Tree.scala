@@ -4,8 +4,8 @@ import com.roundeights.hasher.Implicits._
 
 // Class of Tree entries
 
-case class TreeL(objectType:String,name:String,lSha: String)
-case class Tree(contentTree : Seq[TreeL]) extends Object {
+case class TreeL(objectType:String, path:String, lSha: String)
+case class Tree(contentTree : List[TreeL]) extends Object {
   override def objectType: ObjectType = ObjectType.tree
 }
 
@@ -27,7 +27,7 @@ object Tree{
   def formBodyTree(t:Tree): String = {
    if (t.contentTree.isEmpty) ""
    else
-     " \n" + t.contentTree.head.objectType +" "+ t.contentTree.head.name+" " + t.contentTree.head.lSha +" " +formBodyTree(Tree(t.contentTree.tail))
+     " \n" + t.contentTree.head.objectType +" "+ t.contentTree.head.path+" " + t.contentTree.head.lSha +" " +formBodyTree(Tree(t.contentTree.tail))
 
   }
 }
