@@ -4,7 +4,7 @@ import com.roundeights.hasher.Implicits._
 
 // Class of Tree entries
 
-case class TreeL(objectType:String, path:String, lSha: String)
+case class TreeL(objectType:ObjectType, path:String, lSha: String)
 case class Tree(contentTree : List[TreeL]) extends Object {
   override def objectType: ObjectType = ObjectType.tree
 }

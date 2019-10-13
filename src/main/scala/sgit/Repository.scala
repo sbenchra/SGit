@@ -44,9 +44,9 @@ object Repository {
  //  Init.Init()
 
  //Add.add(List(new File("./soufiane/abdel.txt")))
-    Status.status()
+  //  Status.status()
 
-
+println(sgit.commands.Commit.pr)
 
 
 

@@ -5,12 +5,14 @@ import sgit.utilities.FilesUtilities
 import sgit.{Blob, Index, IndexEntry, ObjectBL}
 
 object Add {
-//index File
+
+  //index File
   def IndexFile: File = {
     new File(System.getProperty("user.dir") + "./sgit/index")
   }
-  //Repository path
 
+
+  //Repository path
   def RepositoryPath: String = {
     System.getProperty("user.dir")
   }
@@ -22,7 +24,7 @@ object Add {
     ObjectBL.addObject(Blob(FilesUtilities.readFileContent(file)))
   }
 
-//Recursive function to add a list of files
+  //Recursive function to add a list of files
   @scala.annotation.tailrec
   def add(lFiles: List[File]): Unit = {
 
