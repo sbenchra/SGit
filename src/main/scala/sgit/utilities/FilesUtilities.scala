@@ -1,6 +1,9 @@
 package sgit.utilities
 
 import java.io.{BufferedWriter, File, FileWriter}
+
+import sgit.commands.Init
+
 import scala.io.Source
 
 
@@ -73,7 +76,10 @@ FilesUtilities {
   def filesOfListFiles(lFile: List[File]): List[File] = {
     lFile match {
       case _ if lFile.isEmpty => List()
-      case _ if !lFile.head.exists()=>filesOfListFiles(lFile.tail)
+      case _ if !lFile.head.exists()=>
+        print(lFile.head.getName+" is not found ")
+        filesOfListFiles(lFile.tail)
+
       case _ if lFile.head.isFile => lFile.head :: filesOfListFiles(lFile.tail)
       case _ if lFile.head.isDirectory => filesOfListFiles(lFile.head.listFiles().toList) ++ filesOfListFiles(lFile.tail)
     }
@@ -100,9 +106,25 @@ FilesUtilities {
       openFileOverWrite(tmp, content.head.mkString(" ")+"\n")
       modifyFile(file,content.tail)
     }
-    val index= new File("./.sgit/index")
-    tmp.renameTo(index)
-
+    tmp.renameTo(file)
 
   }
+//Write a commit message in the dfile MSG_COMMIt
+  def writeCommitMessage(msg:String):Unit={
+    val fileMsg=new File(Init.RepositoryPath+"/.sgit/MSG_COMMIT")
+    if(fileMsg.exists()) modifyFile(fileMsg,List(Array(msg)))
+    else {
+      openFileOverWrite(fileMsg,msg)
+    }
+  }
+//Change the commit id of the branch
+  def changeBranchSha(newSha:String,branch:File):Unit={
+
+    if(branch.exists()) modifyFile(branch,List(Array(newSha)))
+    else {
+      openFileOverWrite(branch,newSha)
+    }
+  }
+
+
 }

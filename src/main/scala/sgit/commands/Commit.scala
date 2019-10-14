@@ -1,10 +1,16 @@
 package sgit.commands
 
-import sgit.{Index, ObjectBL, ObjectType, Tree, TreeL}
+import java.io.File
 
-import scala.annotation.tailrec
+import sgit.utilities.FilesUtilities
+import sgit.{Index,  ObjectBL, ObjectType,Tree, TreeL}
 import scala.math.max
 object Commit {
+
+
+  def headFilePath:String={
+    new File(System.getProperty("user.dir"))+"/.sgit/HEAD"
+  }
   // Recursive function returns the list of paths in the Index
 def pathsIndex(index:Index): List[String]= {
   if (index.indexEntries.isEmpty) List()
@@ -91,7 +97,7 @@ def getHash(index:Index, name:String):String={
   def commitPrepare(paths:List[List[String]]):Map[String,List[TreeL]]={
 
     @scala.annotation.tailrec
-    def commitBis(paths:List[List[String]], acc:Map[String,List[TreeL]]):Map[String,List[TreeL]]= {
+    def commitPrepareBis(paths:List[List[String]], acc:Map[String,List[TreeL]]):Map[String,List[TreeL]]= {
       if (paths.isEmpty) acc
       else
       {
@@ -103,33 +109,67 @@ def getHash(index:Index, name:String):String={
         if (lastLayer.nonEmpty){
           val newDepest=deepestPaths.map(x=>x.dropRight(1)) //Delete the last elements
           val newPaths=paths.diff(deepestPaths)++newDepest
-          commitBis(newPaths, appendObjects(lastLayer,acc)++acc)
+          commitPrepareBis(newPaths, appendObjects(lastLayer,acc)++acc)
         }
         else
         acc
 
       }
     }
-    commitBis(paths,Map(""->List()))
+    commitPrepareBis(paths,Map(""->List()))
 
   }
 
 
+//Check if all files are staged before commit
+  def allFileAreStaged(files:List[File], index:Index):Boolean={
+  if( files.isEmpty) true
+  else{
+   Index.fieldInIndex(files.head.getPath,index) && allFileAreStaged(files.tail,index)
 
-
-  def pr:Any={
-
-  Commit.commitPrepare(fragmentAllPaths(pathsIndex(Status.indexContent)))
+  }
   }
 
+  def commit(msg:String):Unit={
+    val lFilesBis= FilesUtilities.filesOfListFiles(List(new File("./soufiane")))
 
-
-
-  def commit():Unit={
-
+    //Paths of files of the working directory
+    val filesPathDir=lFilesBis.map(_.getPath)
+    //Index content
     val indexContent= Status.indexContent
-    val workingDir=Status.directoryContent
+    //Split index paths
+    val fragmentedPaths= fragmentAllPaths(pathsIndex(indexContent))
+    //Split Dir Paths
+    val fragmentedDirPaths =fragmentAllPaths(filesPathDir)
+    //Find the index commit tree
+    val commitMap=commitPrepare(fragmentedPaths)
+    // The working directory commit tree
+    val commitMapDir=commitPrepare(fragmentedDirPaths)
+    val CommitEntries= commitMap(".")
+    val commitEntriesDir=commitMapDir(".")
 
+    val headFile=new File(headFilePath)
+    //Currrent Branch
+    val currentBranch=FilesUtilities.readFileContent(headFile).split(" ")
+    val branch=new File(Init.RepositoryPath+"/.sgit/"+currentBranch(1))
+    //Last commit Id
+    val lastCommitId= {if (branch.exists()) FilesUtilities.readFileContent(branch)
+                    else "19011995" }
+    //Index Commit
+    val commitObject=sgit.Commit("","","","",msg,"","commit",Tree(CommitEntries),lastCommitId)
+    //Workind directory commit
+    val fakeCommit=sgit.Commit("","","","",msg,"","commit",Tree(commitEntriesDir),lastCommitId)
+
+    commitObject match {
+      case _ if allFileAreStaged(lFilesBis,indexContent) && ObjectBL.sha(commitObject)!=ObjectBL.sha(fakeCommit) =>{
+        ObjectBL.addObject(Tree(CommitEntries))
+        ObjectBL.addObject(commitObject)
+        FilesUtilities.writeCommitMessage(msg)
+        FilesUtilities.changeBranchSha(ObjectBL.sha(commitObject),branch)
+      }
+      case _ if (ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit))) => print("Everything is up to date")
+      case _ => Status.status()
+    }
 
 
 

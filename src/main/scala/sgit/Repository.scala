@@ -46,7 +46,7 @@ object Repository {
  Add.add(List(new File("./soufiane")))
     Status.status()
 
-println(sgit.commands.Commit.pr)
+println(sgit.commands.Commit.commit("soufiane"))
 
 
 

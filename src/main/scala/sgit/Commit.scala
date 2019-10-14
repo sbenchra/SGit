@@ -14,7 +14,7 @@ case class Commit(
                    commitDate: String,
                    messageCommit: String,
                    tree : Tree,
-                   parentCommit: List[Commit]
+                   parentCommit: String
 
                  ) extends Object {
   override def objectType: ObjectType = ObjectType.commit
@@ -42,7 +42,7 @@ object Commit{
   }
 
   def encodeBodyCommit(c:Commit): String = {
-    s"tree ${ObjectBL.sha(c.tree)}\n"+ s"author ${c.authorName} <${c.authorEmail}> ${c.authorDate}\n" + s"committer ${c.committerName} <${c.committerEmail}> ${c.commitDate}\n"+parentCommitToString(c.parentCommit)+ s"\n${c.messageCommit}"
+    s"tree ${ObjectBL.sha(c.tree)}\n"+ s"author ${c.authorName} <${c.authorEmail}> ${c.authorDate}\n" + s"committer ${c.committerName} <${c.committerEmail}> ${c.commitDate}\n"+s"${c.parentCommit}"+ s"\n${c.messageCommit}"
 
 
   }
