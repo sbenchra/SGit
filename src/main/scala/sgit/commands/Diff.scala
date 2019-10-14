@@ -1,13 +1,31 @@
 package sgit.commands
-import sgit.{Object, ObjectType}
+
+import java.io.File
+
+import sgit.Index
+
 object Diff {
 
 
-  def diff: Unit = {
+/*
+  def blobsAndContent(index:Index):Map[String,List[String]]={
+    if (index.indexEntries.isEmpty) Map(""->List())
+    else Map(index.indexEntries.path,contentBlob(index.indexEntries.sha))++blobsAndContent(Index(index.indexEntries.tail))
 
-    val workingDirTree = Commit.wDirMapF
-    val indexTree = Commit.commitMapF
+  }
+
+ */
+
+/*
+  def diff(): Unit = {
+
+  val indexFiles=Status.indexContent
+    val workingDirFile=Status.directoryContent
+    val blobsContent=
+
 
 
   }
+
+ */
 }

@@ -33,8 +33,9 @@ object ObjectBL {
         val fileName =directName+"/"+sha.takeRight(38)
         val file = new File(fileName)
         FilesUtilities.createDirectories(List(directName))
-        val b= FilesUtilities.createFiles(List(fileName))
+        FilesUtilities.createFiles(List(fileName))
         FilesUtilities.writeInFile(file,formObject(o))
+
 
       }
 

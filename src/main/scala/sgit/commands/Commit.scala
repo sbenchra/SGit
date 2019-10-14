@@ -3,13 +3,12 @@ package sgit.commands
 import java.io.File
 
 import sgit.utilities.FilesUtilities
-import sgit.{Index,  ObjectBL, ObjectType,Tree, TreeL}
+import sgit.{Index, ObjectBL, ObjectType, Repository, Tree, TreeL}
+
 import scala.math.max
 object Commit {
-
-
   def headFilePath:String={
-    new File(System.getProperty("user.dir"))+"/.sgit/HEAD"
+    Init.RepositoryPath+"/.sgit/HEAD"
   }
   // Recursive function returns the list of paths in the Index
 def pathsIndex(index:Index): List[String]= {
@@ -122,7 +121,8 @@ def getHash(index:Index, name:String):String={
 
 
 //Check if all files are staged before commit
-  def allFileAreStaged(files:List[File], index:Index):Boolean= {
+@scala.annotation.tailrec
+def allFileAreStaged(files:List[File], index:Index):Boolean= {
     if (files.isEmpty) true
     else {
       Index.fieldInIndex(files.head.getPath, index) && allFileAreStaged(files.tail, index)
@@ -153,6 +153,7 @@ def getHash(index:Index, name:String):String={
     val fragmentedDirPaths =fragmentAllPaths(filesPathDir)
     commitPrepare(fragmentedDirPaths)
   }
+  @scala.annotation.tailrec
   def writeTrees(CommitEntries:Map[String,List[TreeL]]):Unit={
     val setCommitEntries=CommitEntries.filterKeys(_!="").toSeq
     if(setCommitEntries.isEmpty) Unit
@@ -194,7 +195,7 @@ def getHash(index:Index, name:String):String={
         FilesUtilities.writeCommitMessage(msg)
         FilesUtilities.changeBranchSha(ObjectBL.sha(commitObject),branch)
       }
-      case _ if (ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit)) && indexContent.indexEntries.nonEmpty) => print("Everything is up to date")
+      case _ if ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit)) && indexContent.indexEntries.nonEmpty => print("Everything is up to date")
       case _ => Status.status()
     }
 

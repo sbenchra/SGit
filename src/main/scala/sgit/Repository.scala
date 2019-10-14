@@ -1,3 +1,4 @@
+
 package sgit
 import java.io.File
 import sgit.commands.{Add, Init, Status}
@@ -44,11 +45,13 @@ object Repository {
   Init.Init()
 
   Add.add(List(new File("./soufiane")))
+    /*
    Status.status()
 
 println(sgit.commands.Commit.commit("hamza"))
 
 
+ */
 
 
 

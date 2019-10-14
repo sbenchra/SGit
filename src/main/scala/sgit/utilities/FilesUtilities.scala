@@ -2,7 +2,7 @@ package sgit.utilities
 
 import java.io.{BufferedWriter, File, FileWriter}
 
-import sgit.commands.Init
+import sgit.commands.{Init, Status}
 
 import scala.io.Source
 
@@ -50,7 +50,7 @@ FilesUtilities {
   //Function to open a file and overwrite a content
   def openFileOverWrite(file: File, content: String): Unit = {
     val bw = new BufferedWriter(new FileWriter(file, true))
-    bw.write(content)
+    bw.write("\n"+content)
     bw.close()
   }
 
@@ -92,9 +92,14 @@ FilesUtilities {
   }
 
   //Function to get an index content
+
+  def fileContentList(filePath:String): List[Array[String]]={
+    Source.fromFile(filePath).getLines().toList.map(x=>x.split(" "))
+  }
+
   def indexContentBis:List[Array[String]]={
 
-    Source.fromFile(IndexFile.getAbsolutePath).getLines().toList.map(x=>x.split(" "))
+    fileContentList(IndexFile.getAbsolutePath)
 
   }
 
@@ -124,6 +129,12 @@ FilesUtilities {
     else {
       openFileOverWrite(branch,newSha)
     }
+  }
+
+  def contentBlob(sha:String):Array[String]={
+    val filePath=Init.RepositoryPath+"/.sgit/objects/"+sha.take(2)+"/"+sha.takeRight(38)
+    readFileContent(new File(filePath)).split("\n")
+
   }
 
 
