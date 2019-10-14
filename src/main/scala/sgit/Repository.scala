@@ -41,10 +41,10 @@ object Repository {
   }
 
   def main(args: Array[String]): Unit = {
- //  Init.Init()
+  Init.Init()
 
- //Add.add(List(new File("./soufiane/abdel.txt")))
-  //  Status.status()
+ Add.add(List(new File("./soufiane")))
+    Status.status()
 
 println(sgit.commands.Commit.pr)
 

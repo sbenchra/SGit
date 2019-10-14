@@ -1,5 +1,0 @@
-./soufiane/ali.txt 40150da5da2e56ce696bda9001d09db7b2ec74d8
-./soufiane/adil/hamza.txt 0db9d105c74403eb57a0ea2a470bc26bcbd90f79
-./soufiane/hin.txt db1d9a5868925019472b8de05acd419236f28108
-
-./soufiane/abdel.txt 58d02edc67d43ac07028ab50c740ff6da00bf31a

@@ -7,4 +7,5 @@ object ObjectType extends Enumeration {
   val tree = Value("tree")
   val blob = Value("blob")
   val tag = Value("tag")
+  val th=Value("")
 }
