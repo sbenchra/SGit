@@ -50,7 +50,7 @@ FilesUtilities {
   //Function to open a file and overwrite a content
   def openFileOverWrite(file: File, content: String): Unit = {
     val bw = new BufferedWriter(new FileWriter(file, true))
-    bw.write("\n"+content)
+    bw.write(content)
     bw.close()
   }
 
@@ -131,9 +131,9 @@ FilesUtilities {
     }
   }
 
-  def contentBlob(sha:String):Array[String]={
+  def contentBlob(sha:String):List[String]={
     val filePath=Init.RepositoryPath+"/.sgit/objects/"+sha.take(2)+"/"+sha.takeRight(38)
-    readFileContent(new File(filePath)).split("\n")
+    readFileContent(new File(filePath)).split("\n").toList
 
   }
 

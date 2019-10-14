@@ -24,7 +24,7 @@ object Blob{
 //Function to form a Blob to write it in a file
    def formBlob(b: Blob) :List[String] ={
 
-   List(b.getHeader(b),formBlobBody(b))
+   List(b.getHeader(b)+"\n"+formBlobBody(b))
 
    }
 

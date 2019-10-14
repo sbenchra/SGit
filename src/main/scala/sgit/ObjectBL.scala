@@ -35,8 +35,6 @@ object ObjectBL {
         FilesUtilities.createDirectories(List(directName))
         FilesUtilities.createFiles(List(fileName))
         FilesUtilities.writeInFile(file,formObject(o))
-
-
       }
 
 

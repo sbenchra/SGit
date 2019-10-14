@@ -8,7 +8,6 @@ import sun.util.calendar.BaseCalendar.Date
 case class Commit(
                    authorName: String,
                    authorEmail: String,
-                   authorDate: String,
                    committerName: String,
                    committerEmail: String,
                    commitDate: String,
@@ -32,7 +31,7 @@ object Commit{
 
   //Forming the tree
   def encodeCommit(c:Commit): List[String] = {
-    List(c.getHeader(c),encodeBodyCommit(c))
+    List(c.getHeader(c)+"\n"+encodeBodyCommit(c))
   }
 
   def parentCommitToString(pCommits:List[Commit]): String = {
@@ -42,7 +41,7 @@ object Commit{
   }
 
   def encodeBodyCommit(c:Commit): String = {
-    s"tree ${ObjectBL.sha(c.tree)}\n"+ s"author ${c.authorName} <${c.authorEmail}> ${c.authorDate}\n" + s"committer ${c.committerName} <${c.committerEmail}> ${c.commitDate}\n"+s"${c.parentCommit}"+ s"\n${c.messageCommit}"
+    s"tree ${ObjectBL.sha(c.tree)}\n"+ s"author ${c.authorName} <${c.authorEmail}>" + s"committer ${c.committerName} <${c.committerEmail}> ${c.commitDate}\n"+s"${c.parentCommit}"+ s"\n${c.messageCommit}"
 
 
   }
