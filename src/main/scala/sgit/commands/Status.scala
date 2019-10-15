@@ -6,9 +6,7 @@ object Status {
 
 
 
-  def indexContent= Index(Index.indexContent(FilesUtilities.indexContentBis))
-  def workingDirFiles: List[File] = FilesUtilities.filesOfListFiles(List(new File("./soufiane")))
-  def directoryContent=Index(Index.workingDirBlobs(workingDirFiles))
+
 // A recursive function to compare the directory files with index files
     @scala.annotation.tailrec
     def statusCompare(index:Index, workDirContent:Index):Unit={
@@ -46,7 +44,7 @@ object Status {
 
 
 
-      statusCompare(indexContent,directoryContent)
+      statusCompare(Index.indexContent,Index.directoryContent)
 
   }
 

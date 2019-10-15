@@ -42,26 +42,27 @@ object Repository {
       }
   }
 
+
+
   def main(args: Array[String]): Unit = {
   Init.Init()
 
-// Add.add(List(new File("./soufiane")))
+ Add.add(List(new File("./soufiane")))
 
 
 
 
-    /*
+
    Status.status()
-œ
 
-     */
-//println(sgit.commands.Commit.commit("s"))
-   sgit.commands.Diff.diff
 
+sgit.commands.Commit.commit("s")
+   //sgit.commands.Diff.diff
 
 
 
-//print(Log.commitAndParent(Log.logContentArray))
+
+print(Log.commitAndParent(Log.logContentArray))
 
   //  print(s)
   }

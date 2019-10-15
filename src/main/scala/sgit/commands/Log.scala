@@ -6,7 +6,7 @@ import sgit.utilities.FilesUtilities
 
 
 object Log {
-
+  def logFile(): File=new File(Init.RepositoryPath+"/.sgit/logs")
     //Log content
 def logContent:String={
   FilesUtilities.readFileContent(logFile())
@@ -22,7 +22,7 @@ def logContent:String={
     else commitAndParent(logContentA.tail)
 
   }
-  def logFile(): File=new File(Init.RepositoryPath+"/.sgit/logs")
+
 
   def log():Unit={
 

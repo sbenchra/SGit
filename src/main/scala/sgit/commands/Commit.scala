@@ -10,6 +10,7 @@ object Commit {
   def headFilePath:String={
     Init.RepositoryPath+"/.sgit/HEAD"
   }
+
   // Recursive function returns the list of paths in the Index
 def pathsIndex(index:Index): List[String]= {
   if (index.indexEntries.isEmpty) List()
@@ -73,12 +74,12 @@ def getHash(index:Index, name:String):String={
     else getPath(Index(index.indexEntries.tail),name)
   }
 //Funnction to create object
-  def createObjects(data:List[String],acc:Map[String,List[TreeL]]):List[TreeL]={
+  def createObjects(index:Index,data:List[String],acc:Map[String,List[TreeL]]):List[TreeL]={
     if(data.isEmpty) List()
     else if(data.last.contains("txt"))
-      TreeL(ObjectType.blob,getPath(Status.indexContent,data.last),getHash(Status.indexContent,data.last))::createObjects(data.dropRight(1),acc)
-    else if(acc.keysIterator.contains(s"${data.last}")) TreeL(ObjectType.tree,data.last,ObjectBL.sha(Tree(valueAcc(data.last,acc))))::createObjects(data.dropRight(1),acc)
-    else createObjects(data.dropRight(1),acc)
+      TreeL(ObjectType.blob,getPath(index,data.last),getHash(index,data.last))::createObjects(index,data.dropRight(1),acc)
+    else if(acc.keysIterator.contains(s"${data.last}")) TreeL(ObjectType.tree,data.last,ObjectBL.sha(Tree(valueAcc(data.last,acc))))::createObjects(index,data.dropRight(1),acc)
+    else createObjects(index,data.dropRight(1),acc)
   }
   //Function to get a value of the acc map
   def valueAcc(data:String, acc:Map[String,List[TreeL]]):List[TreeL]= {
@@ -88,15 +89,15 @@ def getHash(index:Index, name:String):String={
 
 
 // Append object to the accumulator
-  def appendObjects(data:List[List[String]], acc:Map[String,List[TreeL]]):Map[String,List[TreeL]]={
-    if (data.isEmpty) Map(""->List(TreeL(ObjectType.th,"","")))
-    else Map(data.head.head->createObjects(data.head,acc))++appendObjects(data.tail,acc)
+  def appendObjects(index:Index,data:List[List[String]], acc:Map[String,List[TreeL]]):Map[String,List[TreeL]]={
+    if (data.isEmpty) Map()
+    else Map(data.head.head->createObjects(index,data.head,acc))++appendObjects(index,data.tail,acc)
   }
 //Preparing the commit by generating its sha and forming it s tree
-  def commitPrepare(paths:List[List[String]]):Map[String,List[TreeL]]={
+  def commitPrepare(index:Index,paths:List[List[String]]):Map[String,List[TreeL]]={
 
     @scala.annotation.tailrec
-    def commitPrepareBis(paths:List[List[String]], acc:Map[String,List[TreeL]]):Map[String,List[TreeL]]= {
+    def commitPrepareBis(index:Index,paths:List[List[String]], acc:Map[String,List[TreeL]]):Map[String,List[TreeL]]= {
       if (paths.isEmpty) acc
       else
       {
@@ -108,14 +109,14 @@ def getHash(index:Index, name:String):String={
         if (lastLayer.nonEmpty){
           val newDepest=deepestPaths.map(x=>x.dropRight(1)) //Delete the last elements
           val newPaths=paths.diff(deepestPaths)++newDepest
-          commitPrepareBis(newPaths, appendObjects(lastLayer,acc)++acc)
+          commitPrepareBis(index,newPaths, appendObjects(index,lastLayer,acc)++acc)
         }
         else
         acc
 
       }
     }
-    commitPrepareBis(paths,Map(""->List()))
+    commitPrepareBis(index,paths,Map(""->List()))
 
   }
 
@@ -136,15 +137,14 @@ def allFileAreStaged(files:List[File], index:Index):Boolean= {
       else new File(index.indexEntries.head.path).exists() && allStagedExists(Index(index.indexEntries.tail))
     }
 
-  def indexContent:Index= Status.indexContent
-  def lFilesBis:List[File]= FilesUtilities.filesOfListFiles(List(new File("./soufiane")))
 
   //The index commit Map
-  def commitMapF:Map[String,List[TreeL]]={
-    val fragmentedPaths= fragmentAllPaths(pathsIndex(indexContent))
-    commitPrepare(fragmentedPaths)
+  def commitMapF(index:Index):Map[String,List[TreeL]]={
+    val fragmentedPaths= fragmentAllPaths(pathsIndex(Index.indexContent))
+    commitPrepare(index,fragmentedPaths)
 
   }
+  /*
   //Construct the  working directory
   def wDirMapF:Map[String,List[TreeL]]={
     //Paths of files of the working directory
@@ -153,6 +153,8 @@ def allFileAreStaged(files:List[File], index:Index):Boolean= {
     val fragmentedDirPaths =fragmentAllPaths(filesPathDir)
     commitPrepare(fragmentedDirPaths)
   }
+
+   */
   @scala.annotation.tailrec
   def writeTrees(CommitEntries:Map[String,List[TreeL]]):Unit={
     val setCommitEntries=CommitEntries.filterKeys(_!="").toSeq
@@ -166,9 +168,9 @@ def allFileAreStaged(files:List[File], index:Index):Boolean= {
   def commit(msg:String):Unit={
 
     //Find the index commit tree
-    val commitMap=commitMapF
+    val commitMap=commitMapF(Index.indexContent)
     // The working directory commit tree
-    val commitMapDir=wDirMapF
+    val commitMapDir=commitMapF(Index.directoryContent)
     val commitEntries= if(commitMap.keysIterator.exists(_.contains("."))) commitMap(".")
     else { commitMap("")}
     val commitEntriesDir=if(commitMapDir.keysIterator.exists(_.contains("."))) commitMapDir(".")
@@ -179,22 +181,22 @@ def allFileAreStaged(files:List[File], index:Index):Boolean= {
     val currentBranch=FilesUtilities.readFileContent(headFile).split(" ")
     val branch=new File(Init.RepositoryPath+"/.sgit/"+currentBranch(1))
     //Last commit Id
-    val lastCommitId= {if (branch.exists()) FilesUtilities.readFileContent(branch)
+    val lastCommitId= {if (branch.exists()) FilesUtilities.readFileContent(branch).diff("\n")
                     else "19011995" }
     //Index Commit
     val commitObject=sgit.Commit("","","","","",msg,Tree(commitEntries),lastCommitId)
     //Workind directory commit
     val fakeCommit=sgit.Commit("","","","","",msg,Tree(commitEntriesDir),lastCommitId)
-
+val f =ObjectBL.sha(commitObject).equals(lastCommitId)
     commitObject match {
-      case _ if (allStagedExists(indexContent)&& allFileAreStaged(lFilesBis,indexContent) &&ObjectBL.sha(commitObject)!=lastCommitId && ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit) ))=>{
+      case _ if (allStagedExists(Index.indexContent)&& allFileAreStaged(Index.workingDirFiles,Index.indexContent) &&ObjectBL.sha(commitObject)!=lastCommitId && ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit) ))=>{
         writeTrees(commitMap)
         ObjectBL.addObject(commitObject)
         FilesUtilities.writeCommitMessage(msg)
         FilesUtilities.changeBranchSha(ObjectBL.sha(commitObject),branch)
         FilesUtilities.writeInFile(Log.logFile(),List("Commit:"+ObjectBL.sha(commitObject)+"\n","Author:"+commitObject.authorName+"\n","Date:"+commitObject.commitDate+"\n","Parent:"+lastCommitId,"\n","Message:"+msg,"\n"))
       }
-      case _ if (ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit)) && indexContent.indexEntries.nonEmpty )=> print("Everything is up to date")
+      case _ if (ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit)) && Index.indexContent.indexEntries.nonEmpty )=> print("Everything is up to date")
       case _ => Status.status()
     }
 

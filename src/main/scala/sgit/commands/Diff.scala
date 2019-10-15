@@ -14,7 +14,7 @@ object Diff {
   }
   //Function to put working directory files
   def dirFilesAndContent(files:List[File]):Map[String,List[String]]={
-    if (files.isEmpty) Map(""->List())
+    if (files.isEmpty) Map()
     else Map(files.head.getPath->FilesUtilities.readFileContent(files.head).split("\n").toList) ++ dirFilesAndContent(files.tail)
   }
 
@@ -66,10 +66,10 @@ object Diff {
 
   def diff(): Unit = {
 
-  val indexFiles=Status.indexContent
-    val workingDirFile=Status.workingDirFiles
-    val mapIndex=blobsAndContent(indexFiles).filterKeys(_!="")
-    val mapDir=dirFilesAndContent(workingDirFile).filterKeys(_!="")
+  val indexFiles=Index.indexContent
+    val workingDirFile=Index.workingDirFiles
+    val mapIndex=blobsAndContent(indexFiles)
+    val mapDir=dirFilesAndContent(workingDirFile)
 
     val differences=compareMaps(mapIndex,mapDir)
 

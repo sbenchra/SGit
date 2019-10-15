@@ -10,6 +10,11 @@ case class Index(indexEntries:List[IndexEntry])
 
 object Index{
 
+  def indexContent:Index= Index(Index.indexContent(FilesUtilities.indexContentBis))
+
+  def workingDirFiles: List[File] = FilesUtilities.filesOfListFiles(List(new File("./soufiane")))
+
+  def directoryContent=Index(Index.workingDirBlobs(workingDirFiles))
 
 //Function to tranform an index content to list of index entries
   def indexContent(contentBis:List[Array[String]]): List[IndexEntry]={
