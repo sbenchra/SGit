@@ -41,7 +41,7 @@ object Commit{
   }
 
   def encodeBodyCommit(c:Commit): String = {
-    s"tree ${ObjectBL.sha(c.tree)}\n"+ s"author ${c.authorName} <${c.authorEmail}>" + s"committer ${c.committerName} <${c.committerEmail}> ${c.commitDate}\n"+s"${c.parentCommit}"+ s"\n${c.messageCommit}"
+    s"tree ${ObjectBL.sha(c.tree)}\n"+ s"author ${c.authorName} <${c.authorEmail}>" + s"committer ${c.committerName} <${c.committerEmail}> ${c.commitDate}\n"+ s"\n${c.messageCommit}"
 
 
   }

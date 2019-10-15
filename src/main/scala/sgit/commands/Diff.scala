@@ -23,17 +23,24 @@ object Diff {
     if (l1.isEmpty) l2
     else if (l2.isEmpty) l1
     else {
-      printDiff( l2.diff(l1),l1.diff(l2))
+      val diff1=l2.zipWithIndex.diff(l1.zipWithIndex).map(x=>x._1)
+      val diff2=l1.zipWithIndex.diff(l2.zipWithIndex).map(x=>x._1)
+
+    printDiff( diff1,diff2)
     }
   }
+
+
   //Function to prepare the results for the print
   def printDiff(l1:List[String],l2:List[String]):List[String]={
-    if(l1.isEmpty) l2
-    else if (l2.isEmpty) l1
+    if (l1.isEmpty && l2.isEmpty) List()
+    else if(l1.isEmpty) List("++")++List(" ")++List("\n--")++l2
+    else if (l2.isEmpty) List("++")++l1++List("\n--")++List(" ")
     else{
       val diff1=l1.head
       val diff2=l2.head
       List("++")++List(s"'$diff1'")++List("--")++List(s"'$diff2'")++List("\n")++printDiff(l1.tail,l2.tail)
+
     }
   }
 
@@ -43,15 +50,17 @@ object Diff {
     else if (m2.isEmpty) m1
     else
     {val key=m1.head._1
-      Map(m1.head._1->compare(m1(s"$key"),m2(s"$key")))++compareMaps(m1.tail,m2.tail)}
+      Map(m1.head._1->compare(m1(s"$key"),m2(s"$key")))++compareMaps(m1.filterKeys(_!=key),m2.filterKeys(_!=key))}
   }
 
   //Function to print the differences
   @scala.annotation.tailrec
   def differencesPrinter(res:Map[String,List[String]]):Unit={
-    if(res.isEmpty || res(res.head._1).isEmpty) Unit
+    if(res.isEmpty ) Unit
+    else if (res.head._2.isEmpty)       differencesPrinter(res.tail)
+
     else {
-      print(res.head._1+" changes are "+ res(res.head._1).mkString(" ")+"\n")
+      print(res.head._1+" changes are \n"+ res(res.head._1).mkString(" ")+"\n")
       differencesPrinter(res.tail)
     }
   }

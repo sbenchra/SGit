@@ -78,7 +78,7 @@ def getHash(index:Index, name:String):String={
     else if(data.last.contains("txt"))
       TreeL(ObjectType.blob,getPath(Status.indexContent,data.last),getHash(Status.indexContent,data.last))::createObjects(data.dropRight(1),acc)
     else if(acc.keysIterator.contains(s"${data.last}")) TreeL(ObjectType.tree,data.last,ObjectBL.sha(Tree(valueAcc(data.last,acc))))::createObjects(data.dropRight(1),acc)
-  else createObjects(data.dropRight(1),acc)
+    else createObjects(data.dropRight(1),acc)
   }
   //Function to get a value of the acc map
   def valueAcc(data:String, acc:Map[String,List[TreeL]]):List[TreeL]= {
@@ -187,13 +187,13 @@ def allFileAreStaged(files:List[File], index:Index):Boolean= {
     val fakeCommit=sgit.Commit("","","","","",msg,Tree(commitEntriesDir),lastCommitId)
 
     commitObject match {
-      case _ if allStagedExists(indexContent)&& allFileAreStaged(lFilesBis,indexContent) && ObjectBL.sha(commitObject)!=lastCommitId =>{
+      case _ if (allStagedExists(indexContent)&& allFileAreStaged(lFilesBis,indexContent) &&ObjectBL.sha(commitObject)!=lastCommitId && ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit) ))=>{
         writeTrees(commitMap.filterKeys(_!="."))
         ObjectBL.addObject(commitObject)
         FilesUtilities.writeCommitMessage(msg)
         FilesUtilities.changeBranchSha(ObjectBL.sha(commitObject),branch)
       }
-      case _ if ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit)) && indexContent.indexEntries.nonEmpty => print("Everything is up to date")
+      case _ if (ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit)) && indexContent.indexEntries.nonEmpty )=> print("Everything is up to date")
       case _ => Status.status()
     }
 
