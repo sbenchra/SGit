@@ -9,7 +9,7 @@ object Diff {
 
 //Function to put Index blobs contents in a map
   def blobsAndContent(index:Index):Map[String,List[String]]={
-    if (index.indexEntries.isEmpty) Map(""->List())
+    if (index.indexEntries.isEmpty) Map()
     else Map(index.indexEntries.head.path->FilesUtilities.contentBlob(index.indexEntries.head.sha).drop(1))++ blobsAndContent(Index(index.indexEntries.tail))
   }
   //Function to put working directory files
@@ -34,12 +34,11 @@ object Diff {
   //Function to prepare the results for the print
   def printDiff(l1:List[String],l2:List[String]):List[String]={
     if (l1.isEmpty && l2.isEmpty) List()
-    else if(l1.isEmpty) List("++")++List(" ")++List("\n--")++l2
-    else if (l2.isEmpty) List("++")++l1++List("\n--")++List(" ")
+    else if(l1.isEmpty) List("++ ")++List("-- "+s"${l2.mkString("")}")
+    else if (l2.isEmpty) List("++"+s"${l1.mkString("")}")++List("--  ")
     else{
-      val diff1=l1.head
-      val diff2=l2.head
-      List("++")++List(s"'$diff1'")++List("--")++List(s"'$diff2'")++List("\n")++printDiff(l1.tail,l2.tail)
+
+      List("++"+s"${l1.head}")++List("--"+s"${l2.head}")++printDiff(l1.tail,l2.tail)
 
     }
   }
@@ -49,8 +48,8 @@ object Diff {
     if(m1.isEmpty) m2
     else if (m2.isEmpty) m1
     else
-    {val key=m1.head._1
-      Map(m1.head._1->compare(m1(s"$key"),m2(s"$key")))++compareMaps(m1.filterKeys(_!=key),m2.filterKeys(_!=key))}
+    {
+      Map(m1.head._1->compare(m1(s"${m1.head._1}"),m2(s"${m2.head._1}")))++compareMaps(m1.filterKeys(_!=s"${m1.head._1}"),m2.filterKeys(_!=s"${m2.head._1}"))}
   }
 
   //Function to print the differences
@@ -60,7 +59,7 @@ object Diff {
     else if (res.head._2.isEmpty)       differencesPrinter(res.tail)
 
     else {
-      print(res.head._1+" changes are \n"+ res(res.head._1).mkString(" ")+"\n")
+      print(res.head._1+" changes are \n"+ res(res.head._1).mkString("\n")+"\n"+res.head._2.length/2+ "++--@@ Modifications")
       differencesPrinter(res.tail)
     }
   }

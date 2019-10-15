@@ -188,10 +188,11 @@ def allFileAreStaged(files:List[File], index:Index):Boolean= {
 
     commitObject match {
       case _ if (allStagedExists(indexContent)&& allFileAreStaged(lFilesBis,indexContent) &&ObjectBL.sha(commitObject)!=lastCommitId && ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit) ))=>{
-        writeTrees(commitMap.filterKeys(_!="."))
+        writeTrees(commitMap)
         ObjectBL.addObject(commitObject)
         FilesUtilities.writeCommitMessage(msg)
         FilesUtilities.changeBranchSha(ObjectBL.sha(commitObject),branch)
+        FilesUtilities.writeInFile(Log.logFile(),List("Commit:"+ObjectBL.sha(commitObject)+"\n","Author:"+commitObject.authorName+"\n","Date:"+commitObject.commitDate+"\n","Parent:"+lastCommitId,"\n","Message:"+msg,"\n"))
       }
       case _ if (ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit)) && indexContent.indexEntries.nonEmpty )=> print("Everything is up to date")
       case _ => Status.status()
