@@ -85,7 +85,6 @@ added(l1)++deleted(l2)
 
   def
   diff(): Unit = {
-
     val indexFiles=Index.indexContent
     val workingDirFile=Index.workingDirFiles
     val mapIndex=blobsAndContent(indexFiles)
@@ -93,23 +92,6 @@ added(l1)++deleted(l2)
     val differences=compareMaps(mapIndex,mapDir)
     differencesPrinter(differences)
 
-
-  }
-
-
-  def main(args: Array[String]): Unit = {
-    Init.Init()
-  Add.add(List(new File("./soufiane")))
-    // Status.status()
-    //sgit.commands.Commit.commit("d")
-    //Log.logP()
-   Log.logStat()
-  //  Diff.diff()
-    //Branch.branchAv()
-    //FilesUtilities.deleteContentIndex(Array(" "))
-
-    //println(FilesUtilities.indexContentBis.map(_.head))
-    //  print(s)
   }
 
 }

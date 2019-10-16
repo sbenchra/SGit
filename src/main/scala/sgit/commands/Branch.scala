@@ -9,13 +9,24 @@ import scala.annotation.tailrec
 object Branch {
 
 
+  def commitWrite(file: File) = {
+    val newBranchFile = FilesUtilities.createFiles(List(file.getAbsolutePath))
+    val lastCommit = Commit.lastCommit._2
+    FilesUtilities.writeInFile(newBranchFile.head, List(lastCommit))
+  }
+
   def branch(branchName:String):Unit={
 
-    val newBranchFile=FilesUtilities.createFiles(List(Init.RepositoryPath+"/.sgit/refs/heads/"+branchName))
-    val lastCommit=Commit.lastCommit._2
-    FilesUtilities.writeInFile(newBranchFile.head,List(lastCommit))
+    val file = new File(Init.RepositoryPath+"/.sgit/refs/heads/"+branchName)
+    if(file.exists()) println("This branch already exists")
+    else {
+      commitWrite(file)
+    }
+
 
   }
+
+
   @tailrec
   def branchAVPrinter(lFiles:List[File]):Unit={
     if (lFiles.isEmpty) Unit
