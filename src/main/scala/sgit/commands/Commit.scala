@@ -5,6 +5,7 @@ import java.io.File
 import sgit.utilities.FilesUtilities
 import sgit.{Index, ObjectBL, ObjectType, Repository, Tree, TreeL}
 
+
 import scala.math.max
 object Commit {
   def headFilePath:String={

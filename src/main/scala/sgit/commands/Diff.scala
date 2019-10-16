@@ -24,33 +24,43 @@ object Diff {
     else {
       val diff1=l2.zipWithIndex.diff(l1.zipWithIndex).map(x=>x._1)
       val diff2=l1.zipWithIndex.diff(l2.zipWithIndex).map(x=>x._1)
-      val diffBis1=diff1.diff(l1)
-      val diffBis2=diff2.diff(l2)
+      val diffBis1=diff1.diff(l1).filter(x=>x!="")
+      val diffBis2=diff2.diff(l2).filter(x=>x!="")
 
     printDiff( diffBis1,diffBis2)
+
     }
+  }
+
+  def added(listLines:List[String]):List[String]={
+    if (listLines.isEmpty) List()
+    else List("++"+listLines.head)++added(listLines.tail)
+  }
+
+  def deleted(listLines:List[String]):List[String]={
+    if (listLines.isEmpty) List()
+    else List("--"+listLines.head)++deleted(listLines.tail)
   }
 
 
   //Function to prepare the results for the print
   def printDiff(l1:List[String],l2:List[String]):List[String]={
     if (l1.isEmpty && l2.isEmpty) List()
-    else if(l2.isEmpty) List("++"+s"${l1.mkString("")}")++List("--  ")
-    else if (l1.isEmpty) List("++ ")++List("-- "+s"${l2.mkString("")}")
-    else{
+    else {
+added(l1)++deleted(l2)
 
-      List("++"+s"${l2.head}")++List("--"+s"${l1.head}")++printDiff(l1.tail,l2.tail)
 
     }
+
   }
 
   //Function to compare working directory map and index map
   def compareMaps(m1:Map[String,List[String]],m2:Map[String,List[String]]): Map[String,List[String]]={
-    if(m1.isEmpty) m2
-    else if (m2.isEmpty) m1
+    if(m1.isEmpty || m2.isEmpty) Map()
     else
     {
-      Map(m1.head._1->compare(m1(s"${m1.head._1}"),m2(s"${m2.head._1}")))++compareMaps(m1.filterKeys(_!=s"${m1.head._1}"),m2.filterKeys(_!=s"${m2.head._1}"))}
+      val mapBlob= Map(m1.head._1->compare(m1(s"${m1.head._1}"),m2(s"${m2.head._1}")))
+     mapBlob++compareMaps(m1.filterKeys(_!=s"${m1.head._1}"),m2.filterKeys(_!=s"${m2.head._1}"))}
   }
 
   //Function to print the differences
@@ -59,21 +69,22 @@ object Diff {
     if(res.isEmpty ) Unit
     else if (res.head._2.isEmpty)       differencesPrinter(res.tail)
     else {
-      print(res.head._1+" changes are \n"+ res(res.head._1).mkString("\n")+"\n"+res.head._2.length/2+ "++--@@ Modifications")
+      print(res.head._1+" changes are \n"+ res(res.head._1).mkString("\n")+"\n"+res.head._2.count(_.contains("++"))+ "++@@ Ajout"+"\n"+res.head._2.count(_.contains("--"))+ "--@@ Supression")
       differencesPrinter(res.tail)
     }
   }
 
   @scala.annotation.tailrec
-  def lengthDiff(diff:Map[String,List[String]]):Unit={
+  def statDiff(diff:Map[String,List[String]]):Unit={
     if(diff.isEmpty) Unit
     else {
-      println(diff.head._2.length/2+ "++--@@ Modifications")
-      lengthDiff(diff.tail)
+      println(diff.head._2.count(_.contains("--"))+"--@@ Suppressions\n"+diff.head._2.count(_.contains("--"))+"--@@ Ajouts")
+      statDiff(diff.tail)
     }
   }
 
-  def diff(): Unit = {
+  def
+  diff(): Unit = {
 
     val indexFiles=Index.indexContent
     val workingDirFile=Index.workingDirFiles
@@ -88,11 +99,12 @@ object Diff {
 
   def main(args: Array[String]): Unit = {
     Init.Init()
-    // Add.add(List(new File("./soufiane")))
+  Add.add(List(new File("./soufiane")))
     // Status.status()
     //sgit.commands.Commit.commit("d")
-    //logP()
-    //Diff.diff()
+    //Log.logP()
+   Log.logStat()
+  //  Diff.diff()
     //Branch.branchAv()
     //FilesUtilities.deleteContentIndex(Array(" "))
 

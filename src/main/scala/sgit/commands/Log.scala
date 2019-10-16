@@ -119,6 +119,10 @@ def blobsCommit(trees:List[String]):List[String]={
 //Recursive function to print de the differences of blobs between a commit blobs and its parent
   @scala.annotation.tailrec
   def logPBis(commitsAndParents:Map[String,String], blobs:Map[String,Map[String,List[String]]]):Unit={
+
+
+    if(commitsAndParents.isEmpty)Unit
+    else{
       val parentBlobs = blobs(commitsAndParents.head._1)
       val commitBlobs = blobs(commitsAndParents.head._2)
       val commitTree1 = commitTree(List(commitsAndParents.head._1))
@@ -127,10 +131,8 @@ def blobsCommit(trees:List[String]):List[String]={
       val blobs2 = blobsCommit(commitTree2)
       val mapBlobs1 = blobsToMap(blobs1)
       val mapBlobs2 = blobsToMap(blobs2)
-
-    if(commitsAndParents.isEmpty)Unit
-    else{
       print("\nCommit: "+commitsAndParents.head._1+"\n"+"Parent: "+commitsAndParents.head._2+"\n")
+
       Diff.differencesPrinter(Diff.compareMaps(parentBlobs,commitBlobs))
       checkDiff(mapBlobs1,mapBlobs2)
       logPBis(commitsAndParents.tail,blobs)
@@ -144,7 +146,7 @@ def blobsCommit(trees:List[String]):List[String]={
       val parentBlobs = blobs(commitsAndParents.head._1)
       val commitBlobs = blobs(commitsAndParents.head._2)
       println("Parent: "+commitsAndParents.head._1 +" Commit: "+commitsAndParents.head._2)
-      Diff.lengthDiff(Diff.compareMaps(parentBlobs,commitBlobs))
+      Diff.statDiff(Diff.compareMaps(parentBlobs,commitBlobs))
       logStatBis(commitsAndParents.tail,blobs)
     }
   }
