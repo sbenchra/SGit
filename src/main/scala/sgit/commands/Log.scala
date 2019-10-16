@@ -177,24 +177,5 @@ def blobsCommit(trees:List[String]):List[String]={
   }
 
 
-  def main(args: Array[String]): Unit = {
-   Init.Init()
-
-  // Add.add(List(new File("./soufiane")))
-
-
-    // Status.status()
-
-
-  // sgit.commands.Commit.commit("s")
-   //logP()
-
-    sgit.commands.Log.logStat()
-
-//FilesUtilities.deleteContentIndex(Array(" "))
-
-//println(FilesUtilities.indexContentBis.map(_.head))
-    //  print(s)
-  }
 
 }

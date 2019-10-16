@@ -11,7 +11,6 @@ object Add {
     new File(System.getProperty("user.dir") + "./sgit/index")
   }
 
-
   //Repository path
   def RepositoryPath: String = {
     System.getProperty("user.dir")

@@ -24,8 +24,10 @@ object Diff {
     else {
       val diff1=l2.zipWithIndex.diff(l1.zipWithIndex).map(x=>x._1)
       val diff2=l1.zipWithIndex.diff(l2.zipWithIndex).map(x=>x._1)
+      val diffBis1=diff1.diff(l1)
+      val diffBis2=diff2.diff(l2)
 
-    printDiff( diff1,diff2)
+    printDiff( diffBis1,diffBis2)
     }
   }
 
@@ -33,8 +35,8 @@ object Diff {
   //Function to prepare the results for the print
   def printDiff(l1:List[String],l2:List[String]):List[String]={
     if (l1.isEmpty && l2.isEmpty) List()
-    else if(l2.isEmpty) List("++ ")++List("-- "+s"${l1.mkString("")}")
-    else if (l1.isEmpty) List("++"+s"${l2.mkString("")}")++List("--  ")
+    else if(l2.isEmpty) List("++"+s"${l1.mkString("")}")++List("--  ")
+    else if (l1.isEmpty) List("++ ")++List("-- "+s"${l2.mkString("")}")
     else{
 
       List("++"+s"${l2.head}")++List("--"+s"${l1.head}")++printDiff(l1.tail,l2.tail)
@@ -81,6 +83,21 @@ object Diff {
     differencesPrinter(differences)
 
 
+  }
+
+
+  def main(args: Array[String]): Unit = {
+    Init.Init()
+    // Add.add(List(new File("./soufiane")))
+    // Status.status()
+    //sgit.commands.Commit.commit("d")
+    //logP()
+    //Diff.diff()
+    //Branch.branchAv()
+    //FilesUtilities.deleteContentIndex(Array(" "))
+
+    //println(FilesUtilities.indexContentBis.map(_.head))
+    //  print(s)
   }
 
 }

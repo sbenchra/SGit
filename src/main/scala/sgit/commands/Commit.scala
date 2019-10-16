@@ -176,13 +176,7 @@ def allFileAreStaged(files:List[File], index:Index):Boolean= {
     val commitEntriesDir=if(commitMapDir.keysIterator.exists(_.contains("."))) commitMapDir(".")
     else { commitMapDir("")}
 
-    val headFile=new File(headFilePath)
-    //Currrent Branch
-    val currentBranch=FilesUtilities.readFileContent(headFile).split(" ")
-    val branch=new File(Init.RepositoryPath+"/.sgit/"+currentBranch(1))
-    //Last commit Id
-    val lastCommitId= {if (branch.exists()) FilesUtilities.readFileContent(branch).diff("\n")
-                    else "19011995" }
+    val (branch: File, lastCommitId: String) = lastCommit
     //Index Commit
     val commitObject=sgit.Commit("","","","","",msg,Tree(commitEntries),lastCommitId)
     //Workind directory commit
@@ -204,4 +198,16 @@ def allFileAreStaged(files:List[File], index:Index):Boolean= {
 
   }
 
+  def lastCommit = {
+    val headFile = new File(headFilePath)
+    //Currrent Branch
+    val currentBranch = FilesUtilities.readFileContent(headFile).split(" ")
+    val branch = new File(Init.RepositoryPath + "/.sgit/" + currentBranch(1))
+    //Last commit Id
+    val lastCommitId = {
+      if (branch.exists()) FilesUtilities.readFileContent(branch).diff("\n")
+      else "19011995"
+    }
+    (branch, lastCommitId)
+  }
 }
