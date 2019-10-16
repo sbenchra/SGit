@@ -94,45 +94,46 @@ def blobsCommit(trees:List[String]):List[String]={
     else Map(commitIndex.head._1->Diff.blobsAndContent(commitIndex.head._2))++blobContents(commitIndex.tail)
   }
 
-  @scala.annotation.tailrec
-  def checkDiff(blobs1:Map[String,String], blobs2:Map[String,String], diff:Map[String,String]):Unit={
-    if(diff.isEmpty) Unit
-    else if (blobs1.exists(_._1==diff.head._1) && !blobs2.exists(_._1==diff.head._1))  print("\n"+diff.head._1+" is deleted")
-    else if (blobs2.exists(_._1==diff.head._1) && !blobs1.exists(_._1==diff.head._1))  print("\n"+diff.head._1+" is added")
-    else if (blobs2.exists(_._2==diff.head._2) && !blobs1.exists(_._2==diff.head._2))  print("\n"+diff.head._1+" is modified")
-    else checkDiff(blobs1,blobs2,diff.tail)
+  def checkDiff(blobs1:Map[String,String], blobs2:Map[String,String]):Unit={
+    if(blobs1.isEmpty || blobs2.isEmpty) Unit
+    else if (!blobs1.exists(_._1==blobs2.head._1) && !blobs1.exists(_._2==blobs2.head._2)) {
+      print("\n"+blobs2.head._1+" is deleted")
+      checkDiff(blobs1.tail,blobs2)
+      checkDiff(blobs1,blobs2.tail)
+    }
+    else if (!blobs1.exists(_._1==blobs2.head._1) && !blobs1.exists(_._2==blobs2.head._2))  {
+      print("\n"+blobs1.head._1+" is added")
+      checkDiff(blobs1,blobs2.tail)
 
-
-  }
-
-  @scala.annotation.tailrec
-  def blobsComparaison(commitAndParent:Map[String,String]):Unit={
-    if (commitAndParent.isEmpty)Unit
-    else {
-      val commitTree1= commitTree(List(commitAndParent.head._1))
-      val commitTree2= commitTree(List(commitAndParent.head._2))
-      val blobs1=blobsCommit(commitTree1)
-      val blobs2=blobsCommit(commitTree2)
-      val mapBlobs1=blobsToMap(blobs1)
-      val mapBlobs2=blobsToMap(blobs2)
-      val diff= (mapBlobs1.toSet diff mapBlobs2.toSet).toMap
-      checkDiff(mapBlobs1,mapBlobs1,diff)
-      blobsComparaison(commitAndParent.tail)
+    }
+    else if (blobs1.exists(_._1==blobs2.head._1) && !blobs1.exists(_._2==blobs2.head._2))
+    { print("\n"+blobs1.head._1+" is modified")
+       checkDiff(blobs1,blobs2.tail)
     }
 
 
-
   }
+
 
   @scala.annotation.tailrec
   def logBis(commitsAndParents:Map[String,String], blobs:Map[String,Map[String,List[String]]]):Unit={
     if(commitsAndParents.isEmpty)Unit
     else{
 
-      val parent=blobs(commitsAndParents.head._1)
-      val commit= blobs(commitsAndParents.head._2)
+      val parentBlobs=blobs(commitsAndParents.head._1)
+      val commitBlobs= blobs(commitsAndParents.head._2)
+      val commitTree1= commitTree(List(commitsAndParents.head._1))
+      val commitTree2= commitTree(List(commitsAndParents.head._2))
+      val blobs1=blobsCommit(commitTree1)
+      val blobs2=blobsCommit(commitTree2)
+      val mapBlobs1=blobsToMap(blobs1)
+      val mapBlobs2=blobsToMap(blobs2)
+
       print("\nCommit: "+commitsAndParents.head._1+"\n"+"Parent: "+commitsAndParents.head._2+"\n")
-      Diff.differencesPrinter(Diff.compareMaps(parent,commit))
+      Diff.differencesPrinter(Diff.compareMaps(parentBlobs,commitBlobs))
+
+
+      checkDiff(mapBlobs1,mapBlobs2)
       logBis(commitsAndParents.tail,blobs)
     }
 
@@ -150,7 +151,6 @@ def blobsCommit(trees:List[String]):List[String]={
     val commitsAndParents=commitAndParent(logContentArray)
 
     logBis(commitsAndParents,blobContents(commitIndex(commitsAndParents)))
-    blobsComparaison(commitsAndParents)
 
 
   }
@@ -165,16 +165,14 @@ def blobsCommit(trees:List[String]):List[String]={
     // Status.status()
 
 
-    sgit.commands.Commit.commit("s")
-    logP()
+   sgit.commands.Commit.commit("s")
+   logP()
 
     //sgit.commands.Diff.diff
 
+//FilesUtilities.deleteContentIndex(Array(" "))
 
-
-
-    //print(Log.commitAndParent(Log.logContentArray))
-
+//println(FilesUtilities.indexContentBis.map(_.head))
     //  print(s)
   }
 

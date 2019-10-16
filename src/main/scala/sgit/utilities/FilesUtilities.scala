@@ -2,6 +2,7 @@ package sgit.utilities
 
 import java.io.{BufferedWriter, File, FileWriter}
 
+import javax.swing.text.AbstractDocument.Content
 import sgit.commands.{Init, Status}
 
 import scala.io.Source
@@ -137,6 +138,15 @@ FilesUtilities {
 
   }
 
+  def deleContentIndexBis(dif : String,content:List[Array[String]]):List[Array[String]]={
+    if (content.isEmpty) List(Array())
+    else if (!content.head.contains(dif)) content.head+:deleContentIndexBis(dif,content.tail)
+    else deleContentIndexBis(dif,content.tail)
+  }
+
+  def deleteContentIndex(content:List[Array[String]]):Unit={
+    modifyFile(IndexFile,content)
+  }
 
 
 }

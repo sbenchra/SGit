@@ -24,12 +24,12 @@ object Index{
 
   }
 //Function to modify an index
-  def modifyIndexContent(indexEntry: IndexEntry, indexContent:List[Array[String]]):Unit={
+  def modifyIndexContent(newIndexEntry: IndexEntry, indexContent:List[Array[String]]):Unit={
     if (indexContent.isEmpty) Unit
-    else if (indexContent.head.contains(indexEntry.path)) {
-       indexContent.head.update(1,indexEntry.sha)
+    else if (indexContent.head.contains(newIndexEntry.path)) {
+       indexContent.head.update(1,newIndexEntry.sha)
     }
-    else {modifyIndexContent(indexEntry,indexContent.tail)}
+    else {modifyIndexContent(newIndexEntry,indexContent.tail)}
     FilesUtilities.modifyFile(FilesUtilities.IndexFile,indexContent)
 
 
@@ -73,6 +73,8 @@ object Index{
       workDirField.sha.equals(index.indexEntries.head.sha) || index.indexEntries.head.path.equals(workDirField.path) || containsIndexEntry(workDirField,Index(index.indexEntries.tail))
     }
   }
+
+
 
 
 }

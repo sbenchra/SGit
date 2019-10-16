@@ -1,7 +1,6 @@
 package sgit.commands
 
 import java.io.File
-
 import sgit.Index
 import sgit.utilities.FilesUtilities
 
