@@ -89,11 +89,13 @@ def blobsCommit(trees:List[String]):List[String]={
         constructsIndex(commitMap)
     }
   }
+  //Function to return the commit and its blobs and their content
   def blobContents(commitIndex:Map[String,Index]):Map[String,Map[String,List[String]]]={
     if (commitIndex.isEmpty) Map()
     else Map(commitIndex.head._1->Diff.blobsAndContent(commitIndex.head._2))++blobContents(commitIndex.tail)
   }
 
+//Function to check de the difference between two blobs
   def checkDiff(blobs1:Map[String,String], blobs2:Map[String,String]):Unit={
     if(blobs1.isEmpty || blobs2.isEmpty) Unit
     else if (!blobs1.exists(_._1==blobs2.head._1) && !blobs1.exists(_._2==blobs2.head._2)) {
@@ -114,61 +116,80 @@ def blobsCommit(trees:List[String]):List[String]={
 
   }
 
-
+//Recursive function to print de the differences of blobs between a commit blobs and its parent
   @scala.annotation.tailrec
-  def logBis(commitsAndParents:Map[String,String], blobs:Map[String,Map[String,List[String]]]):Unit={
+  def logPBis(commitsAndParents:Map[String,String], blobs:Map[String,Map[String,List[String]]]):Unit={
+      val parentBlobs = blobs(commitsAndParents.head._1)
+      val commitBlobs = blobs(commitsAndParents.head._2)
+      val commitTree1 = commitTree(List(commitsAndParents.head._1))
+      val commitTree2 = commitTree(List(commitsAndParents.head._2))
+      val blobs1 = blobsCommit(commitTree1)
+      val blobs2 = blobsCommit(commitTree2)
+      val mapBlobs1 = blobsToMap(blobs1)
+      val mapBlobs2 = blobsToMap(blobs2)
+
     if(commitsAndParents.isEmpty)Unit
     else{
-
-      val parentBlobs=blobs(commitsAndParents.head._1)
-      val commitBlobs= blobs(commitsAndParents.head._2)
-      val commitTree1= commitTree(List(commitsAndParents.head._1))
-      val commitTree2= commitTree(List(commitsAndParents.head._2))
-      val blobs1=blobsCommit(commitTree1)
-      val blobs2=blobsCommit(commitTree2)
-      val mapBlobs1=blobsToMap(blobs1)
-      val mapBlobs2=blobsToMap(blobs2)
-
       print("\nCommit: "+commitsAndParents.head._1+"\n"+"Parent: "+commitsAndParents.head._2+"\n")
       Diff.differencesPrinter(Diff.compareMaps(parentBlobs,commitBlobs))
-
-
       checkDiff(mapBlobs1,mapBlobs2)
-      logBis(commitsAndParents.tail,blobs)
+      logPBis(commitsAndParents.tail,blobs)
     }
-
-
   }
-  def log():Unit={
 
+  @scala.annotation.tailrec
+  def logStatBis(commitsAndParents:Map[String,String], blobs:Map[String,Map[String,List[String]]]):Unit={
+    if(commitsAndParents.isEmpty)Unit
+    else{
+      val parentBlobs = blobs(commitsAndParents.head._1)
+      val commitBlobs = blobs(commitsAndParents.head._2)
+      println("Parent: "+commitsAndParents.head._1 +" Commit: "+commitsAndParents.head._2)
+      Diff.lengthDiff(Diff.compareMaps(parentBlobs,commitBlobs))
+      logStatBis(commitsAndParents.tail,blobs)
+    }
+  }
+    //function to start the command log
+  def log():Unit={
     print(logContent)
 
+  }
+  //Function to start the Log -p Command
+  def logP():Unit={
+    val commitsAndParents: _root_.scala.Predef.Map[_root_.scala.Predef.String, _root_.scala.Predef.String] = commitParent
+
+    logPBis(commitsAndParents,blobsContents(commitsAndParents))
+
 
   }
+//blob contents of all comits
+  private def blobsContents(commitsAndParents: Map[String, String]) = {
+    blobContents(commitIndex(commitsAndParents))
+  }
 
-
-  def logP():Unit={
-    val commitsAndParents=commitAndParent(logContentArray)
-
-    logBis(commitsAndParents,blobContents(commitIndex(commitsAndParents)))
-
-
+  //Commits and there parents return map
+  private def commitParent = {
+    val commitsAndParents = commitAndParent(logContentArray)
+    commitsAndParents
+  }
+//Method to start the log -stat command
+  def logStat():Unit={
+    logStatBis(commitParent,blobsContents(commitParent))
   }
 
 
   def main(args: Array[String]): Unit = {
    Init.Init()
 
-   Add.add(List(new File("./soufiane")))
+  // Add.add(List(new File("./soufiane")))
 
 
     // Status.status()
 
 
-   sgit.commands.Commit.commit("s")
-   logP()
+  // sgit.commands.Commit.commit("s")
+   //logP()
 
-    //sgit.commands.Diff.diff
+    sgit.commands.Log.logStat()
 
 //FilesUtilities.deleteContentIndex(Array(" "))
 

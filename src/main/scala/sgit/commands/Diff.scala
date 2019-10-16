@@ -56,16 +56,24 @@ object Diff {
   def differencesPrinter(res:Map[String,List[String]]):Unit={
     if(res.isEmpty ) Unit
     else if (res.head._2.isEmpty)       differencesPrinter(res.tail)
-
     else {
       print(res.head._1+" changes are \n"+ res(res.head._1).mkString("\n")+"\n"+res.head._2.length/2+ "++--@@ Modifications")
       differencesPrinter(res.tail)
     }
   }
 
+  @scala.annotation.tailrec
+  def lengthDiff(diff:Map[String,List[String]]):Unit={
+    if(diff.isEmpty) Unit
+    else {
+      println(diff.head._2.length/2+ "++--@@ Modifications")
+      lengthDiff(diff.tail)
+    }
+  }
+
   def diff(): Unit = {
 
-  val indexFiles=Index.indexContent
+    val indexFiles=Index.indexContent
     val workingDirFile=Index.workingDirFiles
     val mapIndex=blobsAndContent(indexFiles)
     val mapDir=dirFilesAndContent(workingDirFile)
