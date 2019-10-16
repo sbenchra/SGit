@@ -10,7 +10,7 @@ object Diff {
 //Function to put Index blobs contents in a map
   def blobsAndContent(index:Index):Map[String,List[String]]={
     if (index.indexEntries.isEmpty) Map()
-    else Map(index.indexEntries.head.path->FilesUtilities.contentBlob(index.indexEntries.head.sha).drop(1))++ blobsAndContent(Index(index.indexEntries.tail))
+    else Map(index.indexEntries.head.path->FilesUtilities.contentObject(index.indexEntries.head.sha).drop(1))++ blobsAndContent(Index(index.indexEntries.tail))
   }
   //Function to put working directory files
   def dirFilesAndContent(files:List[File]):Map[String,List[String]]={
@@ -34,11 +34,11 @@ object Diff {
   //Function to prepare the results for the print
   def printDiff(l1:List[String],l2:List[String]):List[String]={
     if (l1.isEmpty && l2.isEmpty) List()
-    else if(l1.isEmpty) List("++ ")++List("-- "+s"${l2.mkString("")}")
-    else if (l2.isEmpty) List("++"+s"${l1.mkString("")}")++List("--  ")
+    else if(l2.isEmpty) List("++ ")++List("-- "+s"${l1.mkString("")}")
+    else if (l1.isEmpty) List("++"+s"${l2.mkString("")}")++List("--  ")
     else{
 
-      List("++"+s"${l1.head}")++List("--"+s"${l2.head}")++printDiff(l1.tail,l2.tail)
+      List("++"+s"${l2.head}")++List("--"+s"${l1.head}")++printDiff(l1.tail,l2.tail)
 
     }
   }
@@ -70,15 +70,8 @@ object Diff {
     val workingDirFile=Index.workingDirFiles
     val mapIndex=blobsAndContent(indexFiles)
     val mapDir=dirFilesAndContent(workingDirFile)
-
     val differences=compareMaps(mapIndex,mapDir)
-
     differencesPrinter(differences)
-
-
-
-
-
 
 
   }

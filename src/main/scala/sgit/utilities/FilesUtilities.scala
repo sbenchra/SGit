@@ -131,7 +131,7 @@ FilesUtilities {
     }
   }
 
-  def contentBlob(sha:String):List[String]={
+  def contentObject(sha:String):List[String]={
     val filePath=Init.RepositoryPath+"/.sgit/objects/"+sha.take(2)+"/"+sha.takeRight(38)
     readFileContent(new File(filePath)).split("\n").toList
 

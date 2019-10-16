@@ -31,7 +31,7 @@ object Commit{
 
   //Forming the tree
   def encodeCommit(c:Commit): List[String] = {
-    List(c.getHeader(c)+"\n"+encodeBodyCommit(c))
+    List(ObjectBL.getHeader(c)+"\n"+encodeBodyCommit(c))
   }
 
   def parentCommitToString(pCommits:List[Commit]): String = {

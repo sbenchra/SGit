@@ -20,7 +20,7 @@ object Tree{
   }
   //Forming the tree
   def formTree(t:Tree): List[String] = {
-    List(t.getHeader(t)+"\n"+formBodyTree(t))
+    List(ObjectBL.getHeader(t)+"\n"+formBodyTree(t))
   }
 
   //Tree body

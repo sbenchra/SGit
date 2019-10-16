@@ -44,28 +44,6 @@ object Repository {
 
 
 
-  def main(args: Array[String]): Unit = {
-  Init.Init()
-
- Add.add(List(new File("./soufiane")))
-
-
-
-
-
-   Status.status()
-
-
-sgit.commands.Commit.commit("s")
-   //sgit.commands.Diff.diff
-
-
-
-
-print(Log.commitAndParent(Log.logContentArray))
-
-  //  print(s)
-  }
 
 
 

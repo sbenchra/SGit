@@ -187,8 +187,8 @@ def allFileAreStaged(files:List[File], index:Index):Boolean= {
     val commitObject=sgit.Commit("","","","","",msg,Tree(commitEntries),lastCommitId)
     //Workind directory commit
     val fakeCommit=sgit.Commit("","","","","",msg,Tree(commitEntriesDir),lastCommitId)
-val f =ObjectBL.sha(commitObject).equals(lastCommitId)
-    commitObject match {
+
+      commitObject match {
       case _ if (allStagedExists(Index.indexContent)&& allFileAreStaged(Index.workingDirFiles,Index.indexContent) &&ObjectBL.sha(commitObject)!=lastCommitId && ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit) ))=>{
         writeTrees(commitMap)
         ObjectBL.addObject(commitObject)
