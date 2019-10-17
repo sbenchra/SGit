@@ -7,8 +7,8 @@ import sgit.utilities.FilesUtilities
 
 object Checkout {
 
-/*
-  def checkout(id:String)={
+//Main checkout
+  def checkout(id:String): Unit ={
 
     val logContent=Log.commitAndParent(Log.logContentArray)
     val commits=logContent.keys.toList
@@ -18,11 +18,11 @@ object Checkout {
         if (commits.contains(id) || parents.contains(id)) {    checkoutCommit(id)        }
         else if (branches.contains(id)) {checkoutBranch(id)}
         else if (tags.contains(id)) {checkoutTag(id) }
-        else print("Not found tag")
+        else print("Id not found")
   }
 
- */
 
+//Form a new index File
 @scala.annotation.tailrec
 def addNewIndex(index:Index):Unit={
   if (index.indexEntries.isEmpty)Unit
@@ -30,6 +30,8 @@ def addNewIndex(index:Index):Unit={
         addNewIndex(Index(index.indexEntries.tail))
   }
 }
+
+  //decode blobs in the working directory
   def newDirectory(blobsContent:Map[String,List[String]]):Unit={
     if (blobsContent.isEmpty) Unit
     else {
@@ -42,7 +44,7 @@ def addNewIndex(index:Index):Unit={
 
   }
 
-
+//Checkout commit
   def checkoutCommit(commitId: String): Unit ={
 
       val commitBlobs= Log.constructsCommitMap(Map(commitId->commitId))
@@ -60,9 +62,24 @@ def addNewIndex(index:Index):Unit={
       newDirectory(blobsContent)
 
 
+  }
+//Checkout Branch
+  def checkoutBranch(branchName:String):Unit={
+    val file= new File(Branch.headsDir()+branchName)
+   val commitId=FilesUtilities.readFileContent(file).diff("\n")
+      val headFile= new File(Init.RepositoryPath+"/.sgit/HEAD")
+      checkoutCommit(commitId)
 
-
+      FilesUtilities.modifyFile(headFile,List(Array(branchName)))
 
   }
+  //Check Tag
+  def checkoutTag(tagName:String):Unit={
+    val file= new File(Tag.tagsDirPath()+tagName)
+     val commitId=FilesUtilities.readFileContent(file)
+      checkoutCommit(commitId)
+
+  }
+
 
 }

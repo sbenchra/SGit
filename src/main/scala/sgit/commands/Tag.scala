@@ -26,7 +26,7 @@ object Tag {
     // Status.status()
     sgit.commands.Commit.commit("d")
     //Log.logP()
-print(Checkout.checkoutCommit("c35a677958475c8f1dc2891643d4e00db4bade7c"))
+    print(Checkout.checkoutBranch("master"))
     //  Diff.diff()
     //Branch.branchAv()
     //FilesUtilities.deleteContentIndex(Array(" "))
