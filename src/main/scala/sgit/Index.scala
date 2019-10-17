@@ -1,7 +1,9 @@
 package sgit
 
 import java.io.File
+
 import sgit.utilities.FilesUtilities
+
 import scala.io.Source
 
 case class IndexEntry(path:String,sha:String)
@@ -49,17 +51,27 @@ object Index{
     val path = file.getPath
     IndexEntry(path,sha)
   }
-//Tranform a file to and index entry and fill it in Index file
-  def addIndexEntry(file: File) : IndexEntry= {
+
+  def fileToIndexEntry(file:File):IndexEntry= {
     if (!file.exists()) IndexEntry("", "")
     else {
-      val indexEntry=shaAndPath(file)
+      val indexEntry = shaAndPath(file)
       val sha = indexEntry.sha
       val path = indexEntry.path
-      FilesUtilities.writeInFile(FilesUtilities.IndexFile,List("\n",s"$path"," ",s"$sha"))
-      IndexEntry(path, sha)
+
+      IndexEntry(path,sha)
     }
-  }//Function to transform the list of working directory files to list of entries
+  }
+
+
+
+//Tranform a file to and index entry and fill it in Index file
+  def addIndexEntry(indexEntry: IndexEntry) : Unit= {
+
+      FilesUtilities.writeInFile(FilesUtilities.IndexFile,List("\n",s"${indexEntry.path}"," ",s"${indexEntry.sha}"))
+    }
+
+  //Function to transform the list of working directory files to list of entries
   def workingDirBlobs(lFiles:List[File]) :List[IndexEntry]={
     if(lFiles.isEmpty) List()
     else Index.shaAndPath(lFiles.head):: workingDirBlobs(lFiles.tail)

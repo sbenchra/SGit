@@ -27,19 +27,21 @@ object Branch {
   }
 
 
-  @tailrec
-  def branchAVPrinter(lFiles:List[File]):Unit={
-    if (lFiles.isEmpty) Unit
+  def branchAVPrinter(lFiles:List[File]):List[String]={
+    if (lFiles.isEmpty) List()
     else
       {
         println(lFiles.head.getName)
-        branchAVPrinter(lFiles.tail)
+        lFiles.head.getName::branchAVPrinter(lFiles.tail)
       }
   }
 
   def branchAv():Unit={
-    val branchsFiles=FilesUtilities.filesOfListFiles(List(new File(Init.RepositoryPath+"/.sgit/refs/heads/")))
-    branchAVPrinter(branchsFiles)
+    val branchs: scala.List[_root_.java.io.File] = branchFiles
+    branchAVPrinter(branchs)
   }
-
+  def branchFiles: List[File] = {
+    val branchsFiles = FilesUtilities.filesOfListFiles(List(new File(Init.RepositoryPath + "/.sgit/refs/heads/")))
+    branchsFiles
+  }
 }

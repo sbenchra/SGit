@@ -34,7 +34,8 @@ object Add {
       case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).sha, Index(Index.indexContent(FilesUtilities.indexContentBis))) &&
         !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).path,Index(Index.indexContent(FilesUtilities.indexContentBis)) )=>
                   addFileToDir(lFilesBis.head)
-                 Index.addIndexEntry(lFilesBis.head)
+                 val indexEntry=Index.fileToIndexEntry(lFilesBis.head)
+                  Index.addIndexEntry(indexEntry)
                  add(lFilesBis.tail)
         // if
       case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).sha, Index(Index.indexContent(FilesUtilities.indexContentBis))) &&

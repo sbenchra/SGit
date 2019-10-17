@@ -18,7 +18,8 @@ def logContent:String={
 //Function to return the commits with the parents in a map
   def commitAndParent(logContentA:Array[String]):Map[String,String]={
     if (logContentA.isEmpty) Map()
-    else if (logContentA.head.contains("Commit") && !logContentA(logContentA.indexOf(logContentA.head)+3).contains("19011995"))Map(logContentA.head.diff("Commit:")->logContentA(logContentA.indexOf(logContentA.head)+3).diff("Parent:"))++commitAndParent(logContentA.tail)
+    else if (logContentA.head.contains("Commit") && !logContentA(logContentA.indexOf(logContentA.head)+3).contains("19011995"))
+      Map(logContentA.head.diff("Commit:")->logContentA(logContentA.indexOf(logContentA.head)+3).diff("Parent:"))++commitAndParent(logContentA.tail)
     else commitAndParent(logContentA.tail)
   }
 //Extract tree sha1
@@ -90,9 +91,9 @@ def blobsCommit(trees:List[String]):List[String]={
     }
   }
   //Function to return the commit and its blobs and their content
-  def blobContents(commitIndex:Map[String,Index]):Map[String,Map[String,List[String]]]={
+  def blobIndexContents(commitIndex:Map[String,Index]):Map[String,Map[String,List[String]]]={
     if (commitIndex.isEmpty) Map()
-    else Map(commitIndex.head._1->Diff.blobsAndContent(commitIndex.head._2))++blobContents(commitIndex.tail)
+    else Map(commitIndex.head._1->Diff.blobsAndContent(commitIndex.head._2))++blobIndexContents(commitIndex.tail)
   }
 
 //Function to check de the difference between two blobs
@@ -165,7 +166,7 @@ def blobsCommit(trees:List[String]):List[String]={
   }
 //blob contents of all comits
   private def blobsContents(commitsAndParents: Map[String, String]) = {
-    blobContents(commitIndex(commitsAndParents))
+    blobIndexContents(commitIndex(commitsAndParents))
   }
 
   //Commits and there parents return map

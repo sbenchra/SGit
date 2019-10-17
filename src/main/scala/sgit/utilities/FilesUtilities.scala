@@ -30,6 +30,7 @@ FilesUtilities {
     if (sFiles.isEmpty) List()
     else {
       val newFile = new File(sFiles.head)
+      FilesUtilities.createDirectories(List(newFile.getParent))
       newFile.createNewFile()
       newFile :: createFiles(sFiles.tail)
 
@@ -67,7 +68,14 @@ FilesUtilities {
     else Unit
   }
 
-
+  def deleteRecursively(file: File): Unit = {
+    if (file.isDirectory) {
+      file.listFiles.foreach(deleteRecursively)
+    }
+    if (file.exists && !file.delete) {
+      throw new Exception(s"Unable to delete ${file.getAbsolutePath}")
+    }
+  }
   // Returns the file content as a string
   def readFileContent(file: File): String = {
     Source.fromFile(file).mkString
