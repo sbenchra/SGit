@@ -1,10 +1,7 @@
 package sgit.commands
 
 import java.io.File
-
 import sgit.utilities.FilesUtilities
-
-import scala.annotation.tailrec
 
 object Branch {
 

@@ -97,12 +97,12 @@ def blobsCommit(trees:List[String]):List[String]={
   }
 
 //Function to check de the difference between two blobs
-  def checkDiff(blobs1:Map[String,String], blobs2:Map[String,String]):Unit={
+@scala.annotation.tailrec
+def checkDiff(blobs1:Map[String,String], blobs2:Map[String,String]):Unit={
     if(blobs1.isEmpty || blobs2.isEmpty) Unit
-    else if (!blobs1.exists(_._1==blobs2.head._1) && !blobs1.exists(_._2==blobs2.head._2)) {
-      print("\n"+blobs2.head._1+" is deleted")
+    else if (!blobs2.exists(_._1==blobs1.head._1) && !blobs2.exists(_._2==blobs1.head._2)) {
+      print("\n"+blobs1.head._1+" is deleted")
       checkDiff(blobs1.tail,blobs2)
-      checkDiff(blobs1,blobs2.tail)
     }
     else if (!blobs1.exists(_._1==blobs2.head._1) && !blobs1.exists(_._2==blobs2.head._2))  {
       print("\n"+blobs1.head._1+" is added")
@@ -120,8 +120,6 @@ def blobsCommit(trees:List[String]):List[String]={
 //Recursive function to print de the differences of blobs between a commit blobs and its parent
   @scala.annotation.tailrec
   def logPBis(commitsAndParents:Map[String,String], blobs:Map[String,Map[String,List[String]]]):Unit={
-
-
     if(commitsAndParents.isEmpty)Unit
     else{
       val parentBlobs = blobs(commitsAndParents.head._1)

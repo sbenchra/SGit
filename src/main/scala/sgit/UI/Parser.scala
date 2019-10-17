@@ -2,7 +2,6 @@ package sgit.UI
 
 import scopt.OParser
 case class Config(
-
                    path:String=".",
                     mode :String="",
                     lFile:List[String]=List(),

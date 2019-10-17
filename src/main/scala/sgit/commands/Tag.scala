@@ -22,16 +22,18 @@ object Tag {
 
   def main(args: Array[String]): Unit = {
     Init.Init()
-    Add.add(List(new File("./soufiane")))
+    //Add.add(List(new File("./soufiane")))
     // Status.status()
-    sgit.commands.Commit.commit("d")
+    //sgit.commands.Commit.commit("d")
     //Log.logP()
-    print(Checkout.checkoutBranch("master"))
-    //  Diff.diff()
+    //print(Checkout.checkoutBranch("master"))
+      //Diff.diff()
     //Branch.branchAv()
     //FilesUtilities.deleteContentIndex(Array(" "))
 
     //println(FilesUtilities.indexContentBis.map(_.head))
     //  print(s)
   }
+
+
 }
