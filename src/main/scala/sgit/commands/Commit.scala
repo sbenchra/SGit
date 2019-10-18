@@ -22,13 +22,19 @@ object Commit {
     else index.indexEntries.head.path::pathsIndex(Index(index.indexEntries.tail))
   }
 
+  def fragmentPath(path:List[String]):List[String]={
+    if (path.isEmpty) List()
+    else path.flatMap(_.split("/")).map(_.drop(0))
+  }
+
+
   // Split list of paths
   //@param:path:List[String] -> list of paths
   //Return : List[List[String]] -> Lists of list of each path elements
-    def fragmentAllPaths(paths:List[String]): List[List[String]]={
-        if (paths.isEmpty) List()
-        else List(paths.flatMap(_.split("/")).map(_.drop(0)))++fragmentAllPaths(paths.tail)
-    }
+  def fragmentAllPaths(paths:List[String]): List[List[String]]={
+    if (paths.isEmpty) List()
+    else fragmentPath(List(paths.head))::fragmentAllPaths(paths.tail)
+  }
   //Recursive function to return the max length of path
   //@Param: paths : List[List[String]] -> list of list of paths elements
   //@Return:  The max length of a path in the list
