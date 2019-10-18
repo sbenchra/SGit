@@ -1,7 +1,1 @@
-package sgit.commands
-
-import java.io.File
-
-import sgit.Repository
-import sgit.utilities.FilesUtilities
-
+This is a test

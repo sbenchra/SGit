@@ -168,7 +168,7 @@ def checkDiff(blobs1:Map[String,String], blobs2:Map[String,String]):Unit={
   }
 
   //Commits and there parents return map
-  private def commitParent = {
+  private def commitParent: Map[String, String] = {
     val commitsAndParents = commitAndParent(logContentArray)
     commitsAndParents
   }

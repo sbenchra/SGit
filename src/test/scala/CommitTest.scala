@@ -25,11 +25,16 @@ class CommitTest extends FunSuite with DiagrammedAssertions {
   }
 
   test("it shouldn't commit because the change was not staged"){
+    Init.Init()
     Add.add(listFiles)
     val file=new File(listFiles.head)
     FilesUtilities.writeInFile(file,List("Test text"))
     Commit.commit(msg)
     assert(!Index.fieldInIndex(Index.shaAndPath(file).sha, Index.indexContent))
+  }
+  test("it should get the path in the index")
+  {
+    assert(Commit.getPath(Index.indexContent,"test.txt")=="/home/benchraa/SGit/soufiane/test.txt")
   }
 
 
