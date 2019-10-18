@@ -40,8 +40,8 @@ object Add {
 
       case _ if lFilesBis.isEmpty=>Unit
       //If a file is a deleted
-      case _ if Index.indexContentToIndex(FilesUtilities.indexContentBis).map(_.path).diff(Index.workingDirBlobs(Index.workingDirFiles).map(_.path)).nonEmpty=>
-                val wDirBlobs=Index.workingDirBlobs(Index.workingDirFiles)
+      case _ if Index.indexContentToIndex(FilesUtilities.indexContentBis).map(_.path).diff(Index.workingDirIndex(Index.workingDirFiles).map(_.path)).nonEmpty=>
+                val wDirBlobs=Index.workingDirIndex(Index.workingDirFiles)
                 val diffWdirIndex=Index.indexContentToIndex(indexContent).diff(wDirBlobs)
                 val toListDiff=Index.listOfIndexListArray(diffWdirIndex)
                 val toListDir=Index.listOfIndexListArray(wDirBlobs)

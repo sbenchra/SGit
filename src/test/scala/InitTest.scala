@@ -14,5 +14,10 @@ class InitTest extends FunSuite with DiagrammedAssertions {
     Init.Init()
     assert(dir.listFiles().map(_.getName).contains(".sgit"))
   }
+  test("Should check if the repository is already initialized")
+  {
+    Init.Init()
+    assert(Repository.isInitialized(dir.getAbsolutePath))
+  }
 
 }

@@ -14,7 +14,7 @@ object Index{
 //To change
   def workingDirFiles: List[File] = FilesUtilities.filesOfListFiles(List(new File("soufiane")))
 //Working directory content as index
-  def directoryContent=Index(workingDirBlobs(workingDirFiles))
+  def directoryContent=Index(workingDirIndex(workingDirFiles))
 
   //Function to tranform an index content to list of index entries
   // @param: contentBis->List of index lines as arrays
@@ -77,9 +77,9 @@ object Index{
   //Preparing the index of the working direcotry
   //@param : lFiles-> list of files
   //Return : List of index entries
-  def workingDirBlobs(lFiles:List[File]) :List[IndexEntry]={
+  def workingDirIndex(lFiles:List[File]) :List[IndexEntry]={
     if(lFiles.isEmpty) List()
-    else shaAndPath(lFiles.head)::workingDirBlobs(lFiles.tail)
+    else shaAndPath(lFiles.head)::workingDirIndex(lFiles.tail)
   }
 
   //Check if the workDirField is contained in the index

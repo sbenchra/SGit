@@ -141,8 +141,8 @@ object Commit {
 
         }
       }
-      val b=Repository.getWorkingDirPath(Init.CureentFile).split("/")
-      commitPrepareBis(index,paths.map(x=>List(".")++x.diff(b)),Map())
+      val fullPath=Repository.getWorkingDirPath(Init.CureentFile).split("/")
+      commitPrepareBis(index,paths.map(x=>List(".")++x.diff(fullPath)),Map())
 
     }
 
@@ -202,7 +202,7 @@ object Commit {
           && allFileAreStaged(Index.workingDirFiles,Index.indexContent)
           &&ObjectBL.sha(commitObject)!=lastCommitId &&
           ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit))&&
-          Index.indexContentToIndex(FilesUtilities.indexContentBis).diff(Index.workingDirBlobs(Index.workingDirFiles)).isEmpty
+          Index.indexContentToIndex(FilesUtilities.indexContentBis).diff(Index.workingDirIndex(Index.workingDirFiles)).isEmpty
         =>
         {
           writeTrees(commitMap)

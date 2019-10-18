@@ -23,14 +23,15 @@ class CommitTest extends FunSuite with DiagrammedAssertions {
     Commit.commit(msg)
     assert(Commit.allFileAreStaged(listFiles.map(x=>new File(x)),Index.indexContent))
   }
+
   test("it shouldn't commit because the change was not staged"){
-    Init.Init()
     Add.add(listFiles)
     val file=new File(listFiles.head)
     FilesUtilities.writeInFile(file,List("Test text"))
     Commit.commit(msg)
     assert(!Index.fieldInIndex(Index.shaAndPath(file).sha, Index.indexContent))
   }
+
 
 
 

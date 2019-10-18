@@ -43,7 +43,7 @@ object Repository {
       //Check the existence of the repository
       //@param: path :String-> the working directory path
       //Return : Boolean
-      private def isInitialized(path : String) : Boolean ={
+       def isInitialized(path : String) : Boolean ={
         val dir = new File(path)
         dir.listFiles().map(_.getName()).contains(".sgit")
       }
