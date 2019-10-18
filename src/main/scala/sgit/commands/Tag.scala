@@ -24,8 +24,8 @@ object Tag {
   def main(args: Array[String]): Unit = {
     Init.Init()
    Add.add(List("soufiane"))
-   Commit.commit("soufiane")
-    Log.logStat()
+   Commit.commit("ssss")
+    Log.log()
 
 
   }

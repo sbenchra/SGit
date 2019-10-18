@@ -84,8 +84,7 @@ added(l1)++deleted(l2)
     }
   }
 
-  def
-  diff(): Unit = {
+  def diff(): Unit = {
     val indexFiles=Index.indexContent
     val workingDirFile=Index.workingDirFiles
     val mapIndex=blobsAndContent(indexFiles)

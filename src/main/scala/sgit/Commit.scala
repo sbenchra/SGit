@@ -38,7 +38,7 @@ object Commit{
   //@param : c:Commit-> a commit
   //Return: String -> the commit body
   def formBodyCommit(c:Commit): String = {
-    s"tree ${ObjectBL.sha(c.tree)}\n"+ s"author ${c.authorName}" + s"committer ${c.committerName}  ${c.commitDate}\n"+ s"\n${c.messageCommit}"+ s"\n${c.parentCommit}"
+    s"tree ${ObjectBL.sha(c.tree)}"
 
 
   }

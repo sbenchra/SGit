@@ -3,10 +3,11 @@
 package sgit.commands
 
 import java.io.File
+import java.time.LocalDate
+import java.util.Date
 
 import sgit.utilities.FilesUtilities
 import sgit.{Index, ObjectBL, ObjectType, Repository, Tree, TreeL}
-
 
 import scala.math.max
 object Commit {
@@ -148,17 +149,8 @@ def allFileAreStaged(files:List[File], index:Index):Boolean= {
     commitPrepare(index,fragmentedPaths)
 
   }
-  /*
-  //Construct the  working directory
-  def wDirMapF:Map[String,List[TreeL]]={
-    //Paths of files of the working directory
-    //get Dir Paths
-    val filesPathDir=lFilesBis.map(_.getPath)
-    val fragmentedDirPaths =fragmentAllPaths(filesPathDir)
-    commitPrepare(fragmentedDirPaths)
-  }
 
-   */
+
   @scala.annotation.tailrec
   def writeTrees(CommitEntries:Map[String,List[TreeL]]):Unit={
     val setCommitEntries=CommitEntries.filterKeys(_!="").toSeq
@@ -179,19 +171,24 @@ def allFileAreStaged(files:List[File], index:Index):Boolean= {
     else { commitMap("")}
     val commitEntriesDir=if(commitMapDir.keysIterator.exists(_.contains("."))) commitMapDir(".")
     else { commitMapDir("")}
-
     val (branch: File, lastCommitId: String) = lastCommit
     //Index Commit
-    val commitObject=sgit.Commit("","","","","",msg,Tree(commitEntries),lastCommitId)
+    val commitObject=sgit.Commit("Soufiane","Soufiane",LocalDate.now(),msg,Tree(commitEntries),lastCommitId)
     //Workind directory commit
-    val fakeCommit=sgit.Commit("","","","","",msg,Tree(commitEntriesDir),lastCommitId)
-val f = allFileAreStaged(Index.workingDirFiles,Index.indexContent)
+    val fakeCommit=sgit.Commit("Soufiane","Soufiane",LocalDate.now(),msg,Tree(commitEntriesDir),lastCommitId)
     commitObject match {
-      case _ if (allStagedExists(Index.indexContent)&& allFileAreStaged(Index.workingDirFiles,Index.indexContent) &&ObjectBL.sha(commitObject)!=lastCommitId && ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit) ))=>{
+      case _ if allStagedExists(Index.indexContent)
+        && allFileAreStaged(Index.workingDirFiles,Index.indexContent)
+        &&ObjectBL.sha(commitObject)!=lastCommitId &&
+        ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit))&&
+        Index.indexContentToIndex(FilesUtilities.indexContentBis).diff(Index.workingDirBlobs(Index.workingDirFiles)).isEmpty
+      =>
+      {
         writeTrees(commitMap)
         ObjectBL.addObject(commitObject)
         FilesUtilities.writeCommitMessage(msg)
-        FilesUtilities.changeBranchSha(ObjectBL.sha(commitObject),branch)
+        val sha=ObjectBL.sha(commitObject)
+        FilesUtilities.changeBranchSha(sha,branch)
         FilesUtilities.writeInFile(Log.logFile(),List("Commit:"+ObjectBL.sha(commitObject)+"\n","Author:"+commitObject.authorName+"\n","Date:"+commitObject.commitDate+"\n","Parent:"+lastCommitId,"\n","Message:"+msg,"\n"))
       }
       case _ if (ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit)) && Index.indexContent.indexEntries.nonEmpty )=> println("Everything is up to date")
@@ -202,7 +199,7 @@ val f = allFileAreStaged(Index.workingDirFiles,Index.indexContent)
 
   }
 
-  def lastCommit = {
+  def lastCommit: (File, String) = {
     val headFile = new File(headFilePath)
     //Currrent Branch
     val currentBranch = FilesUtilities.readFileContent(headFile).head.substring(5)

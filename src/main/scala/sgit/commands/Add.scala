@@ -7,52 +7,58 @@ import sgit.{Blob, Index, IndexEntry, ObjectBL, Repository}
 
 object Add {
 
-  //index File
+  //Index File
+  //Return: File-> the index File
   def IndexFile: File = {
     new File(Repository.get.getAbsolutePath+"./sgit/index")
   }
 
-
+  //Add a list of files
+  //@param: lFiles:List[String] -> List of files names
   def add(lFiles:List[String]):Unit={
     if (lFiles.isEmpty) print("Missing files")
     else {
       addBis(lFiles.map(x=>new File(x)))
     }
   }
-
-
-  def addFileToDir(file: File): Unit = {
-
-    ObjectBL.addObject(Blob(FilesUtilities.readFileContent(file)))
+  //Stage a file
+  //@param: file : File -> a file to stage
+  def stageFile(file: File): Unit = {
+    val blobContent=FilesUtilities.readFileContent(file)
+    val blob=Blob(blobContent)
+    ObjectBL.addObject(blob)
   }
 
   //Recursive function to add a list of files
+  //@param: lFiles: List[File]-> a list of files
   @scala.annotation.tailrec
   def addBis(lFiles: List[File]): Unit = {
 
     val lFilesBis= FilesUtilities.filesOfListFiles(lFiles)
+    val indexContent=FilesUtilities.indexContentBis
     lFilesBis match {
+
       case _ if lFilesBis.isEmpty=>Unit
-
-      case _ if Index.indexContent(FilesUtilities.indexContentBis).map(_.path).diff(Index.workingDirBlobs(Index.workingDirFiles).map(_.path)).nonEmpty =>
-        val diffWdirIndex=Index.indexContent(FilesUtilities.indexContentBis).diff(Index.workingDirBlobs(Index.workingDirFiles))
-        val toListDiff=listOfIndexListArray(diffWdirIndex)
-        val toListDir=listOfIndexListArray(Index.workingDirBlobs(Index.workingDirFiles))
-        FilesUtilities.deleteContentIndex(FilesUtilities.deleContentIndexBis(toListDiff.head.mkString(" "),toListDir))
-        addBis(lFiles)
-
+      //If a file is a deleted
+      case _ if Index.indexContentToIndex(FilesUtilities.indexContentBis).map(_.path).diff(Index.workingDirBlobs(Index.workingDirFiles).map(_.path)).nonEmpty=>
+                val wDirBlobs=Index.workingDirBlobs(Index.workingDirFiles)
+                val diffWdirIndex=Index.indexContentToIndex(indexContent).diff(wDirBlobs)
+                val toListDiff=Index.listOfIndexListArray(diffWdirIndex)
+                val toListDir=Index.listOfIndexListArray(wDirBlobs)
+                FilesUtilities.deleteContentIndex(FilesUtilities.deleContentIndexBis(toListDiff.head.mkString(" "),toListDir))
+                addBis(lFiles)
         // if the file doesn't exist in the index add it to the index and object Directory
-      case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).sha, Index(Index.indexContent(FilesUtilities.indexContentBis))) &&
-        !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).path,Index(Index.indexContent(FilesUtilities.indexContentBis)) )=>
-                  addFileToDir(lFilesBis.head)
+      case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).sha, Index(Index.indexContentToIndex(indexContent))) &&
+        !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).path,Index(Index.indexContentToIndex(indexContent)) )=>
+                  stageFile(lFilesBis.head)
                  val indexEntry=Index.shaAndPath(lFilesBis.head)
                   Index.addIndexEntry(indexEntry)
                  addBis(lFilesBis.tail)
-        // if
-      case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).sha, Index(Index.indexContent(FilesUtilities.indexContentBis))) &&
-                 Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).path, Index(Index.indexContent(FilesUtilities.indexContentBis)) )=>
-                 addFileToDir(lFilesBis.head)
-                 Index.modifyIndexContent(Index.shaAndPath(lFilesBis.head),FilesUtilities.indexContentBis)
+        // if the path is in the index but not the -> File is modified
+      case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).sha, Index(Index.indexContentToIndex(indexContent))) &&
+                 Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).path, Index(Index.indexContentToIndex(indexContent)) )=>
+                 stageFile(lFilesBis.head)
+                 Index.modifyIndexContent(Index.shaAndPath(lFilesBis.head),indexContent)
                  addBis(lFilesBis.tail)
 
       case _=>  addBis(lFilesBis.tail)
@@ -61,14 +67,5 @@ object Add {
 
 
   }
-
-  def listOfIndexListArray(diff:List[IndexEntry]):List[Array[String]]={
-    if (diff.isEmpty)List()
-    else List(Array(diff.head.path,diff.head.sha))++listOfIndexListArray(diff.tail)
-  }
-
-
-
-
 
 }

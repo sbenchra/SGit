@@ -10,7 +10,7 @@ case class Index(indexEntries:List[IndexEntry])
 
 object Index{
   //Get the index content
-  def indexContent:Index= Index(indexContent(FilesUtilities.indexContentBis))
+  def indexContent:Index= Index(indexContentToIndex(FilesUtilities.indexContentBis))
 //To change
   def workingDirFiles: List[File] = FilesUtilities.filesOfListFiles(List(new File("soufiane")))
 //Working directory content as index
@@ -19,15 +19,15 @@ object Index{
   //Function to tranform an index content to list of index entries
   // @param: contentBis->List of index lines as arrays
   //return list of index entries
-  def indexContent(contentBis:List[Array[String]]): List[IndexEntry]={
+  def indexContentToIndex(contentBis:List[Array[String]]): List[IndexEntry]={
     contentBis match {
       case _ if contentBis.isEmpty=>List()
       case _ if contentBis.head.length==2=>
         val indexLine=contentBis.head
         val path=indexLine.head
         val sha= contentBis.head(1)
-        List(IndexEntry(path,sha))++indexContent(contentBis.tail)
-      case _=>indexContent(contentBis.tail)
+        List(IndexEntry(path,sha))++indexContentToIndex(contentBis.tail)
+      case _=>indexContentToIndex(contentBis.tail)
     }
   }
 //Function to modify an index
@@ -92,7 +92,8 @@ object Index{
     }
   }
 
-
-
-
+  def listOfIndexListArray(diff:List[IndexEntry]):List[Array[String]]={
+    if (diff.isEmpty)List()
+    else List(Array(diff.head.path,diff.head.sha))++Index.listOfIndexListArray(diff.tail)
+  }
 }
