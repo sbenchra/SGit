@@ -25,7 +25,7 @@ object Tag {
     Init.Init()
    Add.add(List("soufiane"))
    Commit.commit("soufiane")
-    Log.logStat()
+    Log.logP()
 
 
   }

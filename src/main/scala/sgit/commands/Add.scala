@@ -34,7 +34,7 @@ object Add {
     lFilesBis match {
       case _ if lFilesBis.isEmpty=>Unit
 
-      case _ if Index.indexContent(FilesUtilities.indexContentBis).diff(Index.workingDirBlobs(Index.workingDirFiles)).nonEmpty =>
+      case _ if Index.indexContent(FilesUtilities.indexContentBis).map(_.path).diff(Index.workingDirBlobs(Index.workingDirFiles).map(_.path)).nonEmpty =>
         val diffWdirIndex=Index.indexContent(FilesUtilities.indexContentBis).diff(Index.workingDirBlobs(Index.workingDirFiles))
         val toListDiff=listOfIndexListArray(diffWdirIndex)
         val toListDir=listOfIndexListArray(Index.workingDirBlobs(Index.workingDirFiles))
