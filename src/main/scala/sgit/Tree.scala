@@ -2,6 +2,8 @@ package sgit
 import sgit.ObjectType.ObjectType
 import com.roundeights.hasher.Implicits._
 
+
+
 // Class of Tree entries
 
 case class TreeL(objectType:ObjectType, path:String, lSha: String)
@@ -11,9 +13,9 @@ case class Tree(contentTree : List[TreeL]) extends Object {
 
 
 object Tree{
-
+  //Length of the tree body
   def lengthTree(t: Tree): Int = { formBodyTree(t).length }
-
+//Hashing the tree
   def shaTree(t:Tree): String= {
       formTree(t).mkString("").sha1.hex
 

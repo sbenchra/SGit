@@ -9,7 +9,7 @@ object Add {
 
   //index File
   def IndexFile: File = {
-    new File(Repository.getRepository.getAbsolutePath+"./sgit/index")
+    new File(Repository.get.getAbsolutePath+"./sgit/index")
   }
 
 
@@ -45,7 +45,7 @@ object Add {
       case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).sha, Index(Index.indexContent(FilesUtilities.indexContentBis))) &&
         !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).path,Index(Index.indexContent(FilesUtilities.indexContentBis)) )=>
                   addFileToDir(lFilesBis.head)
-                 val indexEntry=Index.fileToIndexEntry(lFilesBis.head)
+                 val indexEntry=Index.shaAndPath(lFilesBis.head)
                   Index.addIndexEntry(indexEntry)
                  addBis(lFilesBis.tail)
         // if

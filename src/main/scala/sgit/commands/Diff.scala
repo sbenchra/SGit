@@ -79,7 +79,7 @@ added(l1)++deleted(l2)
   def statDiff(diff:Map[String,List[String]]):Unit={
     if(diff.isEmpty) Unit
     else {
-      println(diff.head._1.split("/").diff(Repository.getRepository.getAbsolutePath.split("/")).mkString("/") +":\n"+diff.head._2.count(_.contains("--"))+"--@@ Suppressions\n"+diff.head._2.count(_.contains("++"))+"++@@ Ajouts")
+      println(diff.head._1.split("/").diff(Repository.get.getAbsolutePath.split("/")).mkString("/") +":\n"+diff.head._2.count(_.contains("--"))+"--@@ Suppressions\n"+diff.head._2.count(_.contains("++"))+"++@@ Ajouts")
       statDiff(diff.tail)
     }
   }

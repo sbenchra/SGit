@@ -11,7 +11,7 @@ import sgit.{Index, ObjectBL, ObjectType, Repository, Tree, TreeL}
 import scala.math.max
 object Commit {
   def headFilePath:String={
-    Repository.getRepository.getAbsolutePath+"/.sgit/HEAD"
+    Repository.get.getAbsolutePath+"/.sgit/HEAD"
   }
 
   // Recursive function returns the list of paths in the Index
@@ -119,7 +119,7 @@ def getHash(index:Index, name:String):String={
 
       }
     }
-    val b=Repository.getRepoPath(Init.CureentFile).split("/")
+    val b=Repository.getWorkingDirPath(Init.CureentFile).split("/")
     commitPrepareBis(index,paths.map(x=>List(".")++x.diff(b)),Map())
 
   }
@@ -206,7 +206,7 @@ val f = allFileAreStaged(Index.workingDirFiles,Index.indexContent)
     val headFile = new File(headFilePath)
     //Currrent Branch
     val currentBranch = FilesUtilities.readFileContent(headFile).head.substring(5)
-    val branch = new File(Repository.getRepository.getAbsolutePath+"/.sgit/"+currentBranch)
+    val branch = new File(Repository.get.getAbsolutePath+"/.sgit/"+currentBranch)
     //Last commit Id
     val lastCommitId = {
       if (branch.exists()) FilesUtilities.readFileContent(branch).head

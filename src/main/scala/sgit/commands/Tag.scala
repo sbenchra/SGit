@@ -7,7 +7,7 @@ import sgit.utilities.FilesUtilities
 
 object Tag {
 
-  def tagsDirPath(): String =Repository.getRepository.getAbsolutePath+"/.sgit/refs/tags/"
+  def tagsDirPath(): String =Repository.get.getAbsolutePath+"/.sgit/refs/tags/"
 
   def tagFiles(): List[String] =FilesUtilities.filesOfListFiles(List(new File(tagsDirPath()))).map(_.getName)
 

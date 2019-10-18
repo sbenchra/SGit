@@ -1,16 +1,15 @@
 package sgit
 import sgit.ObjectType.ObjectType
+import java.time.LocalDate
 import com.roundeights.hasher.Implicits._
 
 
-import sun.util.calendar.BaseCalendar.Date
+//Commit class
 
 case class Commit(
                    authorName: String,
-                   authorEmail: String,
                    committerName: String,
-                   committerEmail: String,
-                   commitDate: String,
+                   commitDate:LocalDate,
                    messageCommit: String,
                    tree : Tree,
                    parentCommit: String
@@ -20,28 +19,26 @@ case class Commit(
 }
 
 object Commit{
-
+//Commit length
   def lengthCommit(c:Commit):Int= {
-    encodeBodyCommit(c).length
+    formBodyCommit(c).length
   }
-
+//Hash the commit
   def shaCommit(c:Commit):String={
-    encodeBodyCommit(c).mkString("").sha1.hex
+    formBodyCommit(c).mkString("").sha1.hex
   }
 
   //Forming the tree
-  def encodeCommit(c:Commit): List[String] = {
-    List(ObjectBL.getHeader(c)+"\n"+encodeBodyCommit(c))
+  //@param : c:Commit-> a commit
+  //Return: List[String] -> the commit content
+  def formCommit(c:Commit): List[String] = {
+    List(ObjectBL.getHeader(c)+"\n"+formBodyCommit(c))
   }
-
-  def parentCommitToString(pCommits:List[Commit]): String = {
-    if (pCommits.isEmpty) ""
-    else s"Parent Commit" + pCommits.head + parentCommitToString(pCommits.tail)
-
-  }
-
-  def encodeBodyCommit(c:Commit): String = {
-    s"tree ${ObjectBL.sha(c.tree)}\n"+ s"author ${c.authorName} <${c.authorEmail}>" + s"committer ${c.committerName} <${c.committerEmail}> ${c.commitDate}\n"+ s"\n${c.messageCommit}"
+  //forming the body commit
+  //@param : c:Commit-> a commit
+  //Return: String -> the commit body
+  def formBodyCommit(c:Commit): String = {
+    s"tree ${ObjectBL.sha(c.tree)}\n"+ s"author ${c.authorName}" + s"committer ${c.committerName}  ${c.commitDate}\n"+ s"\n${c.messageCommit}"+ s"\n${c.parentCommit}"
 
 
   }

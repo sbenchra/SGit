@@ -8,12 +8,17 @@ import sgit.utilities.FilesUtilities
 
 object ObjectBL {
 
-
+  //The header of a object contains its type and its length
+  //@param: o: Object -> an object (Commit,tree or blob)
+  //Return : The string of the object
   def getHeader(o:Object ): String = {
     s"${o.objectType}"+" "+s"${length(o)}"+"\0"
 
   }
   // Gives the length of an object
+  //@param: o: Object -> an object (Commit,tree or blob)
+  //Return : The length of the object
+
   def length(o: Object) : Int= {
     o match {
       case o: Blob => Blob.lengthBlob(o)
@@ -21,26 +26,31 @@ object ObjectBL {
       case o: Commit => Commit.lengthCommit(o)
     }
   }
-//Get the sha of an object
+  //Get the sha of an object
+  //@param: o: Object -> an object (Commit,tree or blob)
+  //  Return : String -> object sha
   def sha(o:Object) : String = {
-    o match {
-      case o:Blob  => Blob.shaBlob(o)
-      case o:Tree => Tree.shaTree(o)
-      case o:Commit=> Commit.shaCommit(o)
+      o match {
+        case o:Blob  => Blob.shaBlob(o)
+        case o:Tree => Tree.shaTree(o)
+        case o:Commit=> Commit.shaCommit(o)
 
+      }
     }
-  }
 
   //Function to form an object
+  //@param: o: Object -> an object (Commit,tree or blob)
+  //  Return : List of string -> object formed
   def formObject(o:Object) : List[String] = {
       o match {
         case o:Blob => Blob.formBlob(o)
         case o:Tree => Tree.formTree(o)
-        case o:Commit => Commit.encodeCommit(o)
+        case o:Commit => Commit.formCommit(o)
       }
     }
 
-//Function to add an object to the directory object
+      //Function to add an object to the directory object
+      //@param: o: Object -> an object (Commit,tree or blob)
       def addObject(o:Object) :Unit = {
         val sha = ObjectBL.sha(o)
         val directName =Init.CurrentDirPath+"/.sgit/objects/"+sha.take(2)

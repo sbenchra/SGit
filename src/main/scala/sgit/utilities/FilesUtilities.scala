@@ -13,7 +13,6 @@ import scala.io.Source
 object
 FilesUtilities {
   //Recusrive function to create Directories
-
   @scala.annotation.tailrec
   def createDirectories(sDirecoties: List[String]): Unit = {
     if (sDirecoties.isEmpty) Unit

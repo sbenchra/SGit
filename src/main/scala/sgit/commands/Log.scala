@@ -6,7 +6,7 @@ import sgit.utilities.FilesUtilities
 
 
 object Log {
-  def logFile(): File=new File(Repository.getRepository.getAbsolutePath+"/.sgit/logs")
+  def logFile(): File=new File(Repository.get.getAbsolutePath+"/.sgit/logs")
     //Log content
 def logContent:List[String]={
   FilesUtilities.readFileContent(logFile())

@@ -8,7 +8,7 @@ import sgit.utilities.FilesUtilities
 object Branch {
 
 
-  def headsDir():String= Repository.getRepository.getAbsolutePath+"/.sgit/refs/heads/"
+  def headsDir():String= Repository.get.getAbsolutePath+"/.sgit/refs/heads/"
 
   def commitWrite(file: File): Unit = {
     val newBranchFile = FilesUtilities.createFiles(List(file.getAbsolutePath))
