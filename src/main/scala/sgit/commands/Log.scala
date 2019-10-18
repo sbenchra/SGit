@@ -1,12 +1,12 @@
 package sgit.commands
-import sgit.{Index, IndexEntry}
+import sgit.{Index, IndexEntry, Repository}
 import java.io.File
 
 import sgit.utilities.FilesUtilities
 
 
 object Log {
-  def logFile(): File=new File(Init.CurrentDirPath+"/.sgit/logs")
+  def logFile(): File=new File(Repository.getRepository.getAbsolutePath+"/.sgit/logs")
     //Log content
 def logContent:List[String]={
   FilesUtilities.readFileContent(logFile())
@@ -142,8 +142,8 @@ def checkDiff(blobs1:Map[String,String], blobs2:Map[String,String]):Unit={
   def logStatBis(commitsAndParents:Map[String,String], blobs:Map[String,Map[String,List[String]]]):Unit={
     if(commitsAndParents.isEmpty)Unit
     else{
-      val parentBlobs = blobs(commitsAndParents.head._1)
-      val commitBlobs = blobs(commitsAndParents.head._2)
+      val commitBlobs = blobs(commitsAndParents.head._1)
+      val parentBlobs = blobs(commitsAndParents.head._2)
       println("Parent: "+commitsAndParents.head._1 +" Commit: "+commitsAndParents.head._2)
       Diff.statDiff(Diff.compareMaps(parentBlobs,commitBlobs))
       logStatBis(commitsAndParents.tail,blobs)

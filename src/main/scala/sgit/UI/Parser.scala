@@ -65,7 +65,7 @@ object Parser {
             .required()
             .action((x, c) => c.copy(element = x))
             .text("Branch name"),
-          opt[Unit]("a")
+          opt[Unit]("av")
             .action((_, c) => c.copy(option = "av"))
             .text("List all branches"),
         ),

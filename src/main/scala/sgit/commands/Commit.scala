@@ -11,7 +11,7 @@ import sgit.{Index, ObjectBL, ObjectType, Repository, Tree, TreeL}
 import scala.math.max
 object Commit {
   def headFilePath:String={
-    Init.CurrentDirPath+"/.sgit/HEAD"
+    Repository.getRepository.getAbsolutePath+"/.sgit/HEAD"
   }
 
   // Recursive function returns the list of paths in the Index
@@ -194,7 +194,7 @@ val f = allFileAreStaged(Index.workingDirFiles,Index.indexContent)
         FilesUtilities.changeBranchSha(ObjectBL.sha(commitObject),branch)
         FilesUtilities.writeInFile(Log.logFile(),List("Commit:"+ObjectBL.sha(commitObject)+"\n","Author:"+commitObject.authorName+"\n","Date:"+commitObject.commitDate+"\n","Parent:"+lastCommitId,"\n","Message:"+msg,"\n"))
       }
-      case _ if (ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit)) && Index.indexContent.indexEntries.nonEmpty )=> print("Everything is up to date")
+      case _ if (ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit)) && Index.indexContent.indexEntries.nonEmpty )=> println("Everything is up to date")
       case _ => Status.status()
     }
 
@@ -206,7 +206,7 @@ val f = allFileAreStaged(Index.workingDirFiles,Index.indexContent)
     val headFile = new File(headFilePath)
     //Currrent Branch
     val currentBranch = FilesUtilities.readFileContent(headFile).head.substring(5)
-    val branch = new File(Init.CurrentDirPath + "/.sgit/" + currentBranch)
+    val branch = new File(Repository.getRepository.getAbsolutePath+"/.sgit/"+currentBranch)
     //Last commit Id
     val lastCommitId = {
       if (branch.exists()) FilesUtilities.readFileContent(branch).head

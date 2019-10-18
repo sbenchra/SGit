@@ -33,6 +33,14 @@ object Add {
     val lFilesBis= FilesUtilities.filesOfListFiles(lFiles)
     lFilesBis match {
       case _ if lFilesBis.isEmpty=>Unit
+
+      case _ if Index.indexContent(FilesUtilities.indexContentBis).diff(Index.workingDirBlobs(Index.workingDirFiles)).nonEmpty =>
+        val diffWdirIndex=Index.indexContent(FilesUtilities.indexContentBis).diff(Index.workingDirBlobs(Index.workingDirFiles))
+        val toListDiff=listOfIndexListArray(diffWdirIndex)
+        val toListDir=listOfIndexListArray(Index.workingDirBlobs(Index.workingDirFiles))
+        FilesUtilities.deleteContentIndex(FilesUtilities.deleContentIndexBis(toListDiff.head.mkString(" "),toListDir))
+        addBis(lFiles)
+
         // if the file doesn't exist in the index add it to the index and object Directory
       case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).sha, Index(Index.indexContent(FilesUtilities.indexContentBis))) &&
         !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).path,Index(Index.indexContent(FilesUtilities.indexContentBis)) )=>
@@ -46,19 +54,17 @@ object Add {
                  addFileToDir(lFilesBis.head)
                  Index.modifyIndexContent(Index.shaAndPath(lFilesBis.head),FilesUtilities.indexContentBis)
                  addBis(lFilesBis.tail)
-/*
-      case _ if !lFilesBis.length.equals(Index.indexContent(FilesUtilities.indexContentBis).length) =>
-              val indexPaths = Index.indexContent(FilesUtilities.indexContentBis).map(_.path)
-              val dirPaths =lFilesBis.map(_.getPath)
-              indexPaths.diff(dirPaths).foreach(x=>FilesUtilities.deleteContentIndex(FilesUtilities.deleContentIndexBis(x,FilesUtilities.indexContentBis)))
-              addBis(lFiles)
 
- */
       case _=>  addBis(lFilesBis.tail)
     }
 
 
 
+  }
+
+  def listOfIndexListArray(diff:List[IndexEntry]):List[Array[String]]={
+    if (diff.isEmpty)List()
+    else List(Array(diff.head.path,diff.head.sha))++listOfIndexListArray(diff.tail)
   }
 
 

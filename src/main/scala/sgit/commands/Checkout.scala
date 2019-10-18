@@ -67,7 +67,7 @@ def addNewIndex(index:Index):Unit={
   def checkoutBranch(branchName:String):Unit={
     val file= new File(Branch.headsDir()+branchName)
    val commitId=FilesUtilities.readFileContent(file).head
-      val headFile= new File(Repository.getRepoPath(Init.CureentFile)++"/.sgit/HEAD")
+      val headFile= new File(Repository.getRepository.getAbsolutePath+"/.sgit/HEAD")
       checkoutCommit(commitId)
       FilesUtilities.modifyFile(headFile,List(Array(branchName)))
     println("Basculement sur la branche : "+branchName)

@@ -7,7 +7,7 @@ import sgit.utilities.FilesUtilities
 
 object Tag {
 
-  def tagsDirPath(): String =Repository.getRepoPath(Init.CureentFile)+"/.sgit/refs/tags/"
+  def tagsDirPath(): String =Repository.getRepository.getAbsolutePath+"/.sgit/refs/tags/"
 
   def tagFiles(): List[String] =FilesUtilities.filesOfListFiles(List(new File(tagsDirPath()))).map(_.getName)
 
@@ -23,9 +23,10 @@ object Tag {
 
   def main(args: Array[String]): Unit = {
     Init.Init()
-    Add.add(List("soufiane"))
-    Commit.commit("soufiane")
-    Log.logP()
+   Add.add(List("soufiane"))
+   // Commit.commit("soufiane")
+    // Status.status()
+    // Diff.diff()
 
   }
 
