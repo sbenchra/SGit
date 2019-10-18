@@ -14,7 +14,7 @@ object Diff {
   //Function to put working directory files
   def dirFilesAndContent(files:List[File]):Map[String,List[String]]={
     if (files.isEmpty) Map()
-    else Map(files.head.getPath->FilesUtilities.readFileContent(files.head).split("\n").toList) ++ dirFilesAndContent(files.tail)
+    else Map(files.head.getPath->FilesUtilities.readFileContent(files.head)) ++ dirFilesAndContent(files.tail)
   }
 
   //Function to compare between to list of lines

@@ -2,7 +2,7 @@ package sgit.commands
 
 import java.io.File
 
-import sgit.Index
+import sgit.{Index, Repository}
 import sgit.utilities.FilesUtilities
 
 object Checkout {
@@ -57,7 +57,7 @@ def addNewIndex(index:Index):Unit={
       }
       FilesUtilities.createFiles(List(indexFile.getAbsolutePath))
       addNewIndex(index)
-      FilesUtilities.deleteRecursively(new File(Init.RepositoryPath+"/soufiane"))
+      FilesUtilities.deleteRecursively(new File(Repository.getRepoPath(Init.CureentFile)))
       newDirectory(blobsContent)
     println("Basculement sur le commit : "+commitId)
 
@@ -66,8 +66,8 @@ def addNewIndex(index:Index):Unit={
 //Checkout Branch
   def checkoutBranch(branchName:String):Unit={
     val file= new File(Branch.headsDir()+branchName)
-   val commitId=FilesUtilities.readFileContent(file).diff("\n")
-      val headFile= new File(Init.RepositoryPath+"/.sgit/HEAD")
+   val commitId=FilesUtilities.readFileContent(file).head
+      val headFile= new File(Repository.getRepoPath(Init.CureentFile)++"/.sgit/HEAD")
       checkoutCommit(commitId)
       FilesUtilities.modifyFile(headFile,List(Array(branchName)))
     println("Basculement sur la branche : "+branchName)
@@ -75,7 +75,7 @@ def addNewIndex(index:Index):Unit={
   //Check Tag
   def checkoutTag(tagName:String):Unit={
     val file= new File(Tag.tagsDirPath()+tagName)
-     val commitId=FilesUtilities.readFileContent(file)
+     val commitId=FilesUtilities.readFileContent(file).head
       checkoutCommit(commitId)
 
   }

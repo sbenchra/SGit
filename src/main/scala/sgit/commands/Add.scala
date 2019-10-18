@@ -1,21 +1,24 @@
 
 package sgit.commands
 import java.io.File
+
 import sgit.utilities.FilesUtilities
-import sgit.{Blob, Index, IndexEntry, ObjectBL}
+import sgit.{Blob, Index, IndexEntry, ObjectBL, Repository}
 
 object Add {
 
   //index File
   def IndexFile: File = {
-    new File(System.getProperty("user.dir") + "./sgit/index")
+    new File(Repository.getRepository.getAbsolutePath+"./sgit/index")
   }
 
-  //Repository path
-  def RepositoryPath: String = {
-    System.getProperty("user.dir")
-  }
 
+  def add(lFiles:List[String]):Unit={
+    if (lFiles.isEmpty) print("Missing files")
+    else {
+      addBis(lFiles.map(x=>new File(x)))
+    }
+  }
 
 
   def addFileToDir(file: File): Unit = {
@@ -25,7 +28,7 @@ object Add {
 
   //Recursive function to add a list of files
   @scala.annotation.tailrec
-  def add(lFiles: List[File]): Unit = {
+  def addBis(lFiles: List[File]): Unit = {
 
     val lFilesBis= FilesUtilities.filesOfListFiles(lFiles)
     lFilesBis match {
@@ -36,22 +39,22 @@ object Add {
                   addFileToDir(lFilesBis.head)
                  val indexEntry=Index.fileToIndexEntry(lFilesBis.head)
                   Index.addIndexEntry(indexEntry)
-                 add(lFilesBis.tail)
+                 addBis(lFilesBis.tail)
         // if
       case _ if !Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).sha, Index(Index.indexContent(FilesUtilities.indexContentBis))) &&
                  Index.fieldInIndex(Index.shaAndPath(lFilesBis.head).path, Index(Index.indexContent(FilesUtilities.indexContentBis)) )=>
                  addFileToDir(lFilesBis.head)
                  Index.modifyIndexContent(Index.shaAndPath(lFilesBis.head),FilesUtilities.indexContentBis)
-                 add(lFilesBis.tail)
-
+                 addBis(lFilesBis.tail)
+/*
       case _ if !lFilesBis.length.equals(Index.indexContent(FilesUtilities.indexContentBis).length) =>
               val indexPaths = Index.indexContent(FilesUtilities.indexContentBis).map(_.path)
               val dirPaths =lFilesBis.map(_.getPath)
               indexPaths.diff(dirPaths).foreach(x=>FilesUtilities.deleteContentIndex(FilesUtilities.deleContentIndexBis(x,FilesUtilities.indexContentBis)))
-              add(lFiles)
+              addBis(lFiles)
 
-
-      case _=>  add(lFilesBis.tail)
+ */
+      case _=>  addBis(lFilesBis.tail)
     }
 
 

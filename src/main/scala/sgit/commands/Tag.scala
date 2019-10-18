@@ -2,11 +2,12 @@ package sgit.commands
 
 import java.io.File
 
+import sgit.Repository
 import sgit.utilities.FilesUtilities
 
 object Tag {
 
-  def tagsDirPath(): String =Init.RepositoryPath+"/.sgit/refs/tags/"
+  def tagsDirPath(): String =Repository.getRepoPath(Init.CureentFile)+"/.sgit/refs/tags/"
 
   def tagFiles(): List[String] =FilesUtilities.filesOfListFiles(List(new File(tagsDirPath()))).map(_.getName)
 
@@ -22,17 +23,10 @@ object Tag {
 
   def main(args: Array[String]): Unit = {
     Init.Init()
-    //Add.add(List(new File("./soufiane")))
-    // Status.status()
-    //sgit.commands.Commit.commit("d")
-    //Log.logP()
-    //print(Checkout.checkoutBranch("master"))
-      //Diff.diff()
-    //Branch.branchAv()
-    //FilesUtilities.deleteContentIndex(Array(" "))
+    Add.add(List("soufiane"))
+    Commit.commit("soufiane")
+    Log.logP()
 
-    //println(FilesUtilities.indexContentBis.map(_.head))
-    //  print(s)
   }
 
 

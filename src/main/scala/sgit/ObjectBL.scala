@@ -43,12 +43,12 @@ object ObjectBL {
 //Function to add an object to the directory object
       def addObject(o:Object) :Unit = {
         val sha = ObjectBL.sha(o)
-        val directName =Init.RepositoryPath+"/.sgit/objects/"+sha.take(2)
+        val directName =Init.CurrentDirPath+"/.sgit/objects/"+sha.take(2)
         val fileName =directName+"/"+sha.takeRight(38)
         val file = new File(fileName)
         FilesUtilities.createDirectories(List(directName))
         FilesUtilities.createFiles(List(fileName))
-        FilesUtilities.writeInFile(file,formObject(o))
+        FilesUtilities.writeInFile(file,formObject(o).map(x=>x+"\n"))
       }
 
 

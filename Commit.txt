@@ -1,25 +1,5 @@
 
 
-package sgit.commands
-
-import java.io.File
-
-import sgit.utilities.FilesUtilities
-import sgit.{Index, ObjectBL, ObjectType, Repository, Tree, TreeL}
-
-
-import scala.math.max
-object Commit {
-  def headFilePath:String={
-    Init.CurrentDirPath+"/.sgit/HEAD"
-  }
-
-  // Recursive function returns the list of paths in the Index
-def pathsIndex(index:Index): List[String]= {
-  if (index.indexEntries.isEmpty) List()
-  else index.indexEntries.head.path::pathsIndex(Index(index.indexEntries.tail))
-}
-  //Fragment the paths to strings
   def fragmentPath(path:List[String]):List[String]={
     if (path.isEmpty) List()
     else path.flatMap(_.split("/")).map(_.drop(0))
@@ -119,8 +99,7 @@ def getHash(index:Index, name:String):String={
 
       }
     }
-    val b=Repository.getRepoPath(Init.CureentFile).split("/")
-    commitPrepareBis(index,paths.map(x=>List(".")++x.diff(b)),Map())
+    commitPrepareBis(index,paths,Map(""->List()))
 
   }
 
@@ -130,7 +109,7 @@ def getHash(index:Index, name:String):String={
 def allFileAreStaged(files:List[File], index:Index):Boolean= {
     if (files.isEmpty) true
     else {
-      Index.fieldInIndex(files.head.getAbsolutePath, index) && allFileAreStaged(files.tail, index)
+      Index.fieldInIndex(files.head.getPath, index) && allFileAreStaged(files.tail, index)
 
     }
   }
@@ -185,8 +164,8 @@ def allFileAreStaged(files:List[File], index:Index):Boolean= {
     val commitObject=sgit.Commit("","","","","",msg,Tree(commitEntries),lastCommitId)
     //Workind directory commit
     val fakeCommit=sgit.Commit("","","","","",msg,Tree(commitEntriesDir),lastCommitId)
-val f = allFileAreStaged(Index.workingDirFiles,Index.indexContent)
-    commitObject match {
+
+      commitObject match {
       case _ if (allStagedExists(Index.indexContent)&& allFileAreStaged(Index.workingDirFiles,Index.indexContent) &&ObjectBL.sha(commitObject)!=lastCommitId && ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit) ))=>{
         writeTrees(commitMap)
         ObjectBL.addObject(commitObject)

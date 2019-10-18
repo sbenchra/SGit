@@ -12,6 +12,30 @@ import utilities.FilesUtilities
 object Repository {
 
 
+  def getRepository:File={
+    new File(getRepoPath(Init.CureentFile))
+  }
+
+
+  @scala.annotation.tailrec
+  def containsRepo(lfile:Array[File]):Boolean={
+    if(lfile.isEmpty) false
+   else {
+      lfile.head.getAbsolutePath.contains("sgit") || containsRepo(lfile.tail)
+    }
+
+  }
+
+
+  @scala.annotation.tailrec
+  def getRepoPath(file:File):String={
+    if(!file.exists()) ""
+    else if (containsRepo(file.listFiles())) file.getAbsolutePath
+    else {
+      val parent=new File(file.getParent)
+      getRepoPath(parent)
+    }
+  }
 
   private def isInitialized(path : String) : Boolean ={
     val dir = new File(path)

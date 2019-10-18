@@ -6,21 +6,21 @@ import sgit.utilities.FilesUtilities
 
 
 object Log {
-  def logFile(): File=new File(Init.RepositoryPath+"/.sgit/logs")
+  def logFile(): File=new File(Init.CurrentDirPath+"/.sgit/logs")
     //Log content
-def logContent:String={
+def logContent:List[String]={
   FilesUtilities.readFileContent(logFile())
 }
   //Log content as string splited by \n
-  def logContentArray: Array[String] ={logContent.split("\n")}
+  def logContentArray: Array[String] ={logContent.toArray}
 
 
 //Function to return the commits with the parents in a map
   def commitAndParent(logContentA:Array[String]):Map[String,String]={
     if (logContentA.isEmpty) Map()
-    else if (logContentA.head.contains("Commit") && !logContentA(logContentA.indexOf(logContentA.head)+3).contains("19011995"))
-      Map(logContentA.head.diff("Commit:")->logContentA(logContentA.indexOf(logContentA.head)+3).diff("Parent:"))++commitAndParent(logContentA.tail)
-    else commitAndParent(logContentA.tail)
+    else if (logContentA(3).contains("19011995"))commitAndParent(logContentA.drop(5))
+      else Map(logContentA.head.diff("Commit:")->logContentA(3).diff("Parent:"))++commitAndParent(logContentA.drop(5))
+
   }
 //Extract tree sha1
   def extractTree(list:List[String]):List[String]={
@@ -122,14 +122,14 @@ def checkDiff(blobs1:Map[String,String], blobs2:Map[String,String]):Unit={
   def logPBis(commitsAndParents:Map[String,String], blobs:Map[String,Map[String,List[String]]]):Unit={
     if(commitsAndParents.isEmpty)Unit
     else{
-      val parentBlobs = blobs(commitsAndParents.head._1)
-      val commitBlobs = blobs(commitsAndParents.head._2)
-      val commitTree1 = commitTree(List(commitsAndParents.head._1))
+      val parentBlobs = blobs(commitsAndParents.head._2)
+      val commitBlobs = blobs(commitsAndParents.head._1)
       val commitTree2 = commitTree(List(commitsAndParents.head._2))
-      val blobs1 = blobsCommit(commitTree1)
+      val commitTree1 = commitTree(List(commitsAndParents.head._1))
       val blobs2 = blobsCommit(commitTree2)
-      val mapBlobs1 = blobsToMap(blobs1)
+      val blobs1 = blobsCommit(commitTree1)
       val mapBlobs2 = blobsToMap(blobs2)
+      val mapBlobs1 = blobsToMap(blobs1)
       print("\nCommit: "+commitsAndParents.head._1+"\n"+"Parent: "+commitsAndParents.head._2+"\n")
 
       Diff.differencesPrinter(Diff.compareMaps(parentBlobs,commitBlobs))
@@ -151,7 +151,7 @@ def checkDiff(blobs1:Map[String,String], blobs2:Map[String,String]):Unit={
   }
     //function to start the command log
   def log():Unit={
-    print(logContent)
+    print(logContent.mkString("\n"))
 
   }
   //Function to start the Log -p Command

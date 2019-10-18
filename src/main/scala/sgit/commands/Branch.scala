@@ -1,12 +1,14 @@
 package sgit.commands
 
 import java.io.File
+
+import sgit.Repository
 import sgit.utilities.FilesUtilities
 
 object Branch {
 
 
-  def headsDir():String= Init.RepositoryPath+"/.sgit/refs/heads/"
+  def headsDir():String= Repository.getRepoPath(Init.CureentFile)++"/.sgit/refs/heads/"
 
   def commitWrite(file: File): Unit = {
     val newBranchFile = FilesUtilities.createFiles(List(file.getAbsolutePath))
@@ -21,7 +23,6 @@ object Branch {
     else {
       commitWrite(file)
     }
-
 
   }
 
@@ -40,7 +41,7 @@ object Branch {
     branchAVPrinter(branchs)
   }
   def branchFiles: List[File] = {
-    val branchsFiles = FilesUtilities.filesOfListFiles(List(new File(Init.RepositoryPath + "/.sgit/refs/heads/")))
+    val branchsFiles = FilesUtilities.filesOfListFiles(List(new File(Init.CurrentDirPath + "/.sgit/refs/heads/")))
     branchsFiles
   }
 }

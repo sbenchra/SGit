@@ -2,6 +2,7 @@ package sgit
 
 import java.io.File
 
+import sgit.commands.Init
 import sgit.utilities.FilesUtilities
 
 import scala.io.Source
@@ -13,8 +14,8 @@ case class Index(indexEntries:List[IndexEntry])
 object Index{
 
   def indexContent:Index= Index(Index.indexContent(FilesUtilities.indexContentBis))
-
-  def workingDirFiles: List[File] = FilesUtilities.filesOfListFiles(List(new File("./soufiane")))
+//To change
+  def workingDirFiles: List[File] = FilesUtilities.filesOfListFiles(List(new File("soufiane")))
 
   def directoryContent=Index(Index.workingDirBlobs(workingDirFiles))
 
@@ -48,18 +49,15 @@ object Index{
   def shaAndPath(file:File): IndexEntry= {
     val blob = new Blob(FilesUtilities.readFileContent(file))
     val sha = ObjectBL.sha(blob)
-    val path = file.getPath
+    val path = file.getAbsolutePath
     IndexEntry(path,sha)
   }
 
   def fileToIndexEntry(file:File):IndexEntry= {
     if (!file.exists()) IndexEntry("", "")
     else {
-      val indexEntry = shaAndPath(file)
-      val sha = indexEntry.sha
-      val path = indexEntry.path
+      shaAndPath(file)
 
-      IndexEntry(path,sha)
     }
   }
 

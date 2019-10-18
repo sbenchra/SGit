@@ -77,8 +77,8 @@ FilesUtilities {
     }
   }
   // Returns the file content as a string
-  def readFileContent(file: File): String = {
-    Source.fromFile(file).mkString
+  def readFileContent(file: File): List[String] = {
+    Source.fromFile(file).getLines().toList
   }
 
   //Recursive function to list files of a directory and its directories
@@ -125,7 +125,7 @@ FilesUtilities {
   }
 //Write a commit message in the dfile MSG_COMMIt
   def writeCommitMessage(msg:String):Unit={
-    val fileMsg=new File(Init.RepositoryPath+"/.sgit/MSG_COMMIT")
+    val fileMsg=new File(Init.CurrentDirPath+"/.sgit/MSG_COMMIT")
     if(fileMsg.exists()) modifyFile(fileMsg,List(Array(msg)))
     else {
       openFileOverWrite(fileMsg,msg)
@@ -141,8 +141,8 @@ FilesUtilities {
   }
 
   def contentObject(sha:String):List[String]={
-    val filePath=Init.RepositoryPath+"/.sgit/objects/"+sha.take(2)+"/"+sha.takeRight(38)
-    readFileContent(new File(filePath)).split("\n").toList
+    val filePath=Init.CurrentDirPath+"/.sgit/objects/"+sha.take(2)+"/"+sha.takeRight(38)
+    readFileContent(new File(filePath))
 
   }
 
