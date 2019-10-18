@@ -27,7 +27,7 @@ object Commit {
   //Return : List[List[String]] -> Lists of list of each path elements
     def fragmentAllPaths(paths:List[String]): List[List[String]]={
         if (paths.isEmpty) List()
-        else List(paths.flatMap(_.split("/")).map(_.drop(0)))::fragmentAllPaths(paths.tail)
+        else List(paths.flatMap(_.split("/")).map(_.drop(0)))++fragmentAllPaths(paths.tail)
     }
   //Recursive function to return the max length of path
   //@Param: paths : List[List[String]] -> list of list of paths elements
