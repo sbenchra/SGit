@@ -70,9 +70,10 @@ FilesUtilities {
 
   def deleteRecursively(file: File): Unit = {
     if (file.isDirectory) {
-      file.listFiles.foreach(deleteRecursively)
+      val files=file.listFiles.filter(x=>x.getName!=".sgit")
+        files.foreach(deleteRecursively)
     }
-    if (file.exists && !file.delete) {
+    else if (file.exists && !file.delete) {
       throw new Exception(s"Unable to delete ${file.getAbsolutePath}")
     }
   }
