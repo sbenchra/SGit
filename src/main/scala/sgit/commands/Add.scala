@@ -38,7 +38,8 @@ object Add {
     lFilesBis match {
 
       case _ if lFilesBis.isEmpty => Unit
-      //If a file is a deleted
+      //If a file is a deleted from the working directory
+      // Delete from the stage
       case _
           if Index
             .indexContentToIndex(FilesUtilities.indexContentBis)
@@ -52,7 +53,7 @@ object Add {
         val toListDir = Index.listOfIndexListArray(wDirBlobs)
         FilesUtilities.deleteContentIndex(
           FilesUtilities
-            .deleContentIndexBis(toListDiff.head.mkString(" "), toListDir)
+            .changeContentIndexBis(toListDiff.head.mkString(" "), toListDir)
         )
         addBis(lFiles)
       // if the file doesn't exist in the index add it to the index and object Directory

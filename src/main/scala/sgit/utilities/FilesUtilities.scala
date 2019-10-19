@@ -8,7 +8,9 @@ import scala.io.Source
 
 //Layer interacting with the files system
 object FilesUtilities {
+
   //Recusrive function to create Directories
+  //@param:sDirectories : List[String] -> list of directories
   @scala.annotation.tailrec
   def createDirectories(sDirecoties: List[String]): Unit = {
     if (sDirecoties.isEmpty) Unit
@@ -20,7 +22,8 @@ object FilesUtilities {
   }
 
   //Recursive function to create files
-
+  //@param: sFiles: List[String] -> List of files
+  //Return : list of files created
   def createFiles(sFiles: List[String]): List[File] = {
     if (sFiles.isEmpty) List()
     else {
@@ -34,6 +37,8 @@ object FilesUtilities {
 
   //Recursive function to write in a file
   //Write an element of the list contents to a file in the list files having the same index
+  //@param:files :List[File] -> list of files
+  //@param:contents: List[String] -> contents of files
   @scala.annotation.tailrec
   def writeInFiles(files: List[File], contents: List[String]): Unit = {
     if (files.isEmpty || contents.isEmpty || contents.length != files.length)
@@ -46,6 +51,8 @@ object FilesUtilities {
   }
 
   //Function to open a file and overwrite a content
+  //@param: file:File -> file to overwrite
+  //@param: content:String -> content to overwrite
   def openFileOverWrite(file: File, content: String): Unit = {
     val bw = new BufferedWriter(new FileWriter(file, true))
     bw.write(content)
@@ -54,6 +61,8 @@ object FilesUtilities {
 
   //Recursive function to write in a file
   //Write an element of the list contents to a file in the list files having the same index
+  //@param: file:File -> file to overwrite
+  //@param: content:List[String] -> content to overwrite
   @scala.annotation.tailrec
   def writeInFile(file: File, content: List[String]): Unit = {
     if (file.exists() && content.nonEmpty) {
@@ -62,6 +71,9 @@ object FilesUtilities {
     } else Unit
   }
 
+  //Recursive function to delete files
+  //file to delete
+  //@param: file:File -> file to delete
   def deleteRecursively(file: File): Unit = {
     if (file.isDirectory) {
       val files = file.listFiles.filter(x => x.getName != ".sgit")
@@ -72,13 +84,14 @@ object FilesUtilities {
   }
 
   //Recursive function to list files of a directory and its directories
+  //@param: lFile:List[File] -> list of files
+  //@return : List[File] -> list of files and directories
   def filesOfListFiles(lFile: List[File]): List[File] = {
     lFile match {
       case _ if lFile.isEmpty => List()
       case _ if !lFile.head.exists() =>
         print(lFile.head.getName + " is not found ")
         filesOfListFiles(lFile.tail)
-
       case _ if lFile.head.isFile => lFile.head :: filesOfListFiles(lFile.tail)
       case _ if lFile.head.isDirectory =>
         filesOfListFiles(lFile.head.listFiles().toList) ++ filesOfListFiles(
@@ -88,6 +101,7 @@ object FilesUtilities {
 
   }
 
+  //Index content
   def indexContentBis: List[Array[String]] = {
 
     fileContentList(IndexFile.getAbsolutePath)
@@ -100,12 +114,13 @@ object FilesUtilities {
   }
 
   //Function to get an index content
-
+  //Split lines of contents of words
+  //@param:filePath:String-> file path
   def fileContentList(filePath: String): List[Array[String]] = {
     Source.fromFile(filePath).getLines().toList.map(x => x.split(" "))
   }
 
-//Function to modify a files content
+  //Function to modify a files content
   def modifyFile(file: File, content: List[Array[String]]): Unit = {
     val tmp = new File("/tmp/temporary.txt")
     if (content.isEmpty) Unit
@@ -117,7 +132,7 @@ object FilesUtilities {
 
   }
 
-//Write a commit message in the dfile MSG_COMMIt
+  //Write a commit message in the dfile MSG_COMMIt
   def writeCommitMessage(msg: String): Unit = {
     val fileMsg = new File(Init.CurrentDirPath + "/.sgit/MSG_COMMIT")
     if (fileMsg.exists()) modifyFile(fileMsg, List(Array(msg)))
@@ -126,15 +141,16 @@ object FilesUtilities {
     }
   }
 
-//Change the commit id of the branch
+  //Change the commit id of the branch
   def changeBranchSha(newSha: String, branch: File): Unit = {
-
     if (branch.exists()) modifyFile(branch, List(Array(newSha)))
     else {
       openFileOverWrite(branch, newSha)
     }
   }
-
+  //Get the content of the object
+  //@param : sha:String -> sha code of the objects
+  //@return : List[String] -> lines of the content
   def contentObject(sha: String): List[String] = {
     val filePath = Init.CurrentDirPath + "/.sgit/objects/" + sha.take(2) + "/" + sha
       .takeRight(38)
@@ -146,13 +162,17 @@ object FilesUtilities {
   def readFileContent(file: File): List[String] = {
     Source.fromFile(file).getLines().toList
   }
-
-  def deleContentIndexBis(dif: String,
-                          content: List[Array[String]]): List[Array[String]] = {
+  //Delete a field
+  //@param: dif:String-> the change in the content
+  //@param: content : List[Array[String]] -> the content of working directory content
+  def changeContentIndexBis(
+    dif: String,
+    content: List[Array[String]]
+  ): List[Array[String]] = {
     if (content.isEmpty) List(Array())
     else if (!content.head.contains(dif))
-      content.head +: deleContentIndexBis(dif, content.tail)
-    else deleContentIndexBis(dif, content.tail)
+      content.head +: changeContentIndexBis(dif, content.tail)
+    else changeContentIndexBis(dif, content.tail)
   }
 
   def deleteContentIndex(content: List[Array[String]]): Unit = {

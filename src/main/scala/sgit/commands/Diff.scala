@@ -7,7 +7,9 @@ import sgit.{Index, Repository}
 
 object Diff {
 
-//Function to put Index blobs contents in a map
+  //Function to put Index blobs contents in a map
+  //@param: index:Index -> the index content
+  //return : Map[String,List[String]] -> the blob path and content
   def blobsAndContent(index: Index): Map[String, List[String]] = {
     if (index.indexEntries.isEmpty) Map()
     else
@@ -18,6 +20,8 @@ object Diff {
       ) ++ blobsAndContent(Index(index.indexEntries.tail))
   }
   //Function to put working directory files
+  //@param: files:List[File] -> list of files
+  //return : Map[String,List[String]] -> files paths and contents
   def dirFilesAndContent(files: List[File]): Map[String, List[String]] = {
     if (files.isEmpty) Map()
     else
@@ -27,6 +31,9 @@ object Diff {
   }
 
   //Function to compare between to list of lines
+  //@param: l1 : List[String] -> list of lines of a content file
+  //@param: l2 : List[String] -> list of lines of a content file
+  //return : List[String] -> difference between l1 l2
   def compare(l1: List[String], l2: List[String]): List[String] = {
     if (l1.isEmpty) l2
     else if (l2.isEmpty) l1
@@ -36,23 +43,28 @@ object Diff {
       val diffBis1 = diff1.diff(l1).filter(x => x != "")
       val diffBis2 = diff2.diff(l2).filter(x => x != "")
 
-      printDiff(diffBis1, diffBis2)
+      preparePrintDiff(diffBis1, diffBis2)
 
     }
   }
-
+  //Assign ++ to added lines
+  //@param: listLines: List[String]->list of addes lines
+  //return : new List[String] with foreach ++
   def added(listLines: List[String]): List[String] = {
     if (listLines.isEmpty) List()
     else List("++" + listLines.head) ++ added(listLines.tail)
   }
-
+  //Assign -- to deleted lines
+  //@param: listLines: List[String]->list of deleted lines
+  //return : new List[String] with foreach --
   def deleted(listLines: List[String]): List[String] = {
     if (listLines.isEmpty) List()
     else List("--" + listLines.head) ++ deleted(listLines.tail)
   }
 
   //Function to prepare the results for the print
-  def printDiff(l1: List[String], l2: List[String]): List[String] = {
+
+  def preparePrintDiff(l1: List[String], l2: List[String]): List[String] = {
     if (l1.isEmpty && l2.isEmpty) List()
     else {
       added(l1) ++ deleted(l2)
@@ -62,6 +74,9 @@ object Diff {
   }
 
   //Function to compare working directory map and index map
+  //@param:m1: Map[String, List[String]] -> map of index
+  //@param:m2: Map[String, List[String]] -> map of working directory
+  //@return :Map[String, List[String]] ->difference between m1 m2
   def compareMaps(m1: Map[String, List[String]],
                   m2: Map[String, List[String]]): Map[String, List[String]] = {
     if (m1.isEmpty || m2.isEmpty) Map()
@@ -91,7 +106,8 @@ object Diff {
       differencesPrinter(res.tail)
     }
   }
-
+  //Function to account the modifications stats
+  //@param: diff: Map[String, List[String]] -> difference between working dir index and stage
   @scala.annotation.tailrec
   def statDiff(diff: Map[String, List[String]]): Unit = {
     if (diff.isEmpty) Unit
@@ -107,7 +123,7 @@ object Diff {
       statDiff(diff.tail)
     }
   }
-
+  //Diff command
   def diff(): Unit = {
     val indexFiles = Index.indexContent
     val workingDirFile = Index.workingDirFiles

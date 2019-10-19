@@ -25,7 +25,7 @@ object Checkout {
 
   }
 
-//Form a new index File
+  //Form a new index File
   @scala.annotation.tailrec
   def addNewIndex(index: Index): Unit = {
     if (index.indexEntries.isEmpty) Unit
@@ -36,6 +36,7 @@ object Checkout {
   }
 
   //decode blobs in the working directory
+  //@param: blobsContent : Map[String,List[String]] -> the blobs and their contents
   def newDirectory(blobsContent: Map[String, List[String]]): Unit = {
     if (blobsContent.isEmpty) Unit
     else {
@@ -48,7 +49,8 @@ object Checkout {
 
   }
 
-//Checkout commit
+  //Checkout to commit
+  //@param : commitId : String
   def checkoutCommit(commitId: String): Unit = {
     val commitBlobs = Log.constructsCommitMap(Map(commitId -> commitId))
     val indexEntriesMap = Log.constructsIndex(commitBlobs)
@@ -58,13 +60,14 @@ object Checkout {
     if (indexFile.exists()) {
       indexFile.delete()
     }
-    FilesUtilities.createFiles(List(indexFile.getAbsolutePath))
-    addNewIndex(index)
+    //Delete working directory
     FilesUtilities.deleteRecursively(
       new File(Repository.getWorkingDirPath(Init.CureentFile))
     )
+    FilesUtilities.createFiles(List(indexFile.getAbsolutePath))
+    addNewIndex(index)
     newDirectory(blobsContent)
-    println("Basculement sur le commit : " + commitId)
+    println("Basculement sur: " + commitId)
   }
 //Checkout Branch
   def checkoutBranch(branchName: String): Unit = {
@@ -73,7 +76,6 @@ object Checkout {
     val headFile = new File(Repository.get.getAbsolutePath + "/.sgit/HEAD")
     checkoutCommit(commitId)
     FilesUtilities.modifyFile(headFile, List(Array(branchName)))
-    println("Basculement sur la branche : " + branchName)
   }
   //Check Tag
   def checkoutTag(tagName: String): Unit = {

@@ -5,6 +5,25 @@ import sgit.utilities.FilesUtilities
 import sgit.{Index, IndexEntry, Repository}
 
 object Log {
+
+  def logFile(): File = new File(Repository.get.getAbsolutePath + "/.sgit/logs")
+
+  //Log content
+  def logContent: List[String] = {
+    FilesUtilities.readFileContent(logFile())
+  }
+
+  //blob contents of all comits
+  private def blobsContents(commitsAndParents: Map[String, String]) = {
+    blobIndexContents(commitIndex(commitsAndParents))
+  }
+
+  //Commits and there parents return map
+  private def commitParent: Map[String, String] = {
+    val commitsAndParents = commitAndParent(logContentArray)
+    commitsAndParents
+  }
+
   //Log content as string splited by \n
   def logContentArray: Array[String] = { logContent.toArray }
 
@@ -194,13 +213,6 @@ object Log {
 
   }
 
-  //Log content
-  def logContent: List[String] = {
-    FilesUtilities.readFileContent(logFile())
-  }
-
-  def logFile(): File = new File(Repository.get.getAbsolutePath + "/.sgit/logs")
-
   //Function to start the Log -p Command
   def logP(): Unit = {
     val commitsAndParents: _root_.scala.Predef.Map[_root_.scala.Predef.String,
@@ -214,17 +226,6 @@ object Log {
 //Method to start the log -stat command
   def logStat(): Unit = {
     logStatBis(commitParent, blobsContents(commitParent))
-  }
-
-//blob contents of all comits
-  private def blobsContents(commitsAndParents: Map[String, String]) = {
-    blobIndexContents(commitIndex(commitsAndParents))
-  }
-
-  //Commits and there parents return map
-  private def commitParent: Map[String, String] = {
-    val commitsAndParents = commitAndParent(logContentArray)
-    commitsAndParents
   }
 
 }
