@@ -63,14 +63,14 @@ object Diff {
   }
 
   //Function to prepare the results for the print
-
+  //@param l1: List[String] -> list of added content
+  //@param l2: List[String] -> list of deleted content
+  //@return : List[String] -> list of prepared modified content
   def preparePrintDiff(l1: List[String], l2: List[String]): List[String] = {
     if (l1.isEmpty && l2.isEmpty) List()
     else {
       added(l1) ++ deleted(l2)
-
     }
-
   }
 
   //Function to compare working directory map and index map
@@ -92,6 +92,7 @@ object Diff {
   }
 
   //Function to print the differences
+  //@param: res: Map[String, List[String]] -> Each file and its modifications
   @scala.annotation.tailrec
   def differencesPrinter(res: Map[String, List[String]]): Unit = {
     if (res.isEmpty) Unit
@@ -125,13 +126,17 @@ object Diff {
   }
   //Diff command
   def diff(): Unit = {
+    //Index content
     val indexFiles = Index.indexContent
+    //Working diretory index
     val workingDirFile = Index.workingDirFiles
-    val mapIndex = blobsAndContent(indexFiles)
-    val mapDir = dirFilesAndContent(workingDirFile)
-    val differences = compareMaps(mapIndex, mapDir)
+    //Tree Index
+    val treeIndex = blobsAndContent(indexFiles)
+    //Tree working directory
+    val treeDir = dirFilesAndContent(workingDirFile)
+    //differences of maps
+    val differences = compareMaps(treeIndex, treeDir)
     differencesPrinter(differences)
 
   }
-
 }

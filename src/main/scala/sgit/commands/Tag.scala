@@ -7,6 +7,12 @@ import sgit.utilities.FilesUtilities
 
 object Tag {
 
+  //Tag directory path
+  def tagsDirPath(): String =
+    Repository.get.getAbsolutePath + "/.sgit/refs/tags/"
+
+  //Create tag
+  //@param : tagName : String -> tag name
   def createTag(tagName: String): Unit = {
     val file = new File(tagsDirPath + tagName)
     if (tagFiles().contains(tagName)) println("This Tag already exists")
@@ -15,14 +21,12 @@ object Tag {
     }
 
   }
-
+  //Tag files
+  //@return : List[String] -> List of tag files
   def tagFiles(): List[String] =
     FilesUtilities
       .filesOfListFiles(List(new File(tagsDirPath())))
       .map(_.getName)
-
-  def tagsDirPath(): String =
-    Repository.get.getAbsolutePath + "/.sgit/refs/tags/"
 
   def main(args: Array[String]): Unit = {
     Init.Init()

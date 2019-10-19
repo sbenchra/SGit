@@ -2,32 +2,41 @@ package sgit.commands
 import java.io.File
 
 import sgit.utilities.FilesUtilities
-import sgit.{Index, IndexEntry, Repository}
+import sgit.{Index, IndexEntry, ObjectBL, Repository}
 
 object Log {
 
+  //Log file
+  //@return : file-> repository log file
   def logFile(): File = new File(Repository.get.getAbsolutePath + "/.sgit/logs")
 
   //Log content
+  //@return : List[String] -> log file content
   def logContent: List[String] = {
     FilesUtilities.readFileContent(logFile())
   }
 
+  //Log content as string splited by \n
+  //@return: Array[String] -> log file content
+  def logContentArray: Array[String] = { logContent.toArray }
+
   //blob contents of all comits
+  //@param: commitsAndParents: Map[String, String] -> Map of commit and its parent
+  //@return: Map[String, String] -> each commit with its blobs and their contents
   private def blobsContents(commitsAndParents: Map[String, String]) = {
     blobIndexContents(commitIndex(commitsAndParents))
   }
 
   //Commits and there parents return map
+  //@return: Map[String, String] -> A map of commit and its parents
   private def commitParent: Map[String, String] = {
     val commitsAndParents = commitAndParent(logContentArray)
     commitsAndParents
   }
 
-  //Log content as string splited by \n
-  def logContentArray: Array[String] = { logContent.toArray }
-
-  //Function to return the commits with the parents in a map
+  //Function to exctract the commits and parents
+  //@param: logContentA:Array[String] -> log content
+  //@return : Map{String,String] -> Commits and parents
   def commitAndParent(logContentA: Array[String]): Map[String, String] = {
     logContentA match {
       case _ if logContentA.isEmpty => Map()
@@ -38,24 +47,6 @@ object Log {
           logContentA.drop(5)
         )
     }
-  }
-
-  //Extract tree sha1
-  def extractTree(list: List[String]): List[String] = {
-    if (list.isEmpty) List()
-    else if (list.head.contains("tree") && list.head.length > 40) {
-      list.head.diff("tree").replaceAll(" ", "").takeRight(40) :: extractTree(
-        list.tail
-      )
-    } else extractTree(list.tail)
-  }
-
-  //Exctract blobs sha1 and paths
-  def extractBlob(list: List[String]): List[String] = {
-    if (list.isEmpty) List()
-    else if (list.head.contains("blob")) {
-      list.head.diff("blob") :: extractBlob(list.tail)
-    } else extractBlob(list.tail)
   }
 
   //Tranform blob from the object directory to map
@@ -71,7 +62,8 @@ object Log {
   def commitTree(trees: List[String]): List[String] = {
     if (trees.isEmpty) List()
     else {
-      val treesBis = extractTree(FilesUtilities.contentObject(trees.head))
+      val treesBis =
+        ObjectBL.extractTree(FilesUtilities.contentObject(trees.head))
       treesBis ++ commitTree(trees.tail) ++ commitTree(treesBis)
     }
   }
@@ -80,7 +72,7 @@ object Log {
   def blobsCommit(trees: List[String]): List[String] = {
     if (trees.isEmpty) List()
     else {
-      val blobs = extractBlob(FilesUtilities.contentObject(trees.head))
+      val blobs = ObjectBL.extractBlob(FilesUtilities.contentObject(trees.head))
       blobs ++ blobsCommit(trees.tail)
     }
   }
@@ -88,7 +80,7 @@ object Log {
   //Function that returns the blobs of a given commit path->sha
   def commitBlobs(commitId: String): Map[String, String] = {
     val commitContent = FilesUtilities.contentObject(commitId)
-    val treeCommit = extractTree(commitContent)
+    val treeCommit = ObjectBL.extractTree(commitContent)
     blobsToMap(blobsCommit(commitTree(treeCommit)))
   }
 
@@ -143,7 +135,9 @@ object Log {
       )
   }
 
-//Function to check de the difference between two blobs
+  //Function to check de the difference between two blobs
+  //@param : blobs1: Map[String, String] -> parent blobs
+  //@param : blobs2: Map[String, String] -> commit blobs
   @scala.annotation.tailrec
   def checkDiff(blobs1: Map[String, String],
                 blobs2: Map[String, String]): Unit = {
@@ -168,7 +162,9 @@ object Log {
 
   }
 
-//Recursive function to print de the differences of blobs between a commit blobs and its parent
+  //Recursive function to print de the differences of blobs between a commit blobs and its parent
+  //@param: commitsAndParents: Map[String, String] -> commit ->parent
+  //@param: blobs: Map[String, Map[String, List[String]]] -> commit-> (blob->content of the blob)
   @scala.annotation.tailrec
   def logPBis(commitsAndParents: Map[String, String],
               blobs: Map[String, Map[String, List[String]]]): Unit = {
@@ -185,13 +181,14 @@ object Log {
       print(
         "\nCommit: " + commitsAndParents.head._1 + "\n" + "Parent: " + commitsAndParents.head._2 + "\n"
       )
-
       Diff.differencesPrinter(Diff.compareMaps(parentBlobs, commitBlobs))
       checkDiff(mapBlobs1, mapBlobs2)
       logPBis(commitsAndParents.tail, blobs)
     }
   }
-
+  // A recursive function to display log stats
+  //@param: commitsAndParents: Map[String, String] -> commit ->parent
+  //@param: blobs: Map[String, Map[String, List[String]]] -> commit-> (blob->content of the blob)
   @scala.annotation.tailrec
   def logStatBis(commitsAndParents: Map[String, String],
                  blobs: Map[String, Map[String, List[String]]]): Unit = {

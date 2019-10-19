@@ -61,4 +61,28 @@ object ObjectBL {
     FilesUtilities.writeInFile(file, formObject(o).map(x => x + "\n"))
   }
 
+  //Extract blobs sha1
+  //@param objectContent: List[String] -> list of the object content
+  //@return List[String]: -> All blobs in the object
+  def extractBlob(objectContent: List[String]): List[String] = {
+    if (objectContent.isEmpty) List()
+    else if (objectContent.head.contains("blob")) {
+      objectContent.head.diff("blob") :: ObjectBL.extractBlob(
+        objectContent.tail
+      )
+    } else ObjectBL.extractBlob(objectContent.tail)
+  }
+
+  //Extract tree sha1
+  //@param objectContent: List[String] -> list of the object content
+  //@return List[String]: -> All trees sha1 in the object
+  def extractTree(objectContent: List[String]): List[String] = {
+    if (objectContent.isEmpty) List()
+    else if (objectContent.head.contains("tree") && objectContent.head.length > 40) {
+      objectContent.head
+        .diff("tree")
+        .replaceAll(" ", "")
+        .takeRight(40) :: ObjectBL.extractTree(objectContent.tail)
+    } else ObjectBL.extractTree(objectContent.tail)
+  }
 }
