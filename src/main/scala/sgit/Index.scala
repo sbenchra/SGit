@@ -11,7 +11,7 @@ case class Index(indexEntries: List[IndexEntry])
 object Index {
   //Get the index content
   def indexContent: Index =
-    Index(indexContentToIndex(FilesUtilities.indexContentBis))
+    Index(stageContentToIndexEntries(FilesUtilities.indexContentBis))
   //To change
   def workingDirFiles: List[File] =
     FilesUtilities.filesOfListFiles(List(new File("soufiane")))
@@ -21,15 +21,19 @@ object Index {
   //Function to tranform an index content to list of index entries
   // @param: contentBis->List of index lines as arrays
   //return list of index entries
-  def indexContentToIndex(contentBis: List[Array[String]]): List[IndexEntry] = {
+  def stageContentToIndexEntries(
+    contentBis: List[Array[String]]
+  ): List[IndexEntry] = {
     contentBis match {
       case _ if contentBis.isEmpty => List()
       case _ if contentBis.head.length == 2 =>
         val indexLine = contentBis.head
         val path = indexLine.head
         val sha = contentBis.head(1)
-        List(IndexEntry(path, sha)) ++ indexContentToIndex(contentBis.tail)
-      case _ => indexContentToIndex(contentBis.tail)
+        List(IndexEntry(path, sha)) ++ stageContentToIndexEntries(
+          contentBis.tail
+        )
+      case _ => stageContentToIndexEntries(contentBis.tail)
     }
   }
   //Function to modify an index
@@ -85,7 +89,9 @@ object Index {
   //Return : List of index entries
   def workingDirIndex(lFiles: List[File]): List[IndexEntry] = {
     if (lFiles.isEmpty) List()
-    else shaAndPath(lFiles.head) :: workingDirIndex(lFiles.tail)
+    else {
+      shaAndPath(lFiles.head) :: workingDirIndex(lFiles.tail)
+    }
   }
 
   //Check if the workDirField is contained in the index

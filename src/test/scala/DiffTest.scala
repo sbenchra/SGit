@@ -25,4 +25,24 @@ class DiffTest extends FunSuite with DiagrammedAssertions {
     )
   }
 
+  test("should return the difference between a new and old file content") {
+    assert(
+      Diff
+        .compareMaps(
+          Map("Test" -> List("This is test")),
+          Map("Test1" -> List("This is test 2"))
+        )
+        .equals(Map("Test" -> List("++This is test 2", "--This is test")))
+    )
+  }
+
+  test("should return the content of a file and the file in a map") {
+    assert(
+      Diff
+        .dirFilesAndContent(List(file))
+        .equals(Map(file.getPath -> List("This is a test")))
+    )
+
+  }
+
 }

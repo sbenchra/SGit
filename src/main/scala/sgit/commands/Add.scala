@@ -42,13 +42,13 @@ object Add {
       // Delete from the stage
       case _
           if Index
-            .indexContentToIndex(FilesUtilities.indexContentBis)
+            .stageContentToIndexEntries(FilesUtilities.indexContentBis)
             .map(_.path)
             .diff(Index.workingDirIndex(Index.workingDirFiles).map(_.path))
             .nonEmpty =>
         val wDirBlobs = Index.workingDirIndex(Index.workingDirFiles)
         val diffWdirIndex =
-          Index.indexContentToIndex(indexContent).diff(wDirBlobs)
+          Index.stageContentToIndexEntries(indexContent).diff(wDirBlobs)
         val toListDiff = Index.listOfIndexListArray(diffWdirIndex)
         val toListDir = Index.listOfIndexListArray(wDirBlobs)
         FilesUtilities.deleteContentIndex(
@@ -60,11 +60,11 @@ object Add {
       case _
           if !Index.fieldInIndex(
             Index.shaAndPath(lFilesBis.head).sha,
-            Index(Index.indexContentToIndex(indexContent))
+            Index(Index.stageContentToIndexEntries(indexContent))
           ) &&
             !Index.fieldInIndex(
               Index.shaAndPath(lFilesBis.head).path,
-              Index(Index.indexContentToIndex(indexContent))
+              Index(Index.stageContentToIndexEntries(indexContent))
             ) =>
         stageFile(lFilesBis.head)
         val indexEntry = Index.shaAndPath(lFilesBis.head)
@@ -74,11 +74,11 @@ object Add {
       case _
           if !Index.fieldInIndex(
             Index.shaAndPath(lFilesBis.head).sha,
-            Index(Index.indexContentToIndex(indexContent))
+            Index(Index.stageContentToIndexEntries(indexContent))
           ) &&
             Index.fieldInIndex(
               Index.shaAndPath(lFilesBis.head).path,
-              Index(Index.indexContentToIndex(indexContent))
+              Index(Index.stageContentToIndexEntries(indexContent))
             ) =>
         stageFile(lFilesBis.head)
         Index.modifyIndexContent(Index.shaAndPath(lFilesBis.head), indexContent)

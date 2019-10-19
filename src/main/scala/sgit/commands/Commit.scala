@@ -145,11 +145,12 @@ object Commit {
           getHash(index, data.last)
         ) :: createObjects(index, data.dropRight(1), trees)
       case _ if trees.keysIterator.contains(s"${data.last}") =>
-        TreeL(
-          ObjectType.tree,
-          data.last,
-          ObjectBL.sha(Tree(valueTree(data.last, trees)))
-        ) :: createObjects(index, data.dropRight(1), trees)
+        val valueT = valueTree(data.last, trees)
+        TreeL(ObjectType.tree, data.last, ObjectBL.sha(Tree(valueT))) :: createObjects(
+          index,
+          data.dropRight(1),
+          trees
+        )
       case _ => createObjects(index, data.dropRight(1), trees)
     }
   }
@@ -240,9 +241,10 @@ object Commit {
       )
   }
 
-  //The index commit Map
-  def commitMapF(index: Index): Map[String, List[TreeL]] = {
-    val fragmentedPaths = fragmentAllPaths(pathsIndex(Index.indexContent))
+  //The index commit tree
+  def commitTreeF(index: Index): Map[String, List[TreeL]] = {
+    val pathsI = pathsIndex(Index.indexContent)
+    val fragmentedPaths = fragmentAllPaths(pathsI)
     commitPrepare(index, fragmentedPaths)
   }
 
@@ -261,9 +263,9 @@ object Commit {
   def commit(msg: String): Unit = {
 
     //Find the index commit tree
-    val commitMap = commitMapF(Index.indexContent)
+    val commitMap = commitTreeF(Index.indexContent)
     // The working directory commit tree
-    val commitMapDir = commitMapF(Index.directoryContent)
+    val commitMapDir = commitTreeF(Index.directoryContent)
     val commitEntries =
       if (commitMap.keysIterator.exists(_.contains("."))) commitMap(".")
       else { commitMap("") }
@@ -297,7 +299,7 @@ object Commit {
             && ObjectBL.sha(commitObject) != lastCommitId &&
             ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit)) &&
             Index
-              .indexContentToIndex(FilesUtilities.indexContentBis)
+              .stageContentToIndexEntries(FilesUtilities.indexContentBis)
               .diff(Index.workingDirIndex(Index.workingDirFiles))
               .isEmpty => {
         writeTrees(commitMap)

@@ -29,9 +29,12 @@ object Tag {
       .map(_.getName)
 
   def main(args: Array[String]): Unit = {
-    Init.Init()
-    Add.add(List("soufiane"))
-    Commit.commit("ssss")
+    //  Init.Init()
+    //Add.add(List("soufiane"))
+    println(
+      Diff
+        .dirFilesAndContent(List(new File("soufiane/text.txt")))
+    )
     //Log.log()
 
   }
