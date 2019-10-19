@@ -7,37 +7,37 @@ import sgit.utilities.FilesUtilities
 
 class CommitTest extends FunSuite with DiagrammedAssertions {
 
-  val listFiles=List("soufiane/test.txt")
-  val msg="Test commit"
+  val listFiles = List("soufiane/test.txt")
+  val msg = "Test commit"
 
-  test ("it should return the split the path by \\"){
-    val listPath=List("dir1/dir2/file")
-    val splitedList=Commit.fragmentAllPaths(listPath)
-    assert(splitedList==List(List("dir1","dir2","file")))
+  test("it should return the split the path by \\") {
+    val listPath = List("dir1/dir2/file")
+    val splitedList = Commit.fragmentAllPaths(listPath)
+    assert(splitedList == List(List("dir1", "dir2", "file")))
   }
 
-
-  test("it should check if the file is staged"){
+  test("it should check if the file is staged") {
     Init.Init()
     Add.add(listFiles)
     Commit.commit(msg)
-    assert(Commit.allFileAreStaged(listFiles.map(x=>new File(x)),Index.indexContent))
+    assert(
+      Commit
+        .allFileAreStaged(listFiles.map(x => new File(x)), Index.indexContent)
+    )
   }
 
-  test("it shouldn't commit because the change was not staged"){
+  test("it shouldn't commit because the change was not staged") {
     Init.Init()
     Add.add(listFiles)
-    val file=new File(listFiles.head)
-    FilesUtilities.writeInFile(file,List("Test text"))
+    val file = new File(listFiles.head)
+    FilesUtilities.writeInFile(file, List("Test text"))
     Commit.commit(msg)
     assert(!Index.fieldInIndex(Index.shaAndPath(file).sha, Index.indexContent))
   }
-  test("it should get the path in the index")
-  {
-    assert(Commit.getPath(Index.indexContent,"test.txt")=="/home/travis/build/benchraa/SGit/soufiane/test.txt")
+  test("it should get the path in the index") {
+    assert(
+      Commit.getPath(Index.indexContent, "test.txt") == "/home/travis/build/sbenchra/SGit/soufiane/test.txt"
+    )
   }
-
-
-
 
 }

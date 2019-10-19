@@ -6,15 +6,16 @@ import sgit.Repository
 
 object Init {
 
-  def CurrentDirPath:String={
-    System.getProperty("user.dir")
-  }
-  def CureentFile:File={
+  def CureentFile: File = {
     new File(CurrentDirPath)
+  }
+
+  def CurrentDirPath: String = {
+    System.getProperty("user.dir")
   }
 //Initialize the repository
 
-  def Init() : Unit={
+  def Init(): Unit = {
     val dirPath = CurrentDirPath
     Repository.initializeRepo(dirPath)
   }

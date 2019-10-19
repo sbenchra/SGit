@@ -2,13 +2,12 @@ package sgit.UI
 
 import scopt.OParser
 
-case class Config(
-                     command:String="",
-                     path:String=".",
-                     element :String="",
-                     option :String="",
-                     lFile:List[String]=List(),
-                     messageCommit :String = "")
+case class Config(command: String = "",
+                  path: String = ".",
+                  element: String = "",
+                  option: String = "",
+                  lFile: List[String] = List(),
+                  messageCommit: String = "")
 
 object Parser {
   val builder = OParser.builder[Config]
@@ -38,13 +37,14 @@ object Parser {
         ),
       cmd("commit")
         .action((_, c) => c.copy(command = "commit"))
-        .text("Save the changes in the sgit repository").children(
-        opt[String]('m', name = "message")
-          .required()
-          .maxOccurs(1)
-          .action((x, c) => c.copy(messageCommit = x))
-          .text("Commit message")
-      ),
+        .text("Save the changes in the sgit repository")
+        .children(
+          opt[String]('m', name = "message")
+            .required()
+            .maxOccurs(1)
+            .action((x, c) => c.copy(messageCommit = x))
+            .text("Commit message")
+        ),
       cmd("log")
         .action((_, c) => c.copy(command = "log"))
         .text("Show commit logs")
@@ -56,7 +56,6 @@ object Parser {
             .action((_, c) => c.copy(option = "stat"))
             .text("Show statistics of a commit and its parent")
         ),
-
       cmd("branch")
         .action((_, c) => c.copy(command = "branch"))
         .text("Create a new branch")
@@ -69,7 +68,6 @@ object Parser {
             .action((_, c) => c.copy(option = "av"))
             .text("List all branches"),
         ),
-
       cmd("checkout")
         .action((_, c) => c.copy(command = "checkout"))
         .text("Switch to a branch")
@@ -79,7 +77,6 @@ object Parser {
             .action((x, c) => c.copy(element = x))
             .text(" ")
         ),
-
       cmd("tag")
         .action((_, c) => c.copy(command = "tag"))
         .text("Create a new tag")
@@ -89,7 +86,6 @@ object Parser {
             .action((x, c) => c.copy(element = x))
             .text("name of the tag we want to create")
         ),
-
     )
   }
 }
