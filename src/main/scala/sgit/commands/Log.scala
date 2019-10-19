@@ -6,33 +6,9 @@ import sgit.{Index, IndexEntry, ObjectBL, Repository}
 
 object Log {
 
-  //Log file
-  //@return : file-> repository log file
-  def logFile(): File = new File(Repository.get.getAbsolutePath + "/.sgit/logs")
-
-  //Log content
-  //@return : List[String] -> log file content
-  def logContent: List[String] = {
-    FilesUtilities.readFileContent(logFile())
-  }
-
   //Log content as string splited by \n
   //@return: Array[String] -> log file content
   def logContentArray: Array[String] = { logContent.toArray }
-
-  //blob contents of all comits
-  //@param: commitsAndParents: Map[String, String] -> Map of commit and its parent
-  //@return: Map[String, String] -> each commit with its blobs and their contents
-  private def blobsContents(commitsAndParents: Map[String, String]) = {
-    blobIndexContents(commitIndex(commitsAndParents))
-  }
-
-  //Commits and there parents return map
-  //@return: Map[String, String] -> A map of commit and its parents
-  private def commitParent: Map[String, String] = {
-    val commitsAndParents = commitAndParent(logContentArray)
-    commitsAndParents
-  }
 
   //Function to exctract the commits and parents
   //@param: logContentA:Array[String] -> log content
@@ -141,25 +117,29 @@ object Log {
   @scala.annotation.tailrec
   def checkDiff(blobs1: Map[String, String],
                 blobs2: Map[String, String]): Unit = {
-    if (blobs1.isEmpty || blobs2.isEmpty) Unit
-    else if (!blobs2.exists(_._1 == blobs1.head._1) && !blobs2.exists(
-               _._2 == blobs1.head._2
-             )) {
-      print("\n" + blobs1.head._1 + " is deleted")
-      checkDiff(blobs1.tail, blobs2)
-    } else if (!blobs1.exists(_._1 == blobs2.head._1) && !blobs1.exists(
-                 _._2 == blobs2.head._2
-               )) {
-      print("\n" + blobs1.head._1 + " is added")
-      checkDiff(blobs1, blobs2.tail)
 
-    } else if (blobs1.exists(_._1 == blobs2.head._1) && !blobs1.exists(
-                 _._2 == blobs2.head._2
-               )) {
-      print("\n" + blobs1.head._1 + " is modified")
-      checkDiff(blobs1, blobs2.tail)
+    blobs1 match {
+      case _ if blobs1.isEmpty || blobs2.isEmpty => Unit
+      case _
+          if blobs1.exists(_._1 == blobs2.head._1) && blobs1.exists(
+            _._2 == blobs2.head._2
+          ) =>
+        println("\n" + blobs1.head._1 + " is deleted")
+        checkDiff(blobs1.tail, blobs2)
+      case _
+          if !blobs1.exists(_._1 == blobs2.head._1) && !blobs1.exists(
+            _._2 == blobs2.head._2
+          ) =>
+        println("\n" + blobs1.head._1 + " is added")
+        checkDiff(blobs1, blobs2.tail)
+      case _
+          if blobs1.exists(_._1 == blobs2.head._1) && !blobs1.exists(
+            _._2 == blobs2.head._2
+          ) =>
+        println("\n" + blobs1.head._1 + " is modified")
+        checkDiff(blobs1, blobs2.tail)
+
     }
-
   }
 
   //Recursive function to print de the differences of blobs between a commit blobs and its parent
@@ -178,7 +158,7 @@ object Log {
       val blobs1 = blobsCommit(commitTree1)
       val mapBlobs2 = blobsToMap(blobs2)
       val mapBlobs1 = blobsToMap(blobs1)
-      print(
+      println(
         "\nCommit: " + commitsAndParents.head._1 + "\n" + "Parent: " + commitsAndParents.head._2 + "\n"
       )
       Diff.differencesPrinter(Diff.compareMaps(parentBlobs, commitBlobs))
@@ -186,6 +166,7 @@ object Log {
       logPBis(commitsAndParents.tail, blobs)
     }
   }
+
   // A recursive function to display log stats
   //@param: commitsAndParents: Map[String, String] -> commit ->parent
   //@param: blobs: Map[String, Map[String, List[String]]] -> commit-> (blob->content of the blob)
@@ -210,6 +191,16 @@ object Log {
 
   }
 
+  //Log content
+  //@return : List[String] -> log file content
+  def logContent: List[String] = {
+    FilesUtilities.readFileContent(logFile())
+  }
+
+  //Log file
+  //@return : file-> repository log file
+  def logFile(): File = new File(Repository.get.getAbsolutePath + "/.sgit/logs")
+
   //Function to start the Log -p Command
   def logP(): Unit = {
     val commitsAndParents: _root_.scala.Predef.Map[_root_.scala.Predef.String,
@@ -223,6 +214,20 @@ object Log {
 //Method to start the log -stat command
   def logStat(): Unit = {
     logStatBis(commitParent, blobsContents(commitParent))
+  }
+
+  //blob contents of all comits
+  //@param: commitsAndParents: Map[String, String] -> Map of commit and its parent
+  //@return: Map[String, String] -> each commit with its blobs and their contents
+  private def blobsContents(commitsAndParents: Map[String, String]) = {
+    blobIndexContents(commitIndex(commitsAndParents))
+  }
+
+  //Commits and there parents return map
+  //@return: Map[String, String] -> A map of commit and its parents
+  private def commitParent: Map[String, String] = {
+    val commitsAndParents = commitAndParent(logContentArray)
+    commitsAndParents
   }
 
 }
