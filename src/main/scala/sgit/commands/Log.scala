@@ -78,10 +78,12 @@ object Log {
     commits: Map[String, String]
   ): Map[String, Map[String, String]] = {
     if (commits.isEmpty) Map()
-    else
+    else {
       Map(commits.head._1 -> commitBlobs(commits.head._1)) ++ Map(
         commits.head._2 -> commitBlobs(commits.head._2)
       ) ++ constructsCommitMap(commits.tail)
+    }
+
   }
 
   //function to transform a map to a list of index entries

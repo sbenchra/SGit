@@ -191,11 +191,14 @@ object Commit {
     ): Map[String, List[TreeL]] = {
       if (paths.isEmpty) acc
       else {
+
         val deepestPaths = deepestPath(paths, maxLength(paths))
         val lastAParents = lastsAndParents(deepestPaths)
         val listParents = lastAParents.map(_.head)
         val lastLayer = union(lastAParents, listParents).distinct
+
         if (lastLayer.nonEmpty) {
+
           val newDepest = deepestPaths.map(x => x.dropRight(1)) //Delete the last elements
           val newPaths = paths.diff(deepestPaths) ++ newDepest
           commitPrepareBis(
@@ -244,14 +247,14 @@ object Commit {
   }
 
   //create files of objects of the commit map
-  //@param:CommitEntries:Map[String,List[TreeL]]-> CommitMap
+  //@param:commitEntries:Map[String,List[TreeL]]-> CommitMap
   @scala.annotation.tailrec
-  def writeTrees(CommitEntries: Map[String, List[TreeL]]): Unit = {
-    val setCommitEntries = CommitEntries.filterKeys(_ != "").toSeq
+  def writeTrees(commitEntries: Map[String, List[TreeL]]): Unit = {
+    val setCommitEntries = commitEntries.filterKeys(_ != "").toSeq
     if (setCommitEntries.isEmpty) Unit
     else {
       ObjectBL.addObject(Tree(setCommitEntries.head._2))
-      writeTrees(CommitEntries - setCommitEntries.head._1)
+      writeTrees(commitEntries - setCommitEntries.head._1)
     }
   }
 
