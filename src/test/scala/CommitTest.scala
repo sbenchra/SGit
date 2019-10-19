@@ -34,7 +34,7 @@ class CommitTest extends FunSuite with DiagrammedAssertions {
   }
   test("it should get the path in the index")
   {
-    assert(Commit.getPath(Index.indexContent,"test.txt")=="/home/benchraa/SGit/soufiane/test.txt")
+    assert(Commit.getPath(Index.indexContent,"test.txt")=="/home/travis/build/benchraa/SGit/soufiane/test.txt")
   }
 
 
