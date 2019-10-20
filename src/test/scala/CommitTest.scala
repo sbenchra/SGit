@@ -54,3 +54,12 @@ class CommitTest extends FunSuite with DiagrammedAssertions {
   test(" It should give the children of a given parent") {
     assert(
       Commit
+        .commonParents(
+          List(List("F", "D"), List("F", "A"), List("F", "B")),
+          "F"
+        )
+        .equals(List("F", "D", "F", "A", "F", "B"))
+    )
+  }
+
+}
