@@ -1,10 +1,11 @@
 package sgit.commands
 
-import sgit.Index
+import sgit.{Index, IndexEntry}
+import sgit.commands.Commit.allFileAreStaged
 
 object Status {
 
-// A recursive function to compare the directory files with index files
+  // A recursive function to compare the directory files with index files
   @scala.annotation.tailrec
   def statusCompare(index: Index, workDirContent: Index): Unit = {
     index match {
@@ -47,6 +48,7 @@ object Status {
           Index(index.indexEntries.tail),
           Index(workDirContent.indexEntries)
         )
+
       case _ => Unit
     }
 
@@ -55,6 +57,14 @@ object Status {
   def status(): Unit = {
 
     statusCompare(Index.indexContent, Index.directoryContent)
+    //Unstaged files
+    if (Index
+          .indexesDiff(Index.indexContent, Index.directoryContent)
+          .nonEmpty) {
+      val untracked =
+        Index.indexesDiff(Index.indexContent, Index.directoryContent)
+      Index.entryPrinter(untracked)
+    }
 
   }
 

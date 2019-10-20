@@ -2,6 +2,7 @@ package sgit
 
 import java.io.File
 
+import sgit.commands.Init
 import sgit.utilities.FilesUtilities
 
 //An index line is index entry composed of the file path and its sha
@@ -14,11 +15,14 @@ object Index {
   def indexContent: Index =
     Index(stageContentToIndexEntries(FilesUtilities.indexContentBis))
   //To change
-  def workingDirFiles: List[File] =
-    FilesUtilities.filesOfListFiles(List(new File("TestDir")))
+  def workingDirFiles: List[File] = {
+
+    //val workingDir = Repository.getWorkingDirPath(Init.CureentFile)
+    val workingDir = "TestDir"
+    FilesUtilities.filesOfListFiles(List(new File(workingDir)))
+  }
   //Working directory content as index
   def directoryContent = Index(workingDirIndex(workingDirFiles))
-
   //Function to tranform an index content to list of index entries
   // @param: contentBis->List of index lines as arrays
   //return list of index entries
@@ -60,6 +64,33 @@ object Index {
       index.indexEntries.head.sha.equals(field) || index.indexEntries.head.path
         .equals(field) || fieldInIndex(field, Index(index.indexEntries.tail))
     }
+  }
+
+  @scala.annotation.tailrec
+  def entryPrinter(listEntries: List[IndexEntry]): Unit = {
+    if (listEntries.isEmpty) Unit
+    else {
+      println(listEntries.head.path + Console.RED + "is untracked")
+      entryPrinter(listEntries.tail)
+    }
+  }
+  //The difference between index and the working directory
+  //@param:index:Index -> index content
+  //@param:WorkDirContent -> working directory as index
+  //Return List[Entry]-> difference
+  def indexesDiff(index: Index, workDirContent: Index): List[IndexEntry] = {
+    if (workDirContent.indexEntries.isEmpty) List()
+    else if (!fieldInIndex(workDirContent.indexEntries.head.path, index) && !fieldInIndex(
+               workDirContent.indexEntries.head.sha,
+               index
+             ))
+      workDirContent.indexEntries.head :: indexesDiff(
+        index,
+        Index(workDirContent.indexEntries.tail)
+      )
+    else
+      indexesDiff(index, Index(workDirContent.indexEntries.tail))
+
   }
   //Function to get a file as an Index Entry
   //@param : file -> a file to transform

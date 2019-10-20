@@ -27,9 +27,9 @@ object Diff {
   def dirFilesAndContent(files: List[File]): Map[String, List[String]] = {
     if (files.isEmpty) Map()
     else
-      Map(files.head.getPath -> FilesUtilities.readFileContent(files.head)) ++ dirFilesAndContent(
-        files.tail
-      )
+      Map(
+        files.head.getAbsolutePath -> FilesUtilities.readFileContent(files.head)
+      ) ++ dirFilesAndContent(files.tail)
   }
 
   //Function to compare between to list of lines
@@ -84,11 +84,11 @@ object Diff {
     if (m1.isEmpty || m2.isEmpty) Map()
     else {
       val mapBlob = Map(
-        m1.head._1 -> compare(m1(s"${m1.head._1}"), m2(s"${m2.head._1}"))
+        m1.head._1 -> compare(m1(s"${m1.head._1}"), m2(s"${m1.head._1}"))
       )
       mapBlob ++ compareMaps(
         m1.filterKeys(_ != s"${m1.head._1}"),
-        m2.filterKeys(_ != s"${m2.head._1}")
+        m2.filterKeys(_ != s"${m1.head._1}")
       )
     }
   }
@@ -103,8 +103,8 @@ object Diff {
       print(
         res.head._1 + " changes are \n" + res(res.head._1)
           .mkString("\n") + "\n" + Console.GREEN + res.head._2
-          .count(_.contains("++")) + "++@@ Ajout" + "\n" + Console.RED + res.head._2
-          .count(_.contains("--")) + Console.RED + "--@@ Supression"
+          .count(_.contains("++")) + "++@@ Adds" + "\n" + Console.RED + res.head._2
+          .count(_.contains("--")) + Console.RED + "--@@ Delete"
       )
       differencesPrinter(res.tail)
     }
@@ -120,8 +120,8 @@ object Diff {
           .split("/")
           .diff(Repository.get.getAbsolutePath.split("/"))
           .mkString("/") + ":\n" + Console.RED + diff.head._2
-          .count(_.contains("--")) + "--@@ Suppressions\n" + Console.GREEN_B + diff.head._2
-          .count(_.contains("++")) + Console.GREEN + "++@@ Ajouts"
+          .count(_.contains("--")) + "--@@ Delete\n" + Console.GREEN_B + diff.head._2
+          .count(_.contains("++")) + Console.GREEN + "++@@ Add"
       )
       statDiff(diff.tail)
     }
