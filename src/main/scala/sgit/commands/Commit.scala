@@ -299,6 +299,8 @@ object Commit {
     )
 
     commitObject match {
+      //If all the files are staged and no file was deleted
+      //If the new commit is different than the last one
       case _
           if allStagedExists(Index.indexContent)
             && allFileAreStaged(Index.workingDirFiles, Index.indexContent)
@@ -326,6 +328,7 @@ object Commit {
           )
         )
       }
+      //If the new commit is the same as the last one
       case _
           if ObjectBL
             .sha(commitObject)

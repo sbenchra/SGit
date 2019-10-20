@@ -101,6 +101,7 @@ object FilesUtilities {
         filesOfListFiles(lFile.head.listFiles().toList) ++ filesOfListFiles(
           lFile.tail
         )
+      case _ => List()
     }
 
   }
