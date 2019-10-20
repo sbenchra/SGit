@@ -2,7 +2,7 @@ package sgit.commands
 
 import java.io.File
 
-import sgit.Repository
+import sgit.Objects.Repository
 import sgit.utilities.FilesUtilities
 
 object Branch {
@@ -34,7 +34,7 @@ object Branch {
       lFiles.head.getName :: branchAVPrinter(lFiles.tail)
     }
   }
-
+//display all branches
   def branchAv(): Unit = {
     val branchs: scala.List[_root_.java.io.File] = branchFiles
     branchAVPrinter(branchs)

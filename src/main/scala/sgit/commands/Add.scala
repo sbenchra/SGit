@@ -1,8 +1,10 @@
 package sgit.commands
+
 import java.io.File
 
+import sgit.Objects.{Blob, Index, ObjectBL, Repository}
 import sgit.utilities.FilesUtilities
-import sgit.{Blob, Index, ObjectBL, Repository}
+import sgit.{Blob, Index, ObjectBL}
 
 object Add {
 

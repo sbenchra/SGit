@@ -1,5 +1,7 @@
 package sgit.commands
-import sgit.Index
+
+import sgit.Objects.Index
+
 object Status {
 
 // A recursive function to compare the directory files with index files

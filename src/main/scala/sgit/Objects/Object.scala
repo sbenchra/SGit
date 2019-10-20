@@ -1,7 +1,6 @@
-package sgit
+package sgit.Objects
 
-import sgit.ObjectType.ObjectType
-import com.roundeights.hasher.Implicits._
+import sgit.Objects.ObjectType.ObjectType
 
 // Abstract class of Object
 

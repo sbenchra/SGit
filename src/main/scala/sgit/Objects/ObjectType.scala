@@ -1,4 +1,5 @@
-package sgit
+package sgit.Objects
+
 //Enumeration of Objects type
 object ObjectType extends Enumeration {
   type ObjectType = Value

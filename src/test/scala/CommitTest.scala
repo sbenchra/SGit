@@ -1,9 +1,10 @@
 import java.io.File
 
 import org.scalatest.{DiagrammedAssertions, FunSuite}
+import sgit.Objects.{Index, Init}
 import sgit.commands.{Add, Commit, Init}
 import sgit.utilities.FilesUtilities
-import sgit.{Index, ObjectType, TreeL}
+import sgit.Index
 
 class CommitTest extends FunSuite with DiagrammedAssertions {
 

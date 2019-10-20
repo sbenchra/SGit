@@ -3,8 +3,10 @@ package sgit.commands
 import java.io.File
 
 import sgit.utilities.FilesUtilities
-import sgit.{Index, Repository}
-import Console._
+import sgit.Index
+import sgit.Objects.{Index, Repository}
+
+import scala.Console.{print, println}
 
 object Diff {
 

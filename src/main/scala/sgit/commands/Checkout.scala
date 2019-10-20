@@ -3,7 +3,8 @@ package sgit.commands
 import java.io.File
 
 import sgit.utilities.FilesUtilities
-import sgit.{Index, Repository}
+import sgit.Index
+import sgit.Objects.{Index, Repository}
 
 object Checkout {
 

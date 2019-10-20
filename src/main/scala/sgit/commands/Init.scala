@@ -2,7 +2,7 @@ package sgit.commands
 
 import java.io.File
 
-import sgit.Repository
+import sgit.Objects.Repository
 
 object Init {
 

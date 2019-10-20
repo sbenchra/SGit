@@ -1,6 +1,7 @@
-package sgit
+package sgit.Objects
+
 import com.roundeights.hasher.Implicits._
-import sgit.ObjectType.ObjectType
+import sgit.Objects.ObjectType.ObjectType
 
 // Class of Tree entries
 

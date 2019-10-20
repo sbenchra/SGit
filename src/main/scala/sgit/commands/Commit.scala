@@ -3,10 +3,20 @@ package sgit.commands
 import java.io.File
 import java.time.LocalDate
 
+import sgit.Objects.{
+  Commit,
+  Index,
+  ObjectBL,
+  ObjectType,
+  Repository,
+  Tree,
+  TreeL
+}
 import sgit.utilities.FilesUtilities
-import sgit._
+import sgit.{Objects, _}
 
 import scala.math.max
+
 object Commit {
   //Returns the head file of the repository
   def headFilePath: String = {
@@ -257,7 +267,7 @@ object Commit {
     val setCommitEntries = commitEntries.filterKeys(_ != "").toSeq
     if (setCommitEntries.isEmpty) Unit
     else {
-      ObjectBL.addObject(Tree(setCommitEntries.head._2))
+      ObjectBL.addObject(Objects.Tree(setCommitEntries.head._2))
       writeTrees(commitEntries - setCommitEntries.head._1)
     }
   }
@@ -276,21 +286,21 @@ object Commit {
       else { commitMapDir("") }
     val (branch: File, lastCommitId: String) = lastCommitBranch
     //Index Commit
-    val commitObject = sgit.Commit(
+    val commitObject = Commit(
       "Soufiane",
       "Soufiane",
       LocalDate.now(),
       msg,
-      Tree(commitEntries),
+      Objects.Tree(commitEntries),
       lastCommitId
     )
     //Workind directory commit
-    val fakeCommit = sgit.Commit(
+    val fakeCommit = Objects.Commit(
       "Soufiane",
       "Soufiane",
       LocalDate.now(),
       msg,
-      Tree(commitEntriesDir),
+      Objects.Tree(commitEntriesDir),
       lastCommitId
     )
 

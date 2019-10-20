@@ -1,6 +1,7 @@
-package sgit
+package sgit.Objects
 
 import java.io.File
+
 import sgit.utilities.FilesUtilities
 
 //An index line is index entry composed of the file path and its sha

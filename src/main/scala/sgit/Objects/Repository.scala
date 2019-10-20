@@ -1,4 +1,5 @@
-package sgit
+package sgit.Objects
+
 import java.io.File
 
 import sgit.commands.Init

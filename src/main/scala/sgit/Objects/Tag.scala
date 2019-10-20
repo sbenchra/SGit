@@ -1,5 +1,4 @@
-package sgit
-import sgit.ObjectType.ObjectType
+package sgit.Objects
 
 //Tag Class
 case class Tag(name: String) extends Object {

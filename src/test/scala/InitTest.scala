@@ -1,8 +1,9 @@
 import java.io.File
 
 import org.scalatest._
+import sgit.Objects.Repository
 import sgit._
-import sgit.commands._
+import sgit.commands.{Init, _}
 
 class InitTest extends FunSuite with DiagrammedAssertions {
   val dir = new File(System.getProperty("user.dir"))

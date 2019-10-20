@@ -1,9 +1,11 @@
 package sgit.commands
+
 import java.io.File
 
+import sgit.Objects.{Index, IndexEntry, ObjectBL, Repository}
 import sgit.utilities.FilesUtilities
-import sgit.{Index, IndexEntry, ObjectBL, Repository}
-import sgit.UI.ConsoleColorise
+import sgit.{Index, IndexEntry, ObjectBL, Objects}
+
 object Log {
 
   //Log content as string splited by \n
@@ -85,7 +87,7 @@ object Log {
   ): Map[String, Index] = {
     if (commits.isEmpty) Map()
     else
-      Map(commits.head._1 -> Index(mapToIndex(commits.head._2))) ++ constructsIndex(
+      Map(commits.head._1 -> Objects.Index(mapToIndex(commits.head._2))) ++ constructsIndex(
         commits.tail
       )
   }

@@ -1,8 +1,7 @@
-package sgit
+package sgit.Objects
 
 import java.io.File
 
-import sgit.Blob.formBlob
 import sgit.commands.Init
 import sgit.utilities.FilesUtilities
 
