@@ -16,7 +16,7 @@ object Add {
   //Add a list of files
   //@param: lFiles:List[String] -> List of files names
   def add(lFiles: List[String]): Unit = {
-    if (lFiles.isEmpty) print("Missing files")
+    if (lFiles.isEmpty) println("Missing files")
     else {
       addBis(lFiles.map(x => new File(x)))
     }
