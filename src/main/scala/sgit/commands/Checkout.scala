@@ -20,7 +20,7 @@ object Checkout {
         checkoutCommit(id)
       case _ if branches.contains(id) => checkoutBranch(id)
       case _ if tags.contains(id)     => checkoutTag(id)
-      case _                          => print("Id not found")
+      case _                          => println("Name or Sha not found")
     }
 
   }

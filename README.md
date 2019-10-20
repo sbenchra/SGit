@@ -10,7 +10,7 @@ To use the application you must follow the following convention.
 
 ### Prerequisites
 
-*Java 
+* Java 
 ```sh
 sudo apt-get update
 sudo apt-get install default-jdk

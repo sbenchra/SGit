@@ -102,7 +102,7 @@ object Diff {
     if (res.isEmpty) Unit
     else if (res.head._2.isEmpty) differencesPrinter(res.tail)
     else {
-      print(
+      println(
         res.head._1 + " changes are \n" + res(res.head._1)
           .mkString("\n") + "\n" + res.head._2
           .count(_.contains("++")) + "++@@ Adds" + "\n" + Console.RED + res.head._2

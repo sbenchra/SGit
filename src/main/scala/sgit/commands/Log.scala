@@ -189,7 +189,7 @@ object Log {
 
   //function to start the command log
   def log(): Unit = {
-    print(logContent.mkString("\n"))
+    println(logContent.mkString("\n"))
 
   }
 
