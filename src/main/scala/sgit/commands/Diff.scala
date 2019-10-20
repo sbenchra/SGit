@@ -2,8 +2,8 @@ package sgit.commands
 
 import java.io.File
 
-import sgit.{Index, Repository}
 import sgit.utilities.FilesUtilities
+import sgit.{Index, Repository}
 
 import scala.Console.{print, println}
 
@@ -37,16 +37,18 @@ object Diff {
   //@param: l2 : List[String] -> list of lines of a content file
   //return : List[String] -> difference between l1 l2
   def compare(l1: List[String], l2: List[String]): List[String] = {
-    if (l1.isEmpty) l2
-    else if (l2.isEmpty) l1
-    else {
-      val diff1 = l2.zipWithIndex.diff(l1.zipWithIndex).map(x => x._1)
-      val diff2 = l1.zipWithIndex.diff(l2.zipWithIndex).map(x => x._1)
-      val diffBis1 = diff1.diff(l1).filter(x => x != "")
-      val diffBis2 = diff2.diff(l2).filter(x => x != "")
+    l1 match {
+      case _ if l1.isEmpty => l2
+      case _ if l2.isEmpty => l1
+      case _ => {
+        val diff1 = l2.zipWithIndex.diff(l1.zipWithIndex).map(x => x._1)
+        val diff2 = l1.zipWithIndex.diff(l2.zipWithIndex).map(x => x._1)
+        val diffBis1 = diff1.diff(l1).filter(x => x != "")
+        val diffBis2 = diff2.diff(l2).filter(x => x != "")
 
-      preparePrintDiff(diffBis1, diffBis2)
+        preparePrintDiff(diffBis1, diffBis2)
 
+      }
     }
   }
   //Assign ++ to added lines

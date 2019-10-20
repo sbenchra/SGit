@@ -5,7 +5,7 @@ import sgit.commands.Diff
 
 class DiffTest extends FunSuite with DiagrammedAssertions {
 
-  val file = new File("TestDir/text.txt")
+  val file1 = new File("TestDir/test1.txt")
   test("should compare two list of lines") {
     val l1 = List("This is a test", "of sgit file")
     val l2 = List("I changed this line for the test", "of sgit file")
@@ -19,7 +19,9 @@ class DiffTest extends FunSuite with DiagrammedAssertions {
 
   test("should return a map of file and its content") {
     assert(
-      Diff.dirFilesAndContent(List(file)) == Map(file.getPath -> List("Test"))
+      Diff.dirFilesAndContent(List(file1)) == Map(
+        file1.getAbsolutePath -> List("Test")
+      )
     )
   }
 
@@ -28,7 +30,7 @@ class DiffTest extends FunSuite with DiagrammedAssertions {
       Diff
         .compareMaps(
           Map("Test" -> List("This is test")),
-          Map("Test1" -> List("This is test 2"))
+          Map("Test" -> List("This is test 2"))
         )
         .equals(Map("Test" -> List("++This is test 2", "--This is test")))
     )
@@ -37,8 +39,8 @@ class DiffTest extends FunSuite with DiagrammedAssertions {
   test("should return the content of a file and the file in a map") {
     assert(
       Diff
-        .dirFilesAndContent(List(file))
-        .equals(Map(file.getPath -> List("Test")))
+        .dirFilesAndContent(List(file1))
+        .equals(Map(file1.getAbsolutePath -> List("Test")))
     )
 
   }

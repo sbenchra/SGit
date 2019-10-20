@@ -65,12 +65,12 @@ object Index {
         .equals(field) || fieldInIndex(field, Index(index.indexEntries.tail))
     }
   }
-
+  //Entries printer
   @scala.annotation.tailrec
   def entryPrinter(listEntries: List[IndexEntry]): Unit = {
     if (listEntries.isEmpty) Unit
     else {
-      println(listEntries.head.path + Console.RED + "is untracked")
+      println(Console.RED + listEntries.head.path + " is untracked")
       entryPrinter(listEntries.tail)
     }
   }

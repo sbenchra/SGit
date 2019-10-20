@@ -27,12 +27,5 @@ object Tag {
     FilesUtilities
       .filesOfListFiles(List(new File(tagsDirPath())))
       .map(_.getName)
-  def main(args: Array[String]): Unit = {
-
-    Init.Init()
-    Add.add(List("TestDir"))
-    Commit.commit("test")
-
-  }
 
 }

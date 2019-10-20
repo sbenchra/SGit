@@ -268,12 +268,14 @@ object Commit {
     val commitMap = commitTreeF(Index.indexContent)
     // The working directory commit tree
     val commitMapDir = commitTreeF(Index.directoryContent)
+
     val commitEntries =
       if (commitMap.keysIterator.exists(_.contains("."))) commitMap(".")
       else { commitMap("") }
     val commitEntriesDir =
       if (commitMapDir.keysIterator.exists(_.contains("."))) commitMapDir(".")
       else { commitMapDir("") }
+
     val (branch: File, lastCommitId: String) = lastCommitBranch
     //Index Commit
     val commitObject = sgit.Commit(
