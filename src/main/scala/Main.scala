@@ -25,7 +25,8 @@ object Main extends App {
         case "branch" =>
           if (config.av) Branch.branchAv()
           else Branch.branch(config.element)
-        case _ => println("Invalid command")
+        case "checkout" => Checkout.checkout(config.element)
+        case _          => println("Invalid command")
 
       }
     }

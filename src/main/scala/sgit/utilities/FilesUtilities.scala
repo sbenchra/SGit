@@ -2,6 +2,7 @@ package sgit.utilities
 
 import java.io.{BufferedWriter, File, FileWriter}
 
+import sgit.Repository
 import sgit.commands.Init
 
 import scala.io.Source
@@ -141,7 +142,9 @@ object FilesUtilities {
 
   //Write a commit message in the dfile MSG_COMMIt
   def writeCommitMessage(msg: String): Unit = {
-    val fileMsg = new File(Init.CurrentDirPath + "/.sgit/MSG_COMMIT")
+    val fileMsg = new File(
+      Repository.getWorkingDirPath(Init.CureentFile) + "/.sgit/MSG_COMMIT"
+    )
     if (fileMsg.exists()) modifyFile(fileMsg, List(Array(msg)))
     else {
       openFileOverWrite(fileMsg, msg)
@@ -159,7 +162,8 @@ object FilesUtilities {
   //@param : sha:String -> sha code of the objects
   //@return : List[String] -> lines of the content
   def contentObject(sha: String): List[String] = {
-    val filePath = Init.CurrentDirPath + "/.sgit/objects/" + sha.take(2) + "/" + sha
+    val filePath = Repository.getWorkingDirPath(Init.CureentFile) + "/.sgit/objects/" + sha
+      .take(2) + "/" + sha
       .takeRight(38)
     readFileContent(new File(filePath))
 

@@ -139,6 +139,7 @@ object Log {
           ) =>
         println("\n" + blobs1.head._1 + " is modified")
         checkDiff(blobs1.tail, blobs2)
+      case _ => Unit
 
     }
   }

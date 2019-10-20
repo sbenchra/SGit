@@ -244,6 +244,8 @@ object Commit {
   }
 
   //The index commit tree
+  //@param: index content -> the index content
+  //return : Map of the commit tree
   def commitTreeF(index: Index): Map[String, List[TreeL]] = {
     val pathsI = pathsIndex(Index.indexContent)
     val fragmentedPaths = fragmentAllPaths(pathsI)

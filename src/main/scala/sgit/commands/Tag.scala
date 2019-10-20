@@ -27,16 +27,5 @@ object Tag {
     FilesUtilities
       .filesOfListFiles(List(new File(tagsDirPath())))
       .map(_.getName)
-  def main(args: Array[String]): Unit = {
-
-    val file3 = new File("TestDir")
-    println(
-      FilesUtilities
-        .filesOfListFiles(List(file3))
-        .map(_.getAbsolutePath)
-    )
-
-    // Diff.diff()
-  }
 
 }

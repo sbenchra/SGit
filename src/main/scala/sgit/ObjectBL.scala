@@ -52,7 +52,8 @@ object ObjectBL {
   //@param: o: Object -> an object (Commit,tree or blob)
   def addObject(o: Object): Unit = {
     val sha = ObjectBL.sha(o)
-    val directName = Init.CurrentDirPath + "/.sgit/objects/" + sha.take(2)
+    val directName = Repository.getWorkingDirPath(Init.CureentFile) + "/.sgit/objects/" + sha
+      .take(2)
     val fileName = directName + "/" + sha.takeRight(38)
     val file = new File(fileName)
     FilesUtilities.createDirectories(List(directName))

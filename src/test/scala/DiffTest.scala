@@ -20,7 +20,7 @@ class DiffTest extends FunSuite with DiagrammedAssertions {
   test("should return a map of file and its content") {
     assert(
       Diff.dirFilesAndContent(List(file1)) == Map(
-        file1.getAbsolutePath -> List("Test")
+        file1.getAbsolutePath -> List("TestBis")
       )
     )
   }
@@ -40,7 +40,7 @@ class DiffTest extends FunSuite with DiagrammedAssertions {
     assert(
       Diff
         .dirFilesAndContent(List(file1))
-        .equals(Map(file1.getAbsolutePath -> List("Test")))
+        .equals(Map(file1.getAbsolutePath -> List("TestBis")))
     )
 
   }

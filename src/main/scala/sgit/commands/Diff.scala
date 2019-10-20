@@ -104,9 +104,9 @@ object Diff {
     else {
       print(
         res.head._1 + " changes are \n" + res(res.head._1)
-          .mkString("\n") + "\n" + Console.GREEN + res.head._2
+          .mkString("\n") + "\n" + res.head._2
           .count(_.contains("++")) + "++@@ Adds" + "\n" + Console.RED + res.head._2
-          .count(_.contains("--")) + Console.RED + "--@@ Delete"
+          .count(_.contains("--")) + "--@@ Delete"
       )
       differencesPrinter(res.tail)
     }
@@ -121,9 +121,9 @@ object Diff {
         diff.head._1
           .split("/")
           .diff(Repository.get.getAbsolutePath.split("/"))
-          .mkString("/") + ":\n" + Console.RED + diff.head._2
-          .count(_.contains("--")) + "--@@ Delete\n" + Console.GREEN_B + diff.head._2
-          .count(_.contains("++")) + Console.GREEN + "++@@ Add"
+          .mkString("/") + ":\n" + diff.head._2
+          .count(_.contains("--")) + "--@@ Delete\n" + diff.head._2
+          .count(_.contains("++")) + "++@@ Add"
       )
       statDiff(diff.tail)
     }

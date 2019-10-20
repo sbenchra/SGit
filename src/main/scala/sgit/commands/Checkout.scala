@@ -62,7 +62,7 @@ object Checkout {
     }
     //Delete working directory
     FilesUtilities.deleteRecursively(
-      new File(Repository.getWorkingDirPath(Init.CureentFile))
+      new File(Repository.getWorkingDirPath(Repository.get))
     )
     FilesUtilities.createFiles(List(indexFile.getAbsolutePath))
     addNewIndex(index)
