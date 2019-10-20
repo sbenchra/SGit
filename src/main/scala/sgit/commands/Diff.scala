@@ -4,6 +4,7 @@ import java.io.File
 
 import sgit.utilities.FilesUtilities
 import sgit.{Index, Repository}
+import Console._
 
 object Diff {
 
@@ -100,9 +101,9 @@ object Diff {
     else {
       print(
         res.head._1 + " changes are \n" + res(res.head._1)
-          .mkString("\n") + "\n" + res.head._2
-          .count(_.contains("++")) + "++@@ Ajout" + "\n" + res.head._2
-          .count(_.contains("--")) + "--@@ Supression"
+          .mkString("\n") + "\n" + Console.GREEN + res.head._2
+          .count(_.contains("++")) + "++@@ Ajout" + "\n" + Console.RED + res.head._2
+          .count(_.contains("--")) + Console.RED + "--@@ Supression"
       )
       differencesPrinter(res.tail)
     }
@@ -117,9 +118,9 @@ object Diff {
         diff.head._1
           .split("/")
           .diff(Repository.get.getAbsolutePath.split("/"))
-          .mkString("/") + ":\n" + diff.head._2
-          .count(_.contains("--")) + "--@@ Suppressions\n" + diff.head._2
-          .count(_.contains("++")) + "++@@ Ajouts"
+          .mkString("/") + ":\n" + Console.RED + diff.head._2
+          .count(_.contains("--")) + "--@@ Suppressions\n" + Console.GREEN_B + diff.head._2
+          .count(_.contains("++")) + Console.GREEN + "++@@ Ajouts"
       )
       statDiff(diff.tail)
     }

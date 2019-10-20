@@ -8,7 +8,7 @@ import sgit.utilities.FilesUtilities
 class AddTest extends FunSuite with DiagrammedAssertions {
 
   val dir = new File(System.getProperty("user.dir"))
-  val file = new File(dir + "/soufiane/test.txt")
+  val file = new File(dir + "/TestDir/test.txt")
   test("The index should contain the file sha1 and path of the file") {
     Init.Init()
     val listFile = List(file.getAbsolutePath)

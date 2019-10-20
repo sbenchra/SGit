@@ -14,7 +14,7 @@ object Index {
     Index(stageContentToIndexEntries(FilesUtilities.indexContentBis))
   //To change
   def workingDirFiles: List[File] =
-    FilesUtilities.filesOfListFiles(List(new File("soufiane")))
+    FilesUtilities.filesOfListFiles(List(new File("TestDir")))
   //Working directory content as index
   def directoryContent = Index(workingDirIndex(workingDirFiles))
 

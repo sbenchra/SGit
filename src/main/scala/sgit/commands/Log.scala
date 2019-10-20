@@ -3,7 +3,7 @@ import java.io.File
 
 import sgit.utilities.FilesUtilities
 import sgit.{Index, IndexEntry, ObjectBL, Repository}
-
+import sgit.UI.ConsoleColorise
 object Log {
 
   //Log content as string splited by \n
@@ -121,23 +121,23 @@ object Log {
     blobs1 match {
       case _ if blobs1.isEmpty || blobs2.isEmpty => Unit
       case _
-          if blobs1.exists(_._1 == blobs2.head._1) && blobs1.exists(
-            _._2 == blobs2.head._2
+          if !blobs2.exists(_._1 == blobs1.head._1) && !blobs2.exists(
+            _._2 == blobs1.head._2
           ) =>
-        println("\n" + blobs1.head._1 + " is deleted")
+        println(("\n" + blobs1.head._1 + " is deleted"))
         checkDiff(blobs1.tail, blobs2)
       case _
           if !blobs1.exists(_._1 == blobs2.head._1) && !blobs1.exists(
             _._2 == blobs2.head._2
           ) =>
-        println("\n" + blobs1.head._1 + " is added")
-        checkDiff(blobs1, blobs2.tail)
+        println("\n" + Console.GREEN + blobs1.head._1 + " is added")
+        checkDiff(blobs1.tail, blobs2)
       case _
-          if blobs1.exists(_._1 == blobs2.head._1) && !blobs1.exists(
-            _._2 == blobs2.head._2
+          if blobs2.exists(_._1 == blobs1.head._1) && !blobs2.exists(
+            _._2 == blobs1.head._2
           ) =>
         println("\n" + blobs1.head._1 + " is modified")
-        checkDiff(blobs1, blobs2.tail)
+        checkDiff(blobs1.tail, blobs2)
 
     }
   }
@@ -162,7 +162,7 @@ object Log {
         "\nCommit: " + commitsAndParents.head._1 + "\n" + "Parent: " + commitsAndParents.head._2 + "\n"
       )
       Diff.differencesPrinter(Diff.compareMaps(parentBlobs, commitBlobs))
-      checkDiff(mapBlobs1, mapBlobs2)
+      checkDiff(mapBlobs2, mapBlobs1)
       logPBis(commitsAndParents.tail, blobs)
     }
   }

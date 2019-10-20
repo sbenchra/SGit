@@ -7,7 +7,7 @@ import sgit.{Index, ObjectType, TreeL}
 
 class CommitTest extends FunSuite with DiagrammedAssertions {
 
-  val listFiles = List("soufiane/test.txt")
+  val listFiles = List("TestDir/test2.txt")
   val msg = "Test commit"
 
   test("it should return the split the path by \\") {

@@ -2,9 +2,14 @@ package sgit.UI
 
 import scopt.OParser
 
+import scala.util.matching.Regex
+
 case class Config(command: String = "",
                   path: String = ".",
                   element: String = "",
+                  av: Boolean = false,
+                  p: Boolean = false,
+                  stat: Boolean = false,
                   option: String = "",
                   lFile: List[String] = List(),
                   messageCommit: String = "")
@@ -50,10 +55,10 @@ object Parser {
         .text("Show commit logs")
         .children(
           opt[Unit]("p")
-            .action((_, c) => c.copy(option = "p"))
+            .action((_, c) => c.copy(p = true))
             .text("Show diffrences and statistics of a commit and its parent"),
           opt[Unit]("stat")
-            .action((_, c) => c.copy(option = "stat"))
+            .action((_, c) => c.copy(stat = true))
             .text("Show statistics of a commit and its parent")
         ),
       cmd("branch")
@@ -65,7 +70,7 @@ object Parser {
             .action((x, c) => c.copy(element = x))
             .text("Branch name"),
           opt[Unit]("av")
-            .action((_, c) => c.copy(option = "av"))
+            .action((_, c) => c.copy(av = true))
             .text("List all branches"),
         ),
       cmd("checkout")

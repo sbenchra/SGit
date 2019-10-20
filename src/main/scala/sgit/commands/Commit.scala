@@ -18,7 +18,9 @@ object Commit {
     val headFile = new File(headFilePath)
     //Currrent Branch
     val currentBranch =
-      FilesUtilities.readFileContent(headFile).head.substring(5)
+      if (FilesUtilities.readFileContent(headFile).nonEmpty)
+        FilesUtilities.readFileContent(headFile).head.substring(5)
+      else ""
     val branch = new File(
       Repository.get.getAbsolutePath + "/.sgit/" + currentBranch
     )
