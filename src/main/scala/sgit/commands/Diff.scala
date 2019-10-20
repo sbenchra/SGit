@@ -105,7 +105,7 @@ object Diff {
       println(
         res.head._1 + " changes are \n" + res(res.head._1)
           .mkString("\n") + "\n" + res.head._2
-          .count(_.contains("++")) + "++@@ Adds" + "\n" + Console.RED + res.head._2
+          .count(_.contains("++")) + "++@@ Adds" + "\n" + res.head._2
           .count(_.contains("--")) + "--@@ Delete"
       )
       differencesPrinter(res.tail)

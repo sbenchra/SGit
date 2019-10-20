@@ -131,7 +131,7 @@ object Log {
           if !blobs1.exists(_._1 == blobs2.head._1) && !blobs1.exists(
             _._2 == blobs2.head._2
           ) =>
-        println("\n" + Console.GREEN + blobs1.head._1 + " is added")
+        println("\n" + blobs1.head._1 + " is added")
         checkDiff(blobs1.tail, blobs2)
       case _
           if blobs2.exists(_._1 == blobs1.head._1) && !blobs2.exists(
