@@ -1,7 +1,7 @@
 import java.io.File
 
 import org.scalatest.{DiagrammedAssertions, FunSuite}
-import sgit.Objects.{Index, Init}
+import sgit.Index
 import sgit.commands.{Add, Init}
 import sgit.utilities.FilesUtilities
 

@@ -2,7 +2,7 @@ package sgit.commands
 
 import java.io.File
 
-import sgit.Objects.Repository
+import sgit.Repository
 import sgit.utilities.FilesUtilities
 
 object Tag {
@@ -29,10 +29,10 @@ object Tag {
       .map(_.getName)
   def main(args: Array[String]): Unit = {
 
-    println(
-      FilesUtilities
-        .filesOfListFiles(List(new File("TestDir")))
-    )
+    Init.Init()
+    Add.add(List("TestDir"))
+    Commit.commit("test")
+
   }
 
 }

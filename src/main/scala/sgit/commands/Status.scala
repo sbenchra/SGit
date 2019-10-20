@@ -1,6 +1,6 @@
 package sgit.commands
 
-import sgit.Objects.Index
+import sgit.Index
 
 object Status {
 

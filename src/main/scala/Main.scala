@@ -1,5 +1,5 @@
 import scopt.OParser
-import sgit.Objects.Tag
+import sgit.commands.Tag
 import sgit.UI.{Config, Parser}
 import sgit.commands._
 

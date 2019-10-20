@@ -1,4 +1,4 @@
-package sgit.Objects
+package sgit
 
 //Enumeration of Objects type
 object ObjectType extends Enumeration {

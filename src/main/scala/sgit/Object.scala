@@ -1,6 +1,6 @@
-package sgit.Objects
+package sgit
 
-import sgit.Objects.ObjectType.ObjectType
+import sgit.ObjectType.ObjectType
 
 // Abstract class of Object
 

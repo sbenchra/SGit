@@ -1,7 +1,7 @@
-package sgit.Objects
+package sgit
 
 import com.roundeights.hasher.Implicits._
-import sgit.Objects.ObjectType.ObjectType
+import sgit.ObjectType.ObjectType
 // Blob
 case class Blob(content: List[String]) extends Object {
   override def objectType: ObjectType = ObjectType.blob

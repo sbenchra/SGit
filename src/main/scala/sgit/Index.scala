@@ -1,4 +1,4 @@
-package sgit.Objects
+package sgit
 
 import java.io.File
 

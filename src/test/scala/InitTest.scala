@@ -1,8 +1,7 @@
 import java.io.File
 
 import org.scalatest._
-import sgit.Objects.Repository
-import sgit._
+import sgit.{Repository, _}
 import sgit.commands.{Init, _}
 
 class InitTest extends FunSuite with DiagrammedAssertions {

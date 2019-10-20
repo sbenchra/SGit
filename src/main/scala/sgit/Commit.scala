@@ -1,9 +1,9 @@
-package sgit.Objects
+package sgit
 
 import java.time.LocalDate
 
 import com.roundeights.hasher.Implicits._
-import sgit.Objects.ObjectType.ObjectType
+import sgit.ObjectType.ObjectType
 
 //Commit class
 
