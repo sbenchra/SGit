@@ -17,9 +17,10 @@ object Index {
   //To change
   def workingDirFiles: List[File] = {
 
-    //val workingDir = Repository.getWorkingDirPath(Init.CureentFile)
-    val workingDir = "TestDir"
-    FilesUtilities.filesOfListFiles(List(new File(workingDir)))
+    val workingDir = Repository.getWorkingDirPath(Init.CureentFile)
+    FilesUtilities
+      .filesOfListFiles(List(new File(workingDir)))
+      .filter(!_.getAbsolutePath.contains(".sgit"))
   }
   //Working directory content as index
   def directoryContent = Index(workingDirIndex(workingDirFiles))

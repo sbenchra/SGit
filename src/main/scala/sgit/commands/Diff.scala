@@ -5,7 +5,7 @@ import java.io.File
 import sgit.utilities.FilesUtilities
 import sgit.{Index, Repository}
 
-import scala.Console.{print, println}
+import scala.Console.println
 
 object Diff {
 

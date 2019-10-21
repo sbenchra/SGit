@@ -94,10 +94,7 @@ object FilesUtilities {
         print(lFile.head.getName + " is not found ")
         filesOfListFiles(lFile.tail)
       case _ if lFile.head.isFile => lFile.head :: filesOfListFiles(lFile.tail)
-      case _
-          if lFile.head.isDirectory && !lFile.head.getAbsolutePath.contains(
-            ".sgit"
-          ) =>
+      case _ if lFile.head.isDirectory =>
         filesOfListFiles(lFile.head.listFiles().toList) ++ filesOfListFiles(
           lFile.tail
         )
