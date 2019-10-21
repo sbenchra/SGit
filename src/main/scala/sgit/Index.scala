@@ -20,7 +20,6 @@ object Index {
     val workingDir = Repository.getWorkingDirPath(Init.CureentFile)
     FilesUtilities
       .filesOfListFiles(List(new File(workingDir)))
-      .filter(!_.getAbsolutePath.contains(".sgit"))
   }
   //Working directory content as index
   def directoryContent = Index(workingDirIndex(workingDirFiles))
@@ -122,8 +121,10 @@ object Index {
   //Return : List of index entries
   def workingDirIndex(lFiles: List[File]): List[IndexEntry] = {
     if (lFiles.isEmpty) List()
-    else {
+    else if (!lFiles.head.getAbsolutePath.contains(".sgit")) {
       shaAndPath(lFiles.head) :: workingDirIndex(lFiles.tail)
+    } else {
+      workingDirIndex(lFiles.tail)
     }
   }
 
