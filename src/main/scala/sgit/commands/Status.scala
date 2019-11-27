@@ -2,6 +2,7 @@ package sgit.commands
 
 import sgit.{Index, IndexEntry}
 import sgit.commands.Commit.allFileAreStaged
+import sgit.utilities.FilesUtilities
 
 object Status {
 
@@ -56,7 +57,8 @@ object Status {
 
   def status(): Unit = {
 
-    statusCompare(Index.indexContent, Index.directoryContent)
+statusCompare(Index.indexContent, Index.directoryContent)
+
     //Unstaged files
     if (Index
           .indexesDiff(Index.indexContent, Index.directoryContent)
@@ -65,6 +67,10 @@ object Status {
         Index.indexesDiff(Index.indexContent, Index.directoryContent)
       Index.entryPrinter(untracked)
     }
+    if(   Index
+      .stageContentToIndexEntries(FilesUtilities.indexContentBis)
+      .diff(Index.workingDirIndex(Index.workingDirFiles))
+      .isEmpty  ) println("La copie de travail est propre")
 
   }
 

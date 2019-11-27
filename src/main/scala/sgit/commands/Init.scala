@@ -19,4 +19,20 @@ object Init {
     val dirPath = CurrentDirPath
     Repository.initializeRepo(dirPath)
   }
+
+  def main(args: Array[String]) {
+
+   Init()
+
+// Add.add(List("soufiane/lapin"))
+
+  Diff.diff()
+
+
+//  Commit.commit("soufiane")
+    Status.status()
+    Log.logStat()
+  }
+
+
 }

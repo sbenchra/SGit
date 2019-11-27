@@ -4,7 +4,7 @@ import java.io.File
 import java.time.LocalDate
 
 import sgit.utilities.FilesUtilities
-import sgit._
+import sgit.{Index, _}
 
 import scala.math.max
 object Commit {
@@ -140,7 +140,7 @@ object Commit {
                     trees: Map[String, List[TreeL]]): List[TreeL] = {
     index match {
       case _ if data.isEmpty => List()
-      case _ if data.last.contains("txt") =>
+      case _ if isblob(data.last,Index.indexContent) =>
         TreeL(
           ObjectType.blob,
           getPath(index, data.last),
@@ -155,6 +155,13 @@ object Commit {
         )
       case _ => createObjects(index, data.dropRight(1), trees)
     }
+  }
+
+  @scala.annotation.tailrec
+  def isblob(file:String, index:Index): Boolean= {
+    if(index.indexEntries.isEmpty) false
+    else if( index.indexEntries.head.path.split("/").last.equals(file)) true
+    else isblob(file,Index(index.indexEntries.tail))
   }
   //Value of data in tree
   // @param : trees:Map[String,List[TreeL]] -> tree and its entries
@@ -297,19 +304,16 @@ object Commit {
       Tree(commitEntriesDir),
       lastCommitId
     )
+    val soufiane=ObjectBL.sha(commitObject)
 
     commitObject match {
       //If all the files are staged and no file was deleted
       //If the new commit is different than the last one
       case _
           if allStagedExists(Index.indexContent)
-            && allFileAreStaged(Index.workingDirFiles, Index.indexContent)
+            && allFileAreStaged(Index.workingDirFiles.filter(!_.getAbsolutePath.contains(".sgit")), Index.indexContent)
             && ObjectBL.sha(commitObject) != lastCommitId &&
-            ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit)) &&
-            Index
-              .stageContentToIndexEntries(FilesUtilities.indexContentBis)
-              .diff(Index.workingDirIndex(Index.workingDirFiles))
-              .isEmpty => {
+            ObjectBL.sha(commitObject).equals(ObjectBL.sha(fakeCommit))=> {
         writeTrees(commitMap)
         ObjectBL.addObject(commitObject)
         FilesUtilities.writeCommitMessage(msg)
@@ -328,6 +332,13 @@ object Commit {
           )
         )
       }
+      case _
+        if
+          Index
+    .stageContentToIndexEntries(FilesUtilities.indexContentBis)
+    .diff(Index.workingDirIndex(Index.workingDirFiles))
+    .nonEmpty  =>
+        println("Stage tracked files before commit")
       //If the new commit is the same as the last one
       case _
           if ObjectBL

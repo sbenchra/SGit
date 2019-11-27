@@ -112,7 +112,7 @@ object FilesUtilities {
 
   //Getting the index file
   def IndexFile: File = {
-    val file = new File(System.getProperty("user.dir") + "/.sgit/index")
+    val file = new File(Repository.get.getAbsolutePath + "/.sgit/index")
     if (file.exists()) file
     else {
       new File("")
