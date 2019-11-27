@@ -7,11 +7,10 @@ import sgit.utilities.FilesUtilities
 object Status {
 
   // A recursive function to compare the directory files with index files
-  @scala.annotation.tailrec
-  def statusCompare(index: Index, workDirContent: Index): Unit = {
+  def statusCompare(index: Index, workDirContent: Index): Map[String,String] = {
     index match {
       //if the index is empty
-      case _ if index.indexEntries.isEmpty => Unit
+      case _ if index.indexEntries.isEmpty => Map()
       // if the working directory and the index is not empty or the index contains the blob but not the directory
       case _
           if (workDirContent.indexEntries.isEmpty && index.indexEntries.nonEmpty) || !Index
@@ -20,7 +19,8 @@ object Status {
               Index(workDirContent.indexEntries)
             ) =>
         println(index.indexEntries.head.path + " is deleted \n")
-        statusCompare(Index(index.indexEntries.tail), workDirContent)
+        Map(index.indexEntries.head.path ->"deleted")++statusCompare(Index(index.indexEntries.tail), workDirContent)
+
       // if the directory contains a blob which not exists in index
       case _
           if !Index.containsIndexEntry(
@@ -28,7 +28,7 @@ object Status {
             Index(workDirContent.indexEntries)
           ) =>
         println(workDirContent.indexEntries.head.path + " is untracked")
-        statusCompare(Index(index.indexEntries.tail), workDirContent)
+        Map(index.indexEntries.head.path ->" is untracked")++statusCompare(Index(index.indexEntries.tail), workDirContent)
       // if the index contains the blob's path but not is sha1
       case _
           if Index.fieldInIndex(
@@ -39,25 +39,23 @@ object Status {
             Index(workDirContent.indexEntries)
           ) =>
         println(index.indexEntries.head.path + " is modified")
-        statusCompare(Index(index.indexEntries.tail), workDirContent)
+        Map(index.indexEntries.head.path -> " is modified")++statusCompare(Index(index.indexEntries.tail), workDirContent)
       //if the index entry exists in the working directory index and the working directory index entry exists in the index
       case _
           if Index.containsIndexEntry(index.indexEntries.head, index) && Index
             .containsIndexEntry(index.indexEntries.head, workDirContent) =>
         println(index.indexEntries.head.path + " is tracked")
-        statusCompare(
+        Map(index.indexEntries.head.path -> " is tracked")++statusCompare(
           Index(index.indexEntries.tail),
           Index(workDirContent.indexEntries)
         )
-
-      case _ => Unit
     }
 
   }
 
   def status(): Unit = {
 
-statusCompare(Index.indexContent, Index.directoryContent)
+val status=statusCompare(Index.indexContent, Index.directoryContent)
 
     //Unstaged files
     if (Index
@@ -67,10 +65,9 @@ statusCompare(Index.indexContent, Index.directoryContent)
         Index.indexesDiff(Index.indexContent, Index.directoryContent)
       Index.entryPrinter(untracked)
     }
-    if(   Index
-      .stageContentToIndexEntries(FilesUtilities.indexContentBis)
-      .diff(Index.workingDirIndex(Index.workingDirFiles))
-      .isEmpty  ) println("La copie de travail est propre")
+
+
+    if(status.isEmpty) println("La copie de travail est propre")
 
   }
 

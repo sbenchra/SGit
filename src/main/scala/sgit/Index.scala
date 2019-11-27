@@ -19,7 +19,7 @@ object Index {
 
     val workingDir = Repository.getWorkingDirPath(Init.CureentFile)
     FilesUtilities
-      .filesOfListFiles(List(new File(workingDir)))
+      .filesOfListFiles(List(new File("soufiane")))
   }
   //Working directory content as index
   def directoryContent = Index(workingDirIndex(workingDirFiles))

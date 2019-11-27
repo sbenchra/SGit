@@ -304,7 +304,6 @@ object Commit {
       Tree(commitEntriesDir),
       lastCommitId
     )
-    val soufiane=ObjectBL.sha(commitObject)
 
     commitObject match {
       //If all the files are staged and no file was deleted
