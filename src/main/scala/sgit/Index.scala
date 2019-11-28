@@ -16,10 +16,9 @@ object Index {
     Index(stageContentToIndexEntries(FilesUtilities.indexContentBis))
   //To change
   def workingDirFiles: List[File] = {
-
     val workingDir = Repository.getWorkingDirPath(Init.CureentFile)
     FilesUtilities
-      .filesOfListFiles(List(new File("soufiane")))
+      .filesOfListFiles(List(new File(workingDir)))
   }
   //Working directory content as index
   def directoryContent = Index(workingDirIndex(workingDirFiles))

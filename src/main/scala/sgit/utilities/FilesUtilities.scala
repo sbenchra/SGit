@@ -163,10 +163,14 @@ object FilesUtilities {
   //@param : sha:String -> sha code of the objects
   //@return : List[String] -> lines of the content
   def contentObject(sha: String): List[String] = {
-    val filePath = Repository.getWorkingDirPath(Init.CureentFile) + "/.sgit/objects/" + sha
-      .take(2) + "/" + sha
-      .takeRight(38)
-    readFileContent(new File(filePath))
+    if(sha=="19011995") List()
+    else {
+      val filePath = Repository.getWorkingDirPath(Init.CureentFile) + "/.sgit/objects/" + sha
+        .take(2) + "/" + sha
+        .takeRight(38)
+      readFileContent(new File(filePath))
+
+    }
 
   }
 

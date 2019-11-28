@@ -17,8 +17,6 @@ object Log {
   def commitAndParent(logContentA: Array[String]): Map[String, String] = {
     logContentA match {
       case _ if logContentA.isEmpty => Map()
-      case _ if logContentA(3).contains("19011995") =>
-        commitAndParent(logContentA.drop(5))
       case _ =>
         Map(logContentA.head.diff("Commit:") -> logContentA(3).diff("Parent:")) ++ commitAndParent(
           logContentA.drop(5)
@@ -125,19 +123,19 @@ object Log {
           if !blobs2.exists(_._1 == blobs1.head._1) && !blobs2.exists(
             _._2 == blobs1.head._2
           ) =>
-        println(("\n" + blobs1.head._1 + " is deleted"))
+        println((blobs1.head._1 + " is deleted"))
         checkDiff(blobs1.tail, blobs2)
       case _
           if !blobs1.exists(_._1 == blobs2.head._1) && !blobs1.exists(
             _._2 == blobs2.head._2
           ) =>
-        println("\n" + blobs1.head._1 + " is added")
+        println( blobs1.head._1 + " is added")
         checkDiff(blobs1.tail, blobs2)
       case _
           if blobs2.exists(_._1 == blobs1.head._1) && !blobs2.exists(
             _._2 == blobs1.head._2
           ) =>
-        println("\n" + blobs1.head._1 + " is modified")
+        println( blobs1.head._1 + " is modified")
         checkDiff(blobs1.tail, blobs2)
       case _ => Unit
 

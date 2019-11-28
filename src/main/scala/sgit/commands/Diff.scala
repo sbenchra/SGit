@@ -83,7 +83,8 @@ object Diff {
   //@return :Map[String, List[String]] ->difference between m1 m2
   def compareMaps(m1: Map[String, List[String]],
                   m2: Map[String, List[String]]): Map[String, List[String]] = {
-    if (m1.isEmpty || m2.isEmpty) Map()
+    if (m1.values.isEmpty) m2
+    else if (m2.values.isEmpty) m1
     else {
       val mapBlob = Map(
         m1.head._1 -> compare(m1(s"${m1.head._1}"), m2(s"${m1.head._1}"))

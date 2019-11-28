@@ -45,7 +45,7 @@ object Status {
           if Index.containsIndexEntry(index.indexEntries.head, index) && Index
             .containsIndexEntry(index.indexEntries.head, workDirContent) =>
         println(index.indexEntries.head.path + " is tracked")
-        Map(index.indexEntries.head.path -> " is tracked")++statusCompare(
+        statusCompare(
           Index(index.indexEntries.tail),
           Index(workDirContent.indexEntries)
         )
@@ -56,18 +56,19 @@ object Status {
   def status(): Unit = {
 
 val status=statusCompare(Index.indexContent, Index.directoryContent)
-
+    val untracked =
+      Index.indexesDiff(Index.indexContent, Index.directoryContent)
     //Unstaged files
     if (Index
           .indexesDiff(Index.indexContent, Index.directoryContent)
           .nonEmpty) {
-      val untracked =
-        Index.indexesDiff(Index.indexContent, Index.directoryContent)
+
       Index.entryPrinter(untracked)
     }
 
+    if(status.isEmpty && untracked.isEmpty) println("La copie de travail est propre")
 
-    if(status.isEmpty) println("La copie de travail est propre")
+
 
   }
 
