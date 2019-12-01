@@ -75,9 +75,9 @@ object Repository {
       val createdFiles = FilesUtilities.createFiles(files)
       FilesUtilities.writeInFiles(createdFiles, content)
 
-      println(s"Dépôt SGit vide initialisé dans $dirPath/.sgit")
+      println(s"SGit repository is initialized and created $dirPath/.sgit")
     } else {
-      println(s"Dépôt Git existant réinitialisé dans $dirPath/.sgit")
+      println(s"Git repository alreadys exists $dirPath/.sgit")
     }
   }
 

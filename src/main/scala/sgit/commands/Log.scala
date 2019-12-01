@@ -161,6 +161,8 @@ object Log {
       println(
         "\nCommit: " + commitsAndParents.head._1 + "\n" + "Parent: " + commitsAndParents.head._2 + "\n"
       )
+
+      println(Diff.compareMaps(parentBlobs, commitBlobs))
       Diff.differencesPrinter(Diff.compareMaps(parentBlobs, commitBlobs))
       checkDiff(mapBlobs2, mapBlobs1)
       logPBis(commitsAndParents.tail, blobs)
@@ -206,7 +208,6 @@ object Log {
     val commitsAndParents: _root_.scala.Predef.Map[_root_.scala.Predef.String,
                                                    _root_.scala.Predef.String] =
       commitParent
-
     logPBis(commitsAndParents, blobsContents(commitsAndParents))
 
   }

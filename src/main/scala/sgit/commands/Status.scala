@@ -66,7 +66,7 @@ val status=statusCompare(Index.indexContent, Index.directoryContent)
       Index.entryPrinter(untracked)
     }
 
-    if(status.isEmpty && untracked.isEmpty) println("La copie de travail est propre")
+    if(status.isEmpty && untracked.isEmpty) println("The work copy is clean")
 
 
 

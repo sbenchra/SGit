@@ -18,10 +18,10 @@ object Index {
   def workingDirFiles: List[File] = {
     val workingDir = Repository.getWorkingDirPath(Init.CureentFile)
     FilesUtilities
-      .filesOfListFiles(List(new File(workingDir)))
+      .filesOfListFiles(List(new File(workingDir))).filter(!_.getAbsolutePath.contains("sgit"))
   }
   //Working directory content as index
-  def directoryContent = Index(workingDirIndex(workingDirFiles))
+  def directoryContent: Index = Index(workingDirIndex(workingDirFiles))
   //Function to tranform an index content to list of index entries
   // @param: contentBis->List of index lines as arrays
   //return list of index entries

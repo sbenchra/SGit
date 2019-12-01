@@ -25,6 +25,7 @@ object Commit {
       Repository.get.getAbsolutePath + "/.sgit/" + currentBranch
     )
     //Last commit Id
+
     val lastCommitId = {
       if (branch.exists()) FilesUtilities.readFileContent(branch).head
       else "19011995"
